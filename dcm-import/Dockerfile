@@ -1,12 +1,13 @@
 
 FROM rappdw/docker-java-python:latest
+
 # SETUP PYTHON ENV
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-
 RUN apt-get update && apt-get install unixodbc-dev python3-pip -y
 
+RUN /usr/local/bin/python -m pip install --upgrade pip
 
 WORKDIR /usr/src/app
 COPY requirements.txt /usr/src/app/

@@ -49,10 +49,10 @@ class ProductionConfig(Config):
     SECRET_KEY = os.getenv("SECRET_KEY")
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
     MONGO_URI = os.getenv("MONGO_URI")
-    subscription_id = os.getenv("subscription_id")
-    client_id = os.getenv("client_id")
-    secret = os.getenv("secret")
-    tenant = os.getenv("tenant")
+    subscription_id = os.getenv("subscription_id", None)
+    client_id = os.getenv("client_id", None)
+    secret = os.getenv("secret", None)
+    tenant = os.getenv("tenant", None)
     # uncomment the line below to use postgres
     # SQLALCHEMY_DATABASE_URI = postgres_local_base
 

@@ -45,6 +45,8 @@ def execute_node(df, node):
         return hash_columns(df, node["columns"])
     elif node["type"] == "map":
         return map_columns(df, eval(node.get("code", "")))
+    elif node["type"] == "map_standard":
+        return map_columns(df, node)
     elif node["type"] == "select":
         return select_columns(df, node)
     else:
@@ -345,7 +347,7 @@ def groupby(df, node):
         return df
 
 def map_columns(df, node):
-    mappings = node.get("mappings", [])
+    mappings = node.get("mapping", [])
     mapped_df = pd.DataFrame(index=df.index, columns=[])
     for mapping in mappings:
         source = mapping["source"]
@@ -353,6 +355,7 @@ def map_columns(df, node):
         if source in df.columns:
             mapped_df[target] = df[source]
     df = mapped_df
+
     return df
 
 def hash_columns(df, columns):

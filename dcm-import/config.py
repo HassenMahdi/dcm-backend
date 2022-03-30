@@ -41,8 +41,8 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     """Prod config settings"""
     DEBUG = False
-    # MONGO_URI = os.getenv("MONGO_URI")
-    # UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
+    MONGO_URI = os.getenv("MONGO_URI")
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
 
 config_by_name = dict(
     dev=DevelopmentConfig,
