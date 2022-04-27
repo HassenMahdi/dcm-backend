@@ -63,8 +63,11 @@ def execute_node(df, node):
 
 
 def eval_python(df, options):
-    exec(options.get('code', ''))
-    return df
+    global_env = {**globals()}
+    local_env = {**locals()}
+    exec(options.get('code', ''), global_env, local_env)
+
+    return local_env["df"]
 
 
 def join_tables(df, options):

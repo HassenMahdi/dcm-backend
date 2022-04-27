@@ -1,6 +1,8 @@
 from api.utils.converter import excel_sheet_to_csv
 from api.utils.dataframe import parse_columns, read_csv
 from api.utils.utils import get_path, generate_id
+from api.utils.access import access_to_csv
+
 import pandas as pd
 
 import numpy as np
@@ -34,7 +36,7 @@ def generate_ranged_sheet(source, target, cs, ce, rs, re):
     df = read_csv(source, columns=columns, skip_rows=skip_rows, n_rows=n_rows)
 
     # GET RID OF EMPTY LINES AND COLUMNS
-    df = df.replace('', np.nan).dropna(axis=0, how='all').dropna(axis=1, how='all')
+    # df = df.replace('', np.nan).dropna(axis=0, how='all').dropna(axis=1, how='all')
     # SKIP INITIAL SPACE IF HEADER IS EMPTY
 
     if len(df.columns) > 0 and len(df.columns)==len([c for c in df.columns if 'Unnamed:' in c]):
@@ -108,3 +110,21 @@ def create_sheet_metadata(file_id, sheetId, sheet_id, sheet_name, cs=0, ce=0, rs
 
     sheets.create_excel_sheet_metadata(file_id, sheet_id,sheetId, sheet_name, total_lines, columns, cs,ce,rs,re, base_sheet)
 
+
+def generate_sheet_form_access(file_id, table_name, cs, ce, rs, re):
+    source_uuid = file_id
+    target_uuid = generate_id(file_id)
+
+    sheetName = table_name
+
+    row_count = access_to_csv(get_path(file_id, source_uuid, extension='mdb'), get_path(file_id, target_uuid), table_name)
+
+    # row_count = generate_ranged_sheet(get_path(file_id, source_uuid), get_path(file_id, uuid), cs, ce, rs, re)
+
+    create_sheet_metadata(file_id, table_name, target_uuid, table_name, cs, ce, rs, re)
+
+    return {
+            "uuid": target_uuid,
+            "sheetName": sheetName,
+            "rowCount": row_count
+    }
