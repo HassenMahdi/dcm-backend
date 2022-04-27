@@ -2,6 +2,9 @@ import traceback
 
 import pandas as pd
 import re
+import requests
+import difflib
+
 from idna import unicode
 
 from app.db.worksheet_document import WorksheetDocument
@@ -389,3 +392,18 @@ def key_select(df, node):
         del df[key + "_encoded"]
 
     return df
+
+
+
+
+def matching_score(df, node):
+    column_a = node["column_a"]
+    column_b = node["column_b"]
+    df["score"] = pd.Series([is_match(row[column_a], row[column_b]) for index, row in df.iterrows()], index=df.index)
+    return df
+
+
+def is_match(word, match_with):
+    seq = difflib.SequenceMatcher(None, word.upper(), match_with.upper())
+    score = seq.ratio()
+    return score
