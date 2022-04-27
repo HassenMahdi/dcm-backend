@@ -1,6 +1,7 @@
 import traceback
 
 import pandas as pd
+import re
 from idna import unicode
 
 from app.db.worksheet_document import WorksheetDocument
@@ -12,7 +13,6 @@ from inforcehub import Anonymize
 
 
 def execute_node(df, node):
-
     if node["type"] == "delete-rows":
         return delete_rows_by_index(df, node["from"], node["to"])
     elif node["type"] == "delete-column":
@@ -49,6 +49,8 @@ def execute_node(df, node):
         return map_columns(df, node)
     elif node["type"] == "select":
         return select_columns(df, node)
+    elif node["type"] == "key_select":
+        return key_select(df, node)
     else:
         return df
 
@@ -56,6 +58,7 @@ def execute_node(df, node):
 def eval_python(df, options):
     exec(options.get('code', ''))
     return df
+
 
 def join_tables(df, options):
     file_id = options['join_file_id']
@@ -68,6 +71,7 @@ def join_tables(df, options):
     df = df.join(other=join_table.set_index(join_on), on=join_on, how=join_how, lsuffix="_l").reset_index()
 
     return df
+
 
 def concat_tables(df, options):
     file_id = options['concat_file_id']
@@ -86,24 +90,26 @@ def split_column(df, node):
         parts = df[column].str.split(pat=pat, expand=True, n=1)
 
         for p in [0, 1]:
-            df[f'{column}_part_{p}'] = parts[p] if(p in parts.columns.tolist()) else None
+            df[f'{column}_part_{p}'] = parts[p] if (p in parts.columns.tolist()) else None
 
         return df
 
     except:
         print("Exception occurred on Split column!")
         return df
+
 
 def select_columns(df, node):
     try:
         columns = node.get('columns')
         df = df[column]
-        
+
         return df
 
     except:
         print("Exception occurred on Split column!")
         return df
+
 
 def default_value(df, node):
     try:
@@ -131,7 +137,8 @@ def main(file_id, sheet_id, pipe_id):
 
 
 def load_dataframe(path):
-    df = pd.read_csv(path, engine="c",error_bad_lines=False, dtype=str, skipinitialspace=True, na_filter=False,delimiter=";")
+    df = pd.read_csv(path, engine="c", error_bad_lines=False, dtype=str, skipinitialspace=True, na_filter=False,
+                     delimiter=";")
     return df
 
 
@@ -178,7 +185,7 @@ def calculator_columns(df, node):
 
         print(string_formula)
         df[destination] = pd.concat(numeric_srs, axis=1).eval(string_formula)
-        
+
         return df
     except Exception as e:
         print(e)
@@ -211,7 +218,7 @@ def filtering(og_df, options):
         print('ERROR FILTERING')
         print(e)
         traceback.print_exc()
-        return  og_df
+        return og_df
 
 
 def filtering_depricated(df, options):
@@ -244,7 +251,7 @@ def filtering_depricated(df, options):
 
 def replace(df, column, old_value, new_value):
     try:
-        df[column].replace(old_value or "", new_value or "", inplace=True , regex=True)
+        df[column].replace(old_value or "", new_value or "", inplace=True, regex=True)
         return df
     except:
         print("Exception occurred on replace transformation!")
@@ -346,6 +353,7 @@ def groupby(df, node):
         print("Exception occurred on Group By!")
         return df
 
+
 def map_columns(df, node):
     mappings = node.get("mapping", [])
     mapped_df = pd.DataFrame(index=df.index, columns=[])
@@ -358,6 +366,7 @@ def map_columns(df, node):
 
     return df
 
+
 def hash_columns(df, columns):
     try:
         anon = Anonymize()
@@ -366,3 +375,17 @@ def hash_columns(df, columns):
     except:
         print("Exception occurred on hashing column!")
         return df
+
+
+def key_select(df, node):
+    destination = node['destination']
+    df[destination] = node['url']
+
+    keys = re.findall('{(.+?)}', node['url'])
+
+    for key in keys:
+        df[key + "_encoded"] = df[key].replace(" ", "%20", regex=True)
+        df[destination] = df[destination].replace("{" + key + "}", df[key + "_encoded"], regex=True)
+        del df[key + "_encoded"]
+
+    return df
