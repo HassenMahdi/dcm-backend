@@ -14,7 +14,7 @@ import pandas as pd
 from api.utils.converter import excel_to_csv
 from api.utils.paginator import Paginator
 
-ALLOWED_EXTENSIONS = {"xlsx", "xlx", "xlmx", "csv"}
+ALLOWED_EXTENSIONS = {"xlsx", "xlx", "xlmx", "csv", "mdb"}
 IMPORT_FOLDER = "imports/"
 
 

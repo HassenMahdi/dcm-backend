@@ -7,6 +7,10 @@ from database.connection import mongo
 
 class DataHandlerDocument:
 
+    @staticmethod
+    def update_worksheet_metadata(sheet_id, total_lines):
+        mongo.db.worksheet_metadata.update_one({"worksheetId": sheet_id}, {"$set": {"totalExposures": total_lines}})
+
     def get_modification(self, file_id, index):
         """Fetches a document from modifications collection based on given params"""
 

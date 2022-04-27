@@ -23,4 +23,4 @@ def create_app(config_name):
 app = create_app(os.getenv('APP_ENV') or 'dev')
 
 if __name__ == '__main__':
-    app.run(port=app.config['PORT'], debug=True)
+    app.run(port=5001, debug=True)

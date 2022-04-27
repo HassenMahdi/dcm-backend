@@ -148,11 +148,3 @@ class FilesController(Resource):
             return jsonify(import_status)
         else:
             raise Exception()
-
-
-# @import_namespace_v2.route('/dataset/<uid>', methods=['GET'])
-# class FileMetaDataController(Resource):
-#
-#     @import_namespace_v2.doc("Dataset Microservice")
-#     def get(self, uid):
-#         return jsonify(get_worksheetmetadata_by_user(uid))

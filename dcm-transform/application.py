@@ -21,7 +21,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run(port=5000,threaded=True)
+    app.run(port=5002,threaded=True)
 
 
 @manager.command

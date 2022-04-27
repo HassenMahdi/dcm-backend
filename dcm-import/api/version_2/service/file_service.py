@@ -8,10 +8,11 @@ import traceback
 import pandas as pd
 from pandas.errors import EmptyDataError
 
+from api.utils.access import get_access_tables
 from api.utils.converter import get_work_sheets
 from api.utils.utils import generate_id, allowed_file, get_path, get_transformed_df, \
     get_dataframe_page
-from api.version_2.service.sheet_generators import generate_sheet_form_csv, generate_sheet_form_excel
+from api.version_2.service.sheet_generators import generate_sheet_form_csv, generate_sheet_form_excel, generate_sheet_form_access
 from database.data_handler_document import DataHandlerDocument
 from flask import current_app as app, copy_current_request_context
 from os import listdir
@@ -19,6 +20,8 @@ from os.path import isfile, join
 from shutil import copyfile
 
 from database.word_document import WordDocument
+
+from api.version_2.service.results_service import get_result_data
 
 EXCEL_EXTENSIONS = {"xlsx", "xlx", "xlmx"}
 
@@ -36,12 +39,19 @@ def upload_file(request):
             return {"uploaded": False, "message": "Empty Payload"}
 
         file_extension = allowed_file(filename)
+
         if file and file_extension:
             file_id = generate_id(filename)
             file_id_path = file_id + "/"
             full_path = get_path(file_id_path, file_id, extension=file_extension, as_folder=False, create=True)
             file.save(full_path)
 
+            if file_extension == "mdb":
+                worksheets = get_access_tables(full_path)
+                # get tables from access
+                return {"uploaded": True, "filename": file.filename, "file_id": file_id,
+                        "worksheets": worksheets,
+                        "file_type": file_extension, "access": True, "full_path": full_path}
             if file_extension in EXCEL_EXTENSIONS:
                 worksheets = get_work_sheets(full_path)
                 if worksheets:
@@ -125,10 +135,34 @@ def check_is_match(columns):
     return categories
 
 
-def preview_file_data(file_id, params, request, filters):
+def preview_file_data(file_id, params, request, filters, groupby):
     """Reads the imported file data using pagination"""
     path, columns, total_lines = get_file_metadata(file_id)
-    categories = check_is_match(columns)
+    categories = [] #check_is_match(columns)
+    indices = []
+    filtred = False
+    filter_indices = set()
+
+    if filters:
+        indices = apply_filter(path, filters)
+        filter_indices.update(indices)
+        filtred = True
+
+    if groupby:
+        # sort by groupby key to preserve pagination order
+        indices = apply_groupby(path, groupby)
+
+    indices = indices if indices else list(filter_indices)
+    total_lines = len(indices) if indices else total_lines
+
+    preview = get_dataframe_page(path, columns, categories,request.base_url, params, total_lines, filtred, indices, False)
+    return preview
+
+
+def preview_file_data_with_result(sheet_id, result_id, filters, groupby, page, nrows):
+    """Reads the imported file data using pagination"""
+    path, columns, total_lines = get_file_metadata(sheet_id)
+    # result_metadata = get
     indices = []
     filtred = False
     sort_indices = []
@@ -138,11 +172,19 @@ def preview_file_data(file_id, params, request, filters):
         indices = apply_filter(path, filters)
         filter_indices.update(indices)
         filtred = True
+
+    if groupby:
+        # sort by groupby key to preserve pagination order
+        indices = apply_groupby(path, groupby)
+
+
     indices = indices if indices else sort_indices or list(filter_indices)
     total_lines = len(indices) if indices else total_lines
 
-    preview = get_dataframe_page(path, columns, categories,request.base_url, params, total_lines, filtred, indices, False)
-    return preview
+    preview = get_dataframe_page(path, columns, [], "", {"page":page, "nrows":nrows}, total_lines, filtred, indices, False)
+    results = get_result_data(result_id, indices)
+
+    return {**preview, **results}
 
 
 def apply_modifications(file_id, preview):
@@ -206,6 +248,17 @@ def apply_filter(path, filters):
     return filter_indices
 
 
+
+def apply_groupby(path, groupkey):
+    """Applies the filters on mapped_df for data preview"""
+    df = get_transformed_df(path, usecols=[groupkey])
+
+    df.index.name = "index"
+    group_indices = df.sort_values(by=[groupkey, "index"], ascending=True).index.tolist()
+
+    return group_indices
+
+
 def apply_sort(path, sort):
     """Applies sorting on mapped_df for data preview"""
 
@@ -221,7 +274,10 @@ def generate_sheet(file_id, sheetId, cs, ce, rs, re):
 
     file_name = file_metadata["filename"]
 
-    if file_metadata.get("excel", False):
+    if file_metadata.get("access", False):
+        table_name = sheetId
+        result = generate_sheet_form_access(file_id, table_name, cs, ce, rs, re)
+    elif file_metadata.get("excel", False):
         result = generate_sheet_form_excel(file_id, sheetId, file_metadata['file_type'], cs, ce, rs, re)
     else:
         result = generate_sheet_form_csv(file_id, file_name, cs, ce, rs, re)
@@ -312,11 +368,3 @@ def select_file(uid, filename):
     except Exception:
         traceback.print_exc()
         return {"uploaded": False, "message": "Exception Occured"}
-
-
-# def get_worksheetmetadata_by_user(uid):
-#     data_document = DataHandlerDocument()
-#     res = data_document.get_file_metadata_by_user(uid=uid,
-#                                                   fields={"_id": 0, "file_id": 1, "filename": 1, "sheetId": 1,
-#                                                           "sheetName": 1})
-#     return list(res)

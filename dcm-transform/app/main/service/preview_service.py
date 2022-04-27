@@ -36,6 +36,7 @@ def get_file_metadata(filename):
                           na_filter=False) \
         .columns.tolist()
 
+    filename = filename.replace("\\", "/")
     filename = filename.split('/')[-1]
     worksheet_document = WorksheetDocument()
     worksheet_metadata = worksheet_document.get_file_metadata(filename, fields=["totalExposures"])
