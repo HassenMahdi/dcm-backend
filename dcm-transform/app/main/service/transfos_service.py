@@ -1,11 +1,11 @@
 import traceback
-
 import pandas as pd
 import re
 import requests
 import difflib
 
 from idna import unicode
+from concurrent.futures.thread import ThreadPoolExecutor
 
 from app.db.worksheet_document import WorksheetDocument
 from app.main.service.transformation_pipe_service import get_pipe_by_id
@@ -54,6 +54,10 @@ def execute_node(df, node):
         return select_columns(df, node)
     elif node["type"] == "key_select":
         return key_select(df, node)
+    elif node["type"] == "request":
+        return request_api(df, node)
+    elif node["type"] == "matching_score":
+        return matching_score(df, node)
     else:
         return df
 
@@ -394,6 +398,35 @@ def key_select(df, node):
     return df
 
 
+def request_api(df, node):
+    key_url = node['url']
+    result = []
+
+    # WORK IN PARALLEL - SEND ALL REQUEST IN PARALLEL
+    with ThreadPoolExecutor() as executor:
+        args = ((row, key_url, node['method'], node['datapath']) for index, row in df.iterrows())
+        executor.map(lambda p: result.extend(construct_results(*p)), args)
+
+    new_df = pd.json_normalize(result)
+    return new_df
+
+
+def construct_results(row, key_url, method, datapath):
+    data = make_http_call(method, row[key_url], datapath)
+    [d.update(row) for d in data]
+
+    return data
+
+
+def make_http_call(method, url, datapath):
+    if method == 'GET':
+        response = requests.get(url=url)
+        json = response.json()
+        if type(json[datapath]) == list:
+            return json[datapath]
+        else:
+            var = [json[datapath]]
+            return var
 
 
 def matching_score(df, node):
