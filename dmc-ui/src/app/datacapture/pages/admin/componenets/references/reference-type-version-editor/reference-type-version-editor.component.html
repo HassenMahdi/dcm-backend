@@ -1,0 +1,20 @@
+<div *nzModalTitle>Reference Type Version</div>
+<!-- {{data | json}} -->
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Label</nz-form-label>
+  <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.version_label' nz-input /></nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Description</nz-form-label>
+  <nz-form-control [nzSpan]="14"><textarea [(ngModel)]='data.description' nz-input rows="2"></textarea>
+  </nz-form-control>
+</nz-form-item>
+
+
+<div *nzModalFooter>
+  <div class="button-spacing flex end">
+    <button nz-button (click)='close()'>Cancel</button>
+    <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>Save</button>
+  </div>
+</div>

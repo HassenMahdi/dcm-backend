@@ -1,0 +1,16 @@
+<div class="hierarchy-card m-2">
+        <nz-input-group [nzSuffix]="suffixIcon">
+          <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    <div>
+      <nz-tree class="ghost" nzShowIcon [nzData]="nodes$ | async | treeFilter: searchValue" (nzClick)="onElementClick($event)"
+      [nzSelectedKeys]='activetedKey'
+      [nzExpandedKeys] = 'expandedKey'
+      [nzExpandAll]='searchValue?.length > 0'
+      >
+    </nz-tree>  
+  </div>
+</div>

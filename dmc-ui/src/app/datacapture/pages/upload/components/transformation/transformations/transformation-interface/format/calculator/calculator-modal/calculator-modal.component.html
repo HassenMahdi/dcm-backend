@@ -1,0 +1,59 @@
+<h5 nz-typography><i nz-icon nzType='calculator'></i> Formula</h5>
+
+<div class="flex column stretch w-100 mb-2 mt-2 border rounded p-2">
+
+
+  <div class="mb-2 text-right">
+    <div *ngIf='!error'><i nz-icon nzType='check-circle'></i></div>
+    <div *ngIf='error'>{{error}} <i nz-icon nzType='warning'></i></div>
+  </div>
+  <div class="flex-1">
+    <span class="text-muted mr-2"><b>=</b></span>
+    <span class="calculator-display-item" *ngFor='let t of formula'>
+      <ng-container [ngSwitch]='t.type'>
+        <span *ngSwitchCase='"number"' class="calculator-display-number">{{t.value}}</span>
+        <nz-tag *ngSwitchCase='"column"' class="calculator-display-column">{{t.value}}</nz-tag>
+        <span *ngSwitchCase='"lp"' class="calculator-display-paren">{{t.value}}</span>
+        <span *ngSwitchCase='"rp"' class="calculator-display-paren">{{t.value}}</span>
+        <span *ngSwitchCase='"operator"' class="calculator-display-op">{{t.value}}</span>
+        <span *ngSwitchDefault>{{t.value}}</span>
+      </ng-container>
+    </span>
+  </div>
+
+
+</div>
+
+
+<div class="flex">
+  <div class="operations-bar">
+    <div class="calculator-button-wrapper" *ngFor='let btn of ["+", "-","*", "/"]'><button
+        (click)='addToken(btn, "operator")' class="calculator-button" nz-button>{{btn}}</button></div>
+    <div class="calculator-button-wrapper"><button (click)='addToken("(", "lp")' class="calculator-button"
+        nz-button>(</button></div>
+    <div class="calculator-button-wrapper"><button (click)='addToken(")", "rp")' class="calculator-button"
+        nz-button>)</button></div>
+  </div>
+
+  <div class="button-grid flex-1">
+    <div class="calculator-button-wrapper" style="grid-column: span 3;">
+      <button nz-dropdown nzTrigger='click' [nzDropdownMenu]="menu" class="calculator-button" nzBlock nz-button>Column
+        <i nz-icon nzType='down'></i></button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu class="w-100 calculator">
+          <li *ngFor='let col of columns$ | async' nz-menu-item (click)='addToken(col, "column")'>{{col}}</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+    <div class="calculator-button-wrapper" *ngFor='let btn of [1,2,3,4,5,6,7,8,9,".", 0]'><button
+        (click)='addToken(btn, "number")' class="calculator-button" nz-button nzBlock>{{btn}}</button></div>
+    <div class="calculator-button-wrapper"><button (click)='removeLastToken()' class="calculator-button" nzBlock
+        nz-button><i nz-icon nzType='left'></i></button></div>
+    <div class="calculator-button-wrapper"><button (click)='clear()' class="calculator-button" nz-button
+        nzBlock>Clear</button></div>
+    <div class="calculator-button-wrapper" style="grid-column: span 2;"><button (click)='submit()' [disabled]='error'
+        nzType='success' class="calculator-button" nz-button nzBlock>=</button></div>
+  </div>
+
+
+</div>

@@ -1,0 +1,7 @@
+<i *ngIf='valid' nz-icon [nzType]="'check'"  nz-tooltip nzTooltipTitle='Valid' ></i>
+<!-- <i *ngIf='valid' nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i> -->
+<i *ngIf='!valid' nz-tooltip [nzTooltipTitle]='errors' nz-icon [nzType]="'warning'" [nzTheme]="'twotone'" [nzTwotoneColor]="'red'"></i>
+
+<ng-template #errors>
+    <div *ngFor='let m of messages'><span>{{m.reason}}</span></div>
+</ng-template>

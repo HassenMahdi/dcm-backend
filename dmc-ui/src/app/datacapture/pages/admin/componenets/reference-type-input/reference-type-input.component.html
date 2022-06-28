@@ -1,0 +1,11 @@
+<nz-select [nzAllowClear]='true' nz-tooltip class="column-input w-100" [nzLoading]='loading$ | async' [(ngModel)]="value" (nzOpenChange)='onOpenChange($event)'
+    [compareWith]='compareFn'
+>
+    <nz-option *ngFor='let o of list$ | async' [nzValue]="o" [nzLabel]="o.label"></nz-option>
+
+    <nz-option *ngIf="loading$ | async" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" class="loading-icon"></i> Loading...
+      </nz-option>
+      
+    <nz-option *ngIf='!open && value' [nzValue]="value" [nzLabel]="value.label"></nz-option>
+</nz-select>

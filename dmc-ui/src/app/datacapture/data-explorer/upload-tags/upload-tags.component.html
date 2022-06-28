@@ -1,0 +1,35 @@
+<ng-container *ngIf='(loading$ | async);'>
+  <div class="h-100 flex"><nz-spin></nz-spin></div>
+</ng-container>
+<ng-container *ngIf='(tags$ | async); let tags'>
+  <nz-button-group *ngFor='let tag  of tags' class="m-2">
+    <button
+    nz-button 
+    nz-popover 
+    nzPopoverTrigger="click" 
+    [nzPopoverTitle]="editPopoverTitle" 
+    [nzPopoverContent]="editPopoverContent"
+    (click)='onStartEditTag(tag)'>
+    <nz-tag>{{tag}}</nz-tag>
+    <i nz-icon nzType='edit'></i></button>
+    <button 
+    nz-button 
+    nz-popconfirm
+    nzPopconfirmTitle="Are you sure delete this tag?"
+    (nzOnConfirm)="onDeleteTag(tag)"><i nz-icon nzType='delete'></i></button>
+  </nz-button-group>
+  
+  <div class="h-100 flex" *ngIf='tags.length == 0'><nz-empty></nz-empty></div>
+  
+</ng-container>
+  
+<ng-template #editPopoverTitle>Edit tag value</ng-template>
+<ng-template #editPopoverContent>
+        <div>
+            <input nz-input type="text" [(ngModel)]='editValue' />
+        </div>
+      <div class="mt-2">
+        <!-- <button nz-button nzSize="small" nzType="default">Cancel</button> -->
+        <button nzBlock nz-button nzSize="small" nzType="primary" (click)='onEditTag()'>Save</button>
+      </div>
+</ng-template>

@@ -1,0 +1,3 @@
+:host ::ng-deep .table thead th {
+  border-bottom: 0 !important;
+}

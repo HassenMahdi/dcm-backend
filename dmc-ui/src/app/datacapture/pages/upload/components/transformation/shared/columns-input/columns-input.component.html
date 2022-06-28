@@ -1,0 +1,22 @@
+<nz-select nz-tooltip [nzTooltipTitle]='value' [nzMaxTagCount]='0' [nzSize]='nzSize' class="column-input"
+  [(ngModel)]="value" [nzMode]='mode'>
+  <nz-option *ngFor='let o of (columns$ | async)' [nzValue]="o" [nzLabel]="o"></nz-option>
+
+  <ng-container *ngIf="columns$ | async; let columns">
+    <ng-container *ngIf='mode=="default"'>
+      <nz-option nzCustomContent class="invalid-option" *ngIf='value && (columns.indexOf(value) < 0)' [nzValue]="value"
+        [nzLabel]="value">
+        <i nz-icon nzType='warning' class="mr-2"></i>{{value}}
+      </nz-option>
+    </ng-container>
+    <ng-container *ngIf='mode=="multiple"'>
+      <ng-container *ngFor='let o of value'>
+        <nz-option nzCustomContent class="invalid-option" *ngIf='o && (columns.indexOf(o) < 0)' [nzValue]="o"
+          [nzLabel]="o">
+          <i nz-icon nzType='warning' class="mr-2"></i>{{o}}
+        </nz-option>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+</nz-select>

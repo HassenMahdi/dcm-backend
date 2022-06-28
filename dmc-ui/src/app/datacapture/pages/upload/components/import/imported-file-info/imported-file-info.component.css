@@ -1,0 +1,9 @@
+.section-title{
+    /* text-transform: uppercase; */
+    /* color: grey; */
+    /* font-size: 30px; */
+}
+
+:host{
+    display: contents;
+}

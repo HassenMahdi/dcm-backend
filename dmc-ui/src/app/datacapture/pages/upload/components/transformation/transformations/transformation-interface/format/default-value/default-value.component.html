@@ -1,0 +1,14 @@
+<form nz-form [nzLayout]="'horizontal'">
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Column</nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <input nz-input [nzSize]='size'  [(ngModel)]='data.destination' (change)='onDataChanged()' name='destination'/>
+    </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="8">Value</nz-form-label>
+        <nz-form-control [nzSm]="16">
+            <input nz-input [nzSize]='size'  [(ngModel)]='data.value' (change)='onDataChanged()' name='value'/>
+        </nz-form-control>
+      </nz-form-item>
+</form>

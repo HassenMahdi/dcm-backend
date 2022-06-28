@@ -86,7 +86,7 @@ class PreviewData(Resource):
             params = {param: request.args.get(param) for param in ["page", "nrows", "lob"]}
             body = request.get_json()
             filters = body.get('filters', [])
-            preview = preview_file_data(file, params, request, filters)
+            preview = preview_file_data(file, params, request, filters, None)
             # modified_preview = apply_modifications(file, preview)
             # modified_preview = preview
 
@@ -96,20 +96,20 @@ class PreviewData(Resource):
             traceback.print_exc()
             return resp.response_with(resp.SERVER_ERROR_500)
 
-    # /import/data
-    @import_namespace_v2.doc("Modify the previewed data for next steps")
-    @import_namespace_v2.expect(post_request_body)
-    def post(self):
-        if request.method == 'POST':
-            try:
-                params = {param: request.get_json().get(param) for param in ["file", "index", "content"]}
-
-                document = DataHandlerDocument()
-                document.save_modifications(params)
-                return True
-            except Exception:
-                traceback.print_exc()
-                return resp.response_with(resp.BAD_REQUEST_400)
+    # # /import/data
+    # @import_namespace_v2.doc("Modify the previewed data for next steps")
+    # @import_namespace_v2.expect(post_request_body)
+    # def post(self):
+    #     if request.method == 'POST':
+    #         try:
+    #             params = {param: request.get_json().get(param) for param in ["file", "index", "content"]}
+    #
+    #             document = DataHandlerDocument()
+    #             document.save_modifications(params)
+    #             return True
+    #         except Exception:
+    #             traceback.print_exc()
+    #             return resp.response_with(resp.BAD_REQUEST_400)
 
 
 @import_namespace_v2.route('/test', methods=['GET'])

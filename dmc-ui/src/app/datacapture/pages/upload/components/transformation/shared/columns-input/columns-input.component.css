@@ -1,0 +1,7 @@
+.column-input{
+    width: 100%;
+}
+
+::ng-deep .invalid-option{
+    background-color: red;
+}

@@ -1,0 +1,34 @@
+
+::ng-deep .myDiagramDiv {
+    /* background: whitesmoke; */
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+  }
+
+::ng-deep .myOverviewDiv {
+  width: 150px;
+  height: 100px;
+  background: #f0eaea;
+  border: 1px dashed lightgrey;
+  /* border: 1px solid tra; */
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 10px;
+
+  z-index: 1000;
+}
+
+
+::ng-deep .myOverviewDiv canvas,
+::ng-deep .myDiagramDiv canvas
+{
+  outline: none;
+}
+
+::ng-deep .editor-box .ant-card-body{
+      position: relative;
+      background: rgb(255, 255, 255);
+}

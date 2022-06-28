@@ -1,0 +1,59 @@
+<button nzGhost nz-button (click)="onUpload()">
+  <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+</button>
+<nz-result [nzIcon]="icon" [nzTitle]="title">
+  <div nz-result-extra>
+    <button *ngIf="!(uploadingId$ | async)" class="upload" nz-button nzType="default" (click)="onUpload()">
+      <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+      Upload
+    </button>
+
+    <ng-container *ngIf="(uploadStatus$ | async) === 'ERROR'">
+      <div class="button-spacing">
+        <button  nz-button nzType="primary" (click)="onUpload()"><i nz-icon nzType="reload" nzTheme="outline"></i>Retry</button>
+        <button  nz-button nzType="danger"  (click)="cancel.emit(true)"><i nz-icon nzType="close" nzTheme="outline"></i>Cancel</button>
+      </div>
+    </ng-container>
+
+    <div class="button-spacing" *ngIf="(uploadStatus$ | async) === 'DONE'" >
+      <button nz-button nzType="default" (click)="cancel.emit(true)">
+        Complete
+        <i nz-icon nzType="check" nzTheme="outline"></i>
+      </button>
+
+      <button nz-button nzType="primary" (click)="showData()">
+        Show Data
+        <i nz-icon nzType="database"></i>
+      </button>
+    </div>
+  </div>
+</nz-result>
+
+
+<ng-template #icon>
+  <!-- Ready -->
+  <nz-progress *ngIf="!['ERROR', 'DONE'].includes(uploadStatus$ | async)" nzType="circle" [nzPercent]="progress"
+    [nzFormat]="format" [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }"></nz-progress>
+  <!-- Success -->
+  <i nz-icon *ngIf="(uploadStatus$ | async) === 'DONE'" class="text-success" nzType="check-circle" nzTheme="fill"></i>
+  <!-- Error -->
+  <i nz-icon *ngIf="(uploadStatus$ | async) === 'ERROR'" class="text-danger" nzType="close-circle" nzTheme="fill"></i>
+</ng-template>
+
+<ng-template #title>
+  <div *ngIf="!(uploadingId$ | async)" class="ant-result-title"> You are all set to upload your data.</div>
+  <div *ngIf="(result$ | async) && !(['ERROR', 'DONE'].includes(uploadStatus$ | async))" class="ant-result-title">  <nz-spin nzSimple [nzSize]="'large'"></nz-spin> </div>
+  <div *ngIf="(uploadStatus$ | async) === 'DONE'" class="ant-result-title"> Success</div>
+  <div *ngIf="(uploadStatus$ | async) === 'ERROR'" class="ant-result-title"> The upload has failed.</div>
+  <!-- {{result$ | async | json}} -->
+  <nz-descriptions class="mt-4" *ngIf="['ERROR', 'DONE'].includes(uploadStatus$ | async)">
+    <nz-descriptions-item nzTitle="Upload Start Time">{{(result$ | async)?.upload_start_time | date : 'medium'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Upload End Time">{{(result$ | async)?.upload_end_time | date : 'medium'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Upload Tags">
+      <nz-tag *ngFor="let e of (result$ | async)?.upload_tags" [nzColor]="e.color">{{e.value}}</nz-tag>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Total Records">{{(result$ | async)?.total_records}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Inserted Records">{{(result$ | async)?.inserted_records}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Error"><span class="text-danger">{{(result$ | async)?.upload_errors}}</span></nz-descriptions-item>
+  </nz-descriptions>
+</ng-template>

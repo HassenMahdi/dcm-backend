@@ -1,0 +1,26 @@
+.draggable-item{
+    cursor: move;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+    position: relative;
+    background: #fafafa;
+}
+
+
+.draggable-label
+{
+    text-align: center;
+    display: block;
+    font-weight: 200;
+    color: darkslategrey;
+}
+
+
+.draggable-icon
+{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+}

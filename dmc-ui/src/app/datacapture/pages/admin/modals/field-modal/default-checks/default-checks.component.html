@@ -1,0 +1,77 @@
+<div *ngFor='let check of displayed_check' class="mb-4">
+    <div class="mb-1">
+        <b nz-typography>{{check.label}}</b>
+    </div>
+
+    <ng-container [ngSwitch]='check.id'>
+
+        <div *ngSwitchCase="'TYPE_CHECK'">
+            <label nz-checkbox [ngModel]=true nzDisabled></label>
+        </div>
+
+        <div *ngSwitchCase="'EMPTY_CHECK'">
+            <label nz-checkbox [(ngModel)]='model[check.id]'> Not Null</label>
+        </div>
+
+        <div *ngSwitchCase="'NUMERIC_BOUNDRY_CHECK'">
+            <div class="mb-1" *ngFor='let it of model[check.id].iterations; let i = index'>
+                <nz-input-group nzCompact>
+                    <nz-select [nzAllowClear]='true' [(ngModel)]='it.operator' nzPlaceHolder='Operator' style="width: 30%;"><nz-option *ngFor='let o of check.operators' [nzLabel]="o" [nzValue]="o"></nz-option></nz-select>
+                    <nz-input-number  [(ngModel)]='it.operand' nzPlaceHolder='Limit'></nz-input-number>
+                    <button *ngIf='i' (click)='model[check.id].iterations.slice(i,1)' nzType='danger' nz-button><i nz-icon nzType='delete'></i></button>
+                </nz-input-group>
+            </div>
+            <button nz-button class="ghost" (click)='model[check.id].iterations.push({})'><i nz-icon nzType="plus"></i>Add</button>
+        </div>
+        
+        <div *ngSwitchCase="'PROPERTY_BOUNDRY_CHECK'">
+            <div class="mb-1" *ngFor='let it of model[check.id].iterations; let i = index'>
+                <nz-input-group nzCompact>
+                    <nz-select [nzAllowClear]='true' [(ngModel)]='it.operator' nzPlaceHolder='Operator' style="width: 30%;"><nz-option *ngFor='let o of check.operators' [nzLabel]="o" [nzValue]="o"></nz-option></nz-select>
+                    <app-field-input [(ngModel)]='it.property' style="width: 50%;"  [types]='["int", "double"]'></app-field-input>
+                    <button *ngIf='i' (click)='model[check.id].iterations.slice(i,1)' nzType='danger' nz-button><i nz-icon nzType='delete'></i></button>
+                </nz-input-group>
+            </div>
+            <button nz-button class="ghost" (click)='model[check.id].iterations.push({})'><i nz-icon nzType="plus"></i>Add</button>
+        </div>
+
+        <div *ngSwitchCase="'DATE_BOUNDRY_CHECK'">
+            <div class="mb-1" *ngFor='let it of model[check.id].iterations; let i = index'>
+                <nz-input-group nzCompact>
+                    <nz-select [nzAllowClear]='true' [(ngModel)]='it.operator' nzPlaceHolder='Operator' style="width: 30%;"><nz-option *ngFor='let o of check.operators' [nzLabel]="o" [nzValue]="o"></nz-option></nz-select>
+                    <nz-date-picker [(ngModel)]='it.operand'></nz-date-picker>
+                    <button *ngIf='i' (click)='model[check.id].iterations.slice(i,1)' nzType='danger' nz-button><i nz-icon nzType='delete'></i></button>
+                </nz-input-group>
+            </div>
+            <button nz-button class="ghost" (click)='model[check.id].iterations.push({})'><i nz-icon nzType="plus"></i>Add</button>
+        </div>
+
+        <div *ngSwitchCase="'FORMAT_CHECK'">
+            <div class="mb-2">
+                <nz-select [nzAllowClear]='true' class="w-100" *ngIf='!model[check.id].custom' [(ngModel)]='model[check.id].regex' nzPlaceHolder='Regex'>
+                    <nz-option nzLabel="None" [nzValue]="null"></nz-option>
+                    <nz-option *ngFor='let o of check.expressions' [nzLabel]="o.label" [nzValue]="o.value"></nz-option>
+                </nz-select>
+                <input nzPlaceHolder='Custom Regex' nz-input *ngIf='model[check.id].custom' [(ngModel)]='model[check.id].regex'>
+            </div>
+            <div>
+                <label nz-checkbox [(ngModel)]='model[check.id].custom'>Custom</label>
+            </div>
+        </div>
+        <div *ngSwitchCase="'REFERENCE_CHECK'">
+            <!-- <app-reference-type-input [(ngModel)]='model[check.id].ref_type'></app-reference-type-input> -->
+            <label nz-checkbox [(ngModel)]='model[check.id].active'> Exists</label>
+        </div>
+
+        <div *ngSwitchCase="'UNICITY_CHECK'">
+            <label nz-checkbox [(ngModel)]='model[check.id].active'> Is Unique In </label>
+            <nz-select style="min-width: 200px;" [(ngModel)]="model[check.id].lookup">
+                <nz-option nzValue="source" nzLabel='Datasource'></nz-option>
+                <nz-option nzValue="all" nzLabel='Datasource & Collection'></nz-option>
+            </nz-select>
+        </div>
+
+
+    </ng-container>
+</div>
+

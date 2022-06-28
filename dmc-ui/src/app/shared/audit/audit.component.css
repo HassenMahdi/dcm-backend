@@ -1,0 +1,14 @@
+:host nz-list {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+:host nz-collapse {
+  max-height: 60vh;
+  width: 30vw;
+  overflow: auto;
+}
+
+:host ::ng-deep .ant-avatar-string {
+  position: initial;
+}

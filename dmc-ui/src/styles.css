@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'assets/css/modal.css';
+@import 'assets/css/button.css';
+@import 'assets/css/flex.css';
+@import 'assets/css/drawer.css';
+@import 'assets/css/input.css';
+@import 'assets/css/card.css';
+@import 'assets/css/compact.css';
+@import 'assets/css/grid.css';
+@import 'assets/css/bootstrap.css';
+@import 'assets/css/main-loader.css';
+@import 'assets/css/tags.css';
+@import 'assets/css/tabs.css';
+
+
+/* @import 'assets/css/grid-alpine.css'; */
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-balham.css";
+/* @import "ag-grid-community/dist/styles/ag-theme-fresh.css"; */
+
+
+/* Scroll bar */
+*::-webkit-scrollbar {background-color:transparent;height:0.7rem; width: 0.7rem;}
+*::-webkit-scrollbar-track {background-color:transparent}
+*::-webkit-scrollbar-thumb {background-color:#babac0;border-radius:0.7rem}
+
+.ghost.ant-tree{
+    background: transparent;
+}
+
+.ant-form-item{
+    margin-bottom: 12px;
+}
+.ant-form-vertical .ant-form-item-label{
+    padding: 0;
+}
+
+/* RAW PROGRESS BAR STYLE */
+nz-progress.raw .ant-progress-text{
+    display: none ;
+}
+nz-progress.raw{
+    display: block;
+    line-height: 0;
+}
+nz-progress.raw .ant-progress{
+    line-height: 0 ;
+}
+nz-progress.raw .ant-progress-inner,
+nz-progress.raw .ant-progress-bg{
+    border-radius: 0 !important;
+}   
+nz-progress.raw .ant-progress-show-info .ant-progress-outer{
+    margin: 0 ;
+    padding: 0 ;
+}

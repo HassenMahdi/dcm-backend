@@ -29,7 +29,12 @@ def save_super_domain(data):
                 'created_on': datetime.datetime.utcnow()
 
             }})
-        #     CREATE NEW TABLES HERE
+
+        # super domain hierarchy
+        parent_super_domain_id = data.get('parent_super_domain_id', None)
+        if parent_super_domain_id:
+            new_dom.parent_super_domain_id = parent_super_domain_id
+
         dom = new_dom
 
     dom.name = data['name']
@@ -68,12 +73,14 @@ def get_user_query(user_rights):
 
 
 def get_all_super_domains(user_rights=None):
-    return SuperDomain.get_all(query=get_user_query(user_rights))
+    # SuperDomain.get_all(query=get_user_query(user_rights))
+
+    return SuperDomain.get_all(query={**get_user_query(user_rights)})
 
 
-def get_domains_hierarchy(user_rights={}):
+def get_domains_hierarchy(user_rights={}, parent_super_domain_id=None):
     query_result = SuperDomain().db().aggregate([
-        {"$match":get_user_query(user_rights)},
+        {"$match": {**get_user_query(user_rights), 'parent_super_domain_id': parent_super_domain_id}},
         {
        "$lookup": {
            'from': Domain().db().name,
@@ -85,9 +92,9 @@ def get_domains_hierarchy(user_rights={}):
 
     hierarchy = []
     for sd in query_result:
+        super_domain = SuperDomain(**{**sd})
         hierarchy.append(
-            SuperDomain(
-                **{**sd, 'domains':[Domain(**d) for d in sd['domains']]})
+          super_domain.load_hierarchy()
         )
 
     return hierarchy

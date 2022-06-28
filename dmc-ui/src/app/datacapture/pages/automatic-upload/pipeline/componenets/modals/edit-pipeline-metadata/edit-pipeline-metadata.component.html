@@ -1,0 +1,23 @@
+<form nz-form [formGroup]="validateForm" class="login-form">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter your pipeline's name!">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">Description</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Please enter your pipeline's description!">
+        <input nz-input formControlName="description" id="description" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSm]="24" [nzXs]="24">
+      </nz-form-control>
+      <nz-form-control [nzSm]="24" [nzXs]="24" class="text-right">
+        <button nz-button class="mr-2" nzType="default" (click)="cancel()">Cancel</button>
+        <button nz-button class="" nzType="primary" (click)="submitForm()">Submit</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  

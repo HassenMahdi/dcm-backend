@@ -1,0 +1,58 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-tabset>
+    <nz-tab nzTitle="Basic">
+        
+      
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">Description</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <textarea rows="4" nz-input formControlName="description" id="description"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-tab>
+
+    <nz-tab nzTitle="Connection">
+        
+      
+      
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="url">URL</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <input nz-input formControlName="url" id="url" />
+        </nz-form-control>
+      </nz-form-item>
+      
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="auth_with">Authentification</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" >
+        <nz-select formControlName="auth_with" id="auth_with">
+          <nz-option *ngFor='let o of authWith' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    
+    
+    <nz-form-item *ngIf='isAuthWith("sas_token")'>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sas_token">SAS Token</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" >
+        <input nz-input formControlName="sas_token" id="sas_token"/>
+      </nz-form-control>
+    </nz-form-item>
+    
+    <nz-form-item *ngIf='isAuthWith("shared_access_key")'>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="shared_access_key">Shared Access Key</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+          <input nz-input formControlName="shared_access_key" id="shared_access_key"/>
+        </nz-form-control>
+      </nz-form-item>
+      
+    </nz-tab>
+      
+    </nz-tabset>
+  </form>

@@ -1,0 +1,9 @@
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+<div style="height: 700px">
+    <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+</div>
+
+<div class="button-spacing">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+</div>

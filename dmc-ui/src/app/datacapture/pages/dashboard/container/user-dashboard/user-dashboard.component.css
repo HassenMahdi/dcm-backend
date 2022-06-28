@@ -1,0 +1,48 @@
+.grid-container{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-gap:10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+.grid-item{
+    background: white;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    /* margin: 2px; */
+}
+
+.grid-stats{
+    background-color: #DFDBE5;
+    /* background: repeating-linear-gradient( -45deg, transparent 0px, transparent 5px, grey 6px, grey 11px, transparent 12px); */
+    padding: 10px 20px;
+}
+
+.stat-icon{
+    font-size: 64px;
+    /* padding: 20px; */
+    color: white;
+    height: 150px;
+    width: 150px;
+}
+
+.stat-text{
+    font-weight: lighter;
+    opacity: 0.5;
+    /* margin: 7px; */
+    margin-bottom: 0;
+    color: white;
+}
+
+::ng-deep .compact .grid-container{
+    grid-gap:0px;
+}
+
+::ng-deep .compact .grid-item{
+    border-radius: 0px;
+    /* margin: 1px; */
+    border-left: none;
+    border-top: none;
+}

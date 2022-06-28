@@ -1,0 +1,37 @@
+<div class="flex column h-100 w-100 stretch">
+    <p class="mb-2" nz-typography [(nzContent)]="data.label" nzEditable></p>
+
+    <div class="fill mb-2">
+         <form nz-form [nzLayout]="'vertical'">
+  
+            <nz-form-item>
+                <nz-form-label [nzSm]="8">Level</nz-form-label>
+                <nz-form-control [nzSm]="16">
+                    <nz-radio-group  [ngModelOptions]="{standalone: true}" [(ngModel)]="data.level">
+                        <label nz-radio-button nzValue="ERROR">Error</label>
+                        <label nz-radio-button nzValue="WARNING">Warning</label>
+                      </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">Column Name</nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <nz-select nzMode="tags" nzPlaceHolder="Columns" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.columns">
+            </nz-select>
+            <!-- <input nz-input [ngModelOptions]="{standalone: true}" [(ngModel)]="data.column"/> -->
+          </nz-form-control>
+        </nz-form-item>
+  
+      </form>
+
+
+    </div>
+
+
+    <div class="button-spacing text-right w-100">  
+        <button nz-button (click)='cancel()'>Cancel</button>
+        <button nz-button nzType='primary' (click)='save()'>Save</button>
+    </div>
+</div>
+

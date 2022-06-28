@@ -1,0 +1,46 @@
+<button *ngIf='!(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+  nzShape='circle' nz-button class="mr-2">
+  <i nz-icon nzType="menu-unfold"></i>
+</button>
+<button *ngIf='(expanded$ | async)' (click)='onFlipCollapse()' nz-tooltip nzTooltipTitle='Edit Transformation'
+  nzShape='circle' nz-button class="mr-2">
+  <i nz-icon nzType="menu-fold"></i>
+</button>
+
+<ng-container *ngIf='nodesModified$ | async'>
+  <nz-divider nzType='vertical'></nz-divider>
+  <nz-badge style='margin-left:7px' *ngIf='(canSave$ | async)' nzStatus="processing"></nz-badge>
+  <nz-badge style='margin-left:7px' *ngIf='!(canSave$ | async)' nzStatus="error"></nz-badge>
+</ng-container>
+
+
+
+<nz-divider nzType='vertical'></nz-divider>
+<i nz-icon nzType="api" nzTheme="twotone" class="mr-2"></i>
+<nz-select (ngModelChange)='onActiveChanged($event)' [ngModel]='activeId$ | async' style="width: 250px;"
+  [nzDropdownMatchSelectWidth]='false' nzPlaceHolder='Select Transformation Pipe'>
+  <nz-option nzCustomContent *ngFor='let o of (domainPipes$ | async)' [nzValue]='o.id' [nzLabel]='o.name'>
+    <div>{{o.name}}</div>
+    <div class="ellipsis"><small>{{o.description}}</small></div>
+
+  </nz-option>
+
+</nz-select>
+
+<button nz-tooltip nzTooltipTitle='Remove Pipe' nzShape='circle' class="ghost" [disabled]='!(activeId$ | async)'
+  nz-button (click)='onClearClick()'>
+  <i nz-icon nzType="stop"></i>
+</button>
+
+<nz-divider nzType='vertical'></nz-divider>
+
+<button *ngFor='let m of modes' nz-tooltip [nzTooltipTitle]='m.tooltip' [ngClass]='{"ghost": (m.mode!=(pm$ | async))}'
+  nz-button [nzType]='(m.mode==(pm$ | async))?"primary":"default"' (click)='updatePreviewMode(m.mode)'
+  nzShape='round'><i nz-icon [nzType]="m.icon"></i>
+  {{m.label}}
+</button>
+<nz-divider nzType='vertical'></nz-divider>
+<ng-container [ngSwitch]='previewMode$ | async'>
+  <app-clear-grid-filter *ngSwitchCase='"SOURCE"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
+  <app-clear-grid-filter *ngSwitchCase='"TARGET"' [filters]="filters$ | async" (reinit)="resetFilter()"></app-clear-grid-filter>
+</ng-container>

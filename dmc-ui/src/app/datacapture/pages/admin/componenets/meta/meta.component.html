@@ -1,0 +1,25 @@
+<div nz-paragraph class="mb-2">
+  <i nz-icon nzType="clock-circle" nzTheme="outline"></i><i> Created On</i>
+  {{data?.created_on | date: 'dd/MM/yyyy HH:mm'}}
+  <nz-divider nzType="vertical"></nz-divider>
+  <i nz-icon nzType="edit" nzTheme="outline"></i><i> Modified On</i>
+  {{data?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
+
+  <!-- CLASSIFICATION -->
+  <span *ngIf='data?.classification'>
+    <nz-divider nzType="vertical"></nz-divider>
+    <i nz-icon nzType="lock" nzTheme="outline"></i><i> Classification</i>
+    <nz-tag class="ml-2"> {{(data?.classification | titlecase) || 'Null'}}</nz-tag>
+  </span>
+
+  <!-- FACTORY ENABLED -->
+  <span *ngIf='data?.enableDF'>
+    <nz-divider nzType="vertical"></nz-divider>
+    <nz-tag nzColor='#108ee9'>Datafactory Enabled</nz-tag>
+  </span>
+</div>
+
+<p nz-paragraph class="dom-description">
+  {{data?.description}}
+</p>
+

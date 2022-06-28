@@ -1,0 +1,39 @@
+<div class="flex start stretch h-100">
+    <!-- Hierarchy -->
+    <nz-card style="min-width: 300px;"  nzSize='small' nzTitle='Collections'>
+        <app-domain-hierarchy [collection]='explorer.collectionId$ | async' (collectionClicked)='onCollectionClicked($event)'></app-domain-hierarchy>
+    </nz-card> 
+    
+
+    <ng-template #explorerTitle>
+        <app-domain-breadcrumb [collectionId]='explorer.collectionId$ | async'></app-domain-breadcrumb>
+    </ng-template>
+    <!-- Data Exploration -->
+    <div class="fill flex column stretch">
+        <nz-card class="explorer" nzSize='small' [nzTitle]='explorerTitle'>
+           
+            <nz-tabset nzLinkRouter class="topless">
+                <nz-tab *ngFor="let tab of tabs">
+                    <a nz-tab-link [routerLink]="tab.route"> <i nz-icon [nzType]='tab.icon'></i> {{tab.label}}</a>
+                </nz-tab>
+            </nz-tabset>
+        </nz-card> 
+        
+        <nz-card  *ngIf='(explorer.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
+            <router-outlet></router-outlet>
+        </nz-card>
+
+        <nz-card *ngIf='!(explorer.collectionId$ | async)' class="flex fill border-top-0 border-left-0" nzSize='small'>
+            <div class="flex column h-100">
+                <span nz-text nzType='danger'>
+                    <i nz-icon nzType="block" style="font-size: 64px"></i>
+                </span>
+                <div class="mt-3">
+                    <span nz-text>Select a Collection</span>
+                </div>
+            </div>
+        </nz-card>
+
+    </div>
+    
+</div>

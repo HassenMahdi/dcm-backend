@@ -1,0 +1,32 @@
+<form nz-form [nzLayout]="form_orientation">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Column</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.column' name='column'
+        (change)='onDataChanged()'></app-columns-input>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Format</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <nz-select *ngIf='!data.custom' [nzSize]='size' name='format' [(ngModel)]='data.format'
+        (ngModelChange)='onDataChanged()'>
+        <nz-option *ngFor='let f of formats' [nzLabel]='f.label' [nzValue]='f.value'></nz-option>
+      </nz-select>
+      <input nz-input *ngIf='data.custom' [nzSize]='size' name='format' [(ngModel)]='data.format'
+        (change)='onDataChanged()' />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Custom Format</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <label nz-checkbox name='custom' [(ngModel)]='data.custom' (change)='onDataChanged()'></label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Ignore Errors</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <label nz-checkbox name='ignore' [(ngModel)]='data.ignore' (change)='onDataChanged()'></label>
+    </nz-form-control>
+  </nz-form-item>
+</form>

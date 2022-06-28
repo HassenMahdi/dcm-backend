@@ -1,0 +1,31 @@
+<div class="flex stretch column w-100">
+  <div class="mb-3">
+    <!-- <nz-statistic nzValue='' [nzTitle]="'Dataset Selection'"></nz-statistic> -->
+    <div nz-row class="mb-2">
+      <div nz-col nzSpan="4">
+        <span nzTypography>Columns</span>
+      </div>
+      <div nz-col nzSpan="20">
+        <nz-input-group nzAddOnBefore="Start" class="w-50 pr-2">
+          <input type="number" nz-input [(ngModel)]="colValue[0]" />
+        </nz-input-group>
+        <nz-input-group nzAddOnBefore="End" class="w-50 pl-2">
+          <input type="number" nz-input [(ngModel)]="colValue[1]" />
+        </nz-input-group>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="4">
+        <span nzTypography>Rows</span>
+      </div>
+      <div nz-col nzSpan="20">
+        <nz-input-group nzAddOnBefore="Start" class="w-50 pr-2">
+          <input type="number" nz-input [(ngModel)]="rowValue[0]" />
+        </nz-input-group>
+        <nz-input-group nzAddOnBefore="End" class="w-50 pl-2">
+          <input type="number" nz-input [(ngModel)]="rowValue[1]" />
+        </nz-input-group>
+      </div>
+    </div>
+  </div>
+</div>

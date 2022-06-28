@@ -1,0 +1,35 @@
+.vertical-center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-center-modal .ant-modal {
+    padding: 0;
+    top: 0;
+}
+
+.modal-bottom-left .ant-modal {
+    position: sticky;
+
+    bottom: 10px;
+    top: 100%;
+    left: 100%;
+    right: 0;
+    
+    margin: 10px;
+    padding: 0;
+}
+
+
+.ma-b {
+    margin-bottom: 12px
+}
+
+.ma-t {
+    margin-top: 12px
+}
+
+[nz-typography][size='small']{
+    font-size: 80%;
+}

@@ -1,0 +1,6 @@
+<div nz-typography [attr.size]='size' class="text-muted">Query</div>
+<div class="pl-2"  >
+<app-filter [showReverse]='false' [size]='size' (dataChanged)='onDataChanged()' [data]='data' [index]='index'></app-filter>
+</div>
+<div nz-typography [attr.size]='size' class="text-muted">Replacement</div>
+<app-formatter [showFrom]='false' [size]='size' (dataChanged)='onDataChanged()' [data]='data' [index]='index'></app-formatter>

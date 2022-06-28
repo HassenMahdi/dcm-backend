@@ -1,0 +1,40 @@
+<nz-list [nzDataSource]="pipelines | pipelineFilter : 'name' : search" [nzRenderItem]="item" [nzItemLayout]="'vertical'"
+  [nzLoading]="loading">
+  <ng-template #item let-item>
+    <nz-list-item [nzActions]="item.loading ? [] : [editAction, moreAction]" class="author-item">
+      <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+        <ng-template #nzTitle>
+          <div nz-typography class="font-weight-light">{{item.name }}</div>
+        </ng-template>
+        <ng-template #nzAvatar>
+          <nz-avatar nzIcon="deployment-unit" [nzShape]="'square'" style="background: #00a2ae;">
+          </nz-avatar>
+        </ng-template>
+        <ng-template #nzDescription>
+          <!-- <div>
+            <i nz-icon nzType="file" nzTheme="twotone"></i>
+            <span nz-typography class="pl-2">{{item.description }}</span>
+            <nz-divider nzType="vertical"></nz-divider>
+            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+            <span class="pl-2" nz-typography>Created On</span>: {{item.created_at | date: 'medium'}}
+            <nz-divider nzType="vertical"></nz-divider>
+            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+            <span class="pl-2" nz-typography>Modified On</span>: {{item.modified_on | date: 'medium'}}
+          </div> -->
+          <app-meta [data]="item"></app-meta>
+        </ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+    <ng-template #editAction>
+      <button nz-button class="ghost" (click)="edit.emit(item)">
+        <i nz-icon nzType="edit" class="btns" ></i>
+      </button>
+    </ng-template>
+    <ng-template #moreAction>
+      <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this pipeline?"
+        nzPopconfirmPlacement="left" (nzOnConfirm)="delete.emit(item.id)">
+        <i nz-icon nzType="delete" class="btns"></i>
+      </button>
+    </ng-template>
+  </ng-template>
+</nz-list>

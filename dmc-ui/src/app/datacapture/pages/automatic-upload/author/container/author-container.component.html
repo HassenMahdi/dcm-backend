@@ -1,0 +1,28 @@
+<div class="author-container p-1">
+  <nz-page-header class="site-page-header" [nzTitle]="Title" nzSubtitle="Manage Pipelines"></nz-page-header>
+  <ng-template #Title><i class="mr-2" nz-icon nzType="team" nzTheme="outline"></i>Pipelines</ng-template>
+
+  <div nz-row class='ma-b'>
+    <div nz-col [nzSpan]='18'>
+      <button nz-button class='ghost' (click)="addPipeline()">
+        <i nz-icon nzType="plus"></i>Add Pipeline
+      </button>
+      <button nz-button class='ghost' (click)="getData()"><i nz-icon nzType="reload"></i></button>
+    </div>
+
+    <div nz-col [nzSpan]='6'>
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input [(ngModel)]='searchPipeline' placeholder="Filter Pipelines" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+    <app-author-list [pipelines]="pipelines" [search]="searchPipeline" (delete)="deletePipeline($event)"
+      (edit)="editPipeline($event)">
+    </app-author-list>
+  </div>
+</div>

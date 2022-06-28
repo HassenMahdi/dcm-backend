@@ -1,0 +1,73 @@
+.collection-card        .ant-card-head, 
+.domain-card            .ant-card-head,
+.transformation-card    .ant-card-head
+{
+    border: none;
+}
+.collection-card        .ant-card-head-title, 
+.domain-card            .ant-card-head-title,
+.transformation-card    .ant-card-head-title
+{
+    white-space: pre-line;
+}
+.collection-card        .ant-card-body, 
+.domain-card            .ant-card-body,
+.transformation-card    .ant-card-body
+{
+    padding-top: 0;
+}
+.collection-card .ant-avatar.ant-avatar-icon, 
+.domain-card     .ant-avatar.ant-avatar-icon{
+    line-height: 40px !important;
+    min-height: 42px;
+    min-width: 42px;
+}
+.collection-card.ant-card, 
+.domain-card.ant-card,
+.collection-details-card.ant-card{
+    border-radius: 0px !important;
+}
+
+.collection-details-card .ant-card-body {
+    padding: 0px;
+    padding-top: 0px;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.collection-details-card .ant-tabs.ant-tabs-card  .ant-tabs-tab:first-child {
+    margin-left: 24px;
+}
+
+.collection-details-card .ant-tabs-bar{
+    margin: 0px;
+}
+
+.bg-grey{
+    background-color: #e7e7e7;
+    border-radius: 0px;
+    padding: 0rem;
+}
+
+.gutter-row{
+    padding: 0rem;
+}
+
+nz-card.flex{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+nz-card.flex .ant-card-body{
+    flex: 1 1 auto;
+    height: 0;
+}
+
+nz-card.paddless .ant-card-body{
+    padding: 0!important;
+}
+

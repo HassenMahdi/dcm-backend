@@ -1,0 +1,29 @@
+<div class="users-container p-1">
+
+  <nz-page-header class="site-page-header" [nzTitle]="userTitle" nzSubtitle="Manage Users"></nz-page-header>
+  <ng-template #userTitle><i class="mr-2" nz-icon nzType="team" nzTheme="outline"></i>Users</ng-template>
+
+  <div nz-row class='ma-b'>
+    <div nz-col [nzSpan]='18'>
+      <button nz-button class='ghost' (click)="addUser('The user was added successfully.', false)">
+        <i nz-icon nzType="plus"></i>Add User
+      </button>
+      <button nz-button class='ghost' (click)="reload()"><i nz-icon nzType="reload"></i></button>
+    </div>
+
+    <div nz-col [nzSpan]='6'>
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input [(ngModel)]='searchUser' placeholder="Filter Users" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="flex-box flex-scroll  bg-grey rounded-0 m-0 p-0">
+    <!-- <nz-card class="fields-card ma-b"> -->
+      <app-users-list [searchTerm]="searchUser" [reload$]="reload$" (updateUser)="editUser($event)"></app-users-list>
+    <!-- </nz-card> -->
+  </div>
+</div>

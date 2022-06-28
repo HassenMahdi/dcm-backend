@@ -1,0 +1,30 @@
+
+<ng-template #extraTemplate>
+  <div class="button-spacing ghost" >
+      <button  nzShape='circle' nz-button (click)='edit.emit(data)'><i nz-icon nzType="edit"></i></button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nzShape='circle' nz-button (click)="createChildDomain.emit(data)" nzType="default"><i nz-icon nzType="plus" nzTheme="outline"></i></button>      
+      <nz-divider nzType='vertical'></nz-divider>
+      <button  nzShape='circle' nz-button (click)='delete.emit(data)'><i nz-icon nzType="delete"></i></button>
+  </div>
+</ng-template>
+<ng-template #titleTemplate>
+  <div class="flex start wrap">
+    <h4>
+          <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="folder" style="background-color:#f56a00;"></nz-avatar>
+          <i nz-icon *ngIf='small' style="color: #f56a00;" nzType='folder'></i>
+            {{data?.name}}
+          </h4>
+  </div>
+</ng-template>
+
+<ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
+<ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
+
+<nz-card class="domain-card" [ngClass]='class' [nzExtra]="extraTemplate" [nzTitle]='titleTemplate' [nzLoading]='loading' [nzSize]='s.displaySize$ | async'>
+  <app-meta *ngIf='!small' [data]='data'></app-meta>
+
+  <button (click)='collections.emit(data)' nz-button nzType="default"><i nz-icon nzType="block"
+    nzTheme="outline"></i>Collections</button>
+    <ng-content></ng-content>
+</nz-card>

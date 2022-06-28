@@ -1,0 +1,92 @@
+<div nz-row class='ma-b'>
+
+  <div nz-col [nzSpan]='18'>
+
+    <button nz-button class='ghost' [disabled]="!enableAddbtn((profile$ | async))" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Target Field</button>
+
+    <button nz-button class='ghost' (click)="load_data()"><i nz-icon nzType="reload"></i></button>
+
+    <nz-upload [nzAction]="uploadURI" [nzHeaders]="{ authorization: 'authorization-text' }"
+      (nzChange)="handleChange($event)">
+
+      <button nz-button class='ghost'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+    </nz-upload>
+
+  </div>
+
+  <div nz-col [nzSpan]='6'>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input [(ngModel)]='searchTerm' placeholder="Filter Domain Targets" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </div>
+</div>
+
+<nz-card class="fields-card ma-b">
+  <nz-table [nzData]="list$ | async" nzSize='small' [nzShowPagination]="false" [nzLoading]='loading'>
+    <thead>
+      <tr>
+        <ng-container *ngFor="let column of columns">
+          <th *ngIf="column.field != 'action'">
+            {{ column.label }}
+          </th>
+          <th *ngIf="column.field == 'action'"></th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let data of list$ | async | filter :'label': searchTerm">
+        
+
+        <ng-container *ngFor="let column of columns">
+          <ng-container [ngSwitch]="column.field">
+
+            <td *ngSwitchCase="'action'">
+              <div class="button-spacing">
+                <button nz-button nzShape="circle" class="ghost" (click)='openConfig(data)'><i nz-icon
+                    nzType="edit"></i></button>
+                <nz-divider nzType='vertical'></nz-divider>
+                <button nz-button nzShape="circle" class="ghost" (click)='showDeleteConfirm(data)'><i nz-icon
+                    nzType="delete"></i></button>
+              </div>
+            </td>
+
+            <td *ngSwitchCase="'type'">
+              {{data_types[data[column.field]] || (data[column.field]+' (NOT SUPPORTED)')}}
+            </td>
+
+            <td *ngSwitchCase="'rules'">
+              <span *ngFor="let rule of data.rules; let i = index">
+                <span *ngIf='i!=0'>, </span>{{ (checks$ | async)[rule.type]?.label }}
+              </span>
+            </td>
+            <td *ngSwitchCase="'mandatory'">
+              <app-bool-icon [b]='data[column.field]'></app-bool-icon>
+            </td>
+            <td *ngSwitchCase="'editable'">
+              <app-bool-icon [b]='data[column.field]'></app-bool-icon>
+            </td>
+
+            <td *ngSwitchCase="'ref_type'">
+              <i>{{data.ref_type?.label}}</i>
+            </td>
+
+            <td *ngSwitchCase="'label'">
+              <nz-tag style="text-align: center;">{{data.label}}</nz-tag>  
+            </td>
+
+
+            <td *ngSwitchDefault>
+              {{ data[column.field] }}
+            </td>
+
+          </ng-container>
+        </ng-container>
+
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

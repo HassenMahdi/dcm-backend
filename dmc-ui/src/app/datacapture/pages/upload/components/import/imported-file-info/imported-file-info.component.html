@@ -1,0 +1,76 @@
+<div class="flex stretch column w-100 flex-scroll">
+  <div class="mb-3">
+    <nz-statistic nzValue="" [nzTitle]="'File Name'"></nz-statistic>
+    <h4 nz-typography>{{(metadata$ | async)?.filename}}</h4>
+  </div>
+  <div class="mb-3">
+    <nz-statistic nzValue='' [nzTitle]="'Sheets'"></nz-statistic>
+    <app-sheet-selector type='list'></app-sheet-selector>
+  </div>
+
+  <ng-container *ngIf='(sheet$|async) >= 0'>
+  <div class="flex-1 mb-3 flex column stretch flex-scroll">
+    <nz-statistic nzValue="" [nzTitle]="'Dataset Range'"></nz-statistic>
+
+    <div class="mb-2 flex between">
+    
+      <div class="flex">
+        <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Vertical Ranges'> 
+          <i class="text-primary" nz-icon nzType="column-width" nzTheme="outline"></i>
+        Columns from
+        <nz-tag class="m-0">{{(colValue[0] == 0 ? 'Start' : colValue[0])}}</nz-tag>
+        to
+        <nz-tag class="m-0">{{(colValue[1] == 0 ? 'End' : colValue[1])}}</nz-tag>
+        </p>
+        <nz-divider nzType='vertical'></nz-divider>
+        <p nz-typography class='m-0'  nz-tooltip nzTooltipTitle='Horizontal Ranges'> 
+          <i class="text-primary" nz-icon nzType="column-height" nzTheme="outline"></i>
+          Rows from
+          <nz-tag class="m-0">{{(rowValue[0] == 0 ? 'Start' : rowValue[0])}}</nz-tag>
+          to
+          <nz-tag class="m-0">{{(rowValue[1] == 0 ? 'End' : rowValue[1])}}</nz-tag>
+        </p>
+        <nz-divider nzType='vertical'></nz-divider>
+        <p nz-typography class='m-0' nz-tooltip nzTooltipTitle='Columns x Rows'>
+          <i class="text-primary" nz-icon nzType="appstore" nzTheme="outline"></i>
+          Block Range
+          <nz-tag class="m-0">{{(headers$ | async)?.length}} x {{total$ | async}}</nz-tag>
+        </p>
+    </div>
+
+    <div class="button-spacing">
+      <button nz-button (click)="openConfig()">
+        <i nz-icon nzType="setting"></i>
+        Select Range
+      </button>
+      <button nz-button (click)="resetRange()">
+        <i nz-icon nzType="redo"></i>
+        Reset Range
+      </button>
+    </div>
+      
+    </div>
+    <nz-statistic nzValue="" [nzTitle]="'Header Preview'"></nz-statistic>
+
+    <div class="flex-scroll border rounded" >
+      <nz-collapse [nzBordered]='false' nzSize="small">
+        <nz-collapse-panel *ngFor='let h of (headers$ | async)' [nzHeader]="title" [nzActive]="false" [nzDisabled]="false" (nzActiveChange)='onColumnChange(h, $event)'>
+          <ng-template #title><nz-tag>{{h}}</nz-tag></ng-template>
+          <nz-spin nzSimple *ngIf='!descriptions[h]' nzSize="small"></nz-spin>
+          <nz-descriptions *ngIf='descriptions[h]; let description'>
+            <nz-descriptions-item *ngFor='let d of description' [nzTitle]="d.label">{{d.value}}</nz-descriptions-item>
+          </nz-descriptions>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+
+  </div>
+</ng-container>
+
+<ng-container *ngIf='(sheet$|async) < 0'>
+  <div class="flex flex-1 column">
+    <span nz-text nzType='danger'><i nz-icon nzType="copy" style="font-size: 64px"></i> </span>
+    <span class="mt-3" nz-text>Please select a sheet. </span>
+  </div>
+</ng-container>
+</div>

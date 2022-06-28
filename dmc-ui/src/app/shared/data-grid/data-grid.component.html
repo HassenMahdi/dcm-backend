@@ -1,0 +1,35 @@
+<!-- class="ag-theme-alpine" -->
+<!-- [defaultColDef]="defaultColDef" -->
+<ag-grid-angular #agGrid
+  [columnDefs]="columnDefs"
+  class="ag-theme-balham"
+  style="width: 100%; height: 100%;"
+  [rowStyle] = "{background: 'white'}"
+  [rowData]="rowData"
+  [modules]="modules"
+  [animateRows]="true"
+  [rowModelType]="'serverSide'"
+  [cacheBlockSize]="paginationPageSize"
+  [enterMovesDown]="true"
+  [maxBlocksInCache]="10000"
+  [blockLoadDebounceMillis]='100'
+  [suppressMenuHide]="true"
+  [enableCellChangeFlash]="true"
+  [enterMovesDownAfterEdit]="true"
+  [stopEditingWhenGridLosesFocus]="true"
+  [frameworkComponents]="frameworkComponents"
+  [getContextMenuItems]="contextMenu"
+  [getMainMenuItems]="mainContextMenu"
+  [enableRangeSelection]="rangeSelection"
+  [gridOptions]='gridOptions'
+  (cellValueChanged)="cellValueChanged.emit($event)"
+  [floatingFilter]='floatingFilter'
+  [rowSelection]="rowSelection"
+  (gridReady)="onGridReady($event)">
+</ag-grid-angular>
+<!-- [floatingFilter]='floatingFilter' -->
+<!-- [sideBar]="['filters']" -->
+<!-- [blockLoadDebounceMillis]="100" -->
+  <!-- [fillOperation]="fillOperation" -->
+  <!-- [enableRangeSelection]="true"
+  [enableFillHandle]="true" -->

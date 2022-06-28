@@ -1,0 +1,12 @@
+
+.ant-typography kbd {
+  margin: 0 .2em;
+  padding: .15em .4em .1em;
+  font-size: 90%;
+  background: hsla(0,0%,58.8%,.06);
+  border: solid hsla(0,0%,39.2%,.2);
+  border-width: 1px 1px 2px;
+  border-radius: 3px;
+  color: rgba(0,0,0,.85);
+  overflow-wrap: break-word;
+}

@@ -1,0 +1,139 @@
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::ng-deep .anticon {
+  vertical-align: 2px !important;
+}
+
+:host ::ng-deep .ant-layout-header {
+  padding: 0 16px !important;
+}
+
+.full-h {
+  height: 100vh;
+  width: 100vw;
+}
+
+.logo {
+  width: 184px;
+  /* height: 31px; */
+  float: left;
+  margin: auto;
+}
+
+.collapsed-logo {
+  width: 64px;
+  /* height: 31px; */
+  float: left;
+  margin: auto;
+}
+
+.logo h1 {
+  display: inline-block;
+  margin: 0 0 0 10px;
+  color: #fff;
+  font-weight: 1000;
+  font-size: 18px;
+  /* font-family: 'Ubuntu', sans-serif; */
+  vertical-align: middle;
+}
+
+.search-box {
+  width: 30%;
+}
+
+.header-icon {
+  height: 32px;
+}
+
+.header-icon-collapsed {
+  padding-left: 8px;
+}
+
+.header-menu {
+  line-height: 64px;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-bottom: 48px;
+}
+
+.inner-layout {
+  padding: 0 24px 24px;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nz-content {
+  /* background: #fff; */
+  /* padding: 24px; */
+  min-height: 280px;
+}
+
+.main-sidebar-header {
+  height: 60px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 8px 24px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 40px;
+  text-overflow: ellipsis;
+  position: relative;
+  /* white-space: nowrap; */
+  /* background-color: #e2e2e2; */
+}
+
+.title-padding {
+  padding-left: 20px;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+  box-shadow: none;
+}
+
+:host ::ng-deep .ant-menu-submenu, .ant-menu-submenu-inline:focus  {
+  outline-color: #dadde0;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::after, :host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+  background: #808386;
+}
+
+/*
+:host ::ng-deep .ant-menu.ant-menu-dark .ant-menu-item-selected, :host ::ng-deep ant-menu-dark .ant-menu-submenu-selected {
+  color: #e0eff6 !important;
+  background: #002140 !important;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::after, :host ::ng-deep .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+  background: #002140;
+} */
+
+::ng-deep .compact .compatable{
+  display: none;
+}
+
+::ng-deep .compact nz-layout{
+  padding: 0 !important;
+}
+
+::ng-deep .compact nz-sider{
+  border-right: 1px solid #e8e8e8;
+  box-sizing: content-box;
+}
+
+::ng-deep .compact .ant-layout-header{
+  height: 48px;
+  line-height: 48px;
+}

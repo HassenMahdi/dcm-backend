@@ -1,0 +1,42 @@
+<div class="button-spacing">
+
+  <ng-container *ngIf='showTransformation'>
+    <div class="flex between w-100">
+      <div class="flex-1">
+        <button class='ghost' *ngFor='let t of (shownTrans$ | async)' nzShape='circle' nz-button nzType='default'
+          (click)='addTransformation(t)' nz-tooltip [nzTooltipTitle]="t.label"><i nz-icon [nzType]="t.icon || 'sliders'"
+            [nzRotate]='t.icon_rotation || 0'></i></button>
+      </div>
+
+      <div class="ml-3" *ngIf='(collapsedTrans$ | async) && (collapsedTrans$ | async).length > 0'>
+        <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon
+            nzType="ellipsis" [nzRotate]='90'></i></button>
+        <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngFor='let t of (collapsedTrans$ | async)' (click)='addTransformation(t)' nz-menu-item>
+              <i nz-icon [nzType]="t.icon || 'sliders'" [nzRotate]='t.icon_rotation || 0'></i>
+              <span class="ml-2">{{t.label}}</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf='showActions'>
+    <button class='ghost' *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Delete"
+       nz-popconfirm nzPopconfirmTitle="Are you sure delete this Pipe?"
+      (nzOnConfirm)="onDelete()" [disabled]='!enableAddbtn(profile)'><i nz-icon nzType="delete"></i>
+    </button>
+    <button *ngIf='saved' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Save as New" (click)='onSaveAsNew()'
+      [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' [disabled]='!(canSave$ | async) || !enableAddbtn(profile)'><i nz-icon
+        nzType="saveAs"></i>
+    </button>
+
+    <button [nzType]='saveBtnType$ | async' [ngClass]='ghostBtn$ | async' nzShape='circle' nz-button nz-tooltip
+      nzTooltipTitle="Save" (click)='onSave()' [disabled]='!(canSave$ | async) || !enableAddbtn(profile)'>
+      <nz-badge [nzDot]='!saved'><i nz-icon nzType="save"></i></nz-badge>
+    </button>
+
+  </ng-container>
+</div>

@@ -1,0 +1,50 @@
+<div *nzModalTitle><i nz-icon nzType="form" nzTheme="outline"></i> Target Field</div>
+
+<nz-steps nzType="navigation" [nzCurrent]="index" (nzIndexChange)="index = $event">
+  <nz-step nzTitle="General"></nz-step>
+  <nz-step nzTitle="Checks"></nz-step>
+</nz-steps>
+
+
+<div *ngIf='index == 0'>
+  <nz-divider nzText="General"></nz-divider>
+  <ng-container *ngFor='let f of form'>
+  <nz-form-item *ngIf='display(f)'>
+
+      <nz-form-label [nzSpan]="7" [nzRequired]="f.mandatory">{{f.name}}</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <ng-container [ngSwitch]="f.type">
+          <div *ngSwitchCase="'text'">
+            {{data[f.field]}}
+          </div>
+          
+          <textarea *ngSwitchCase="'textarea'" [(ngModel)]='data[f.field]' nz-input rows="2"></textarea>
+          
+          <nz-select (ngModelChange)='onChange(f, $event)' style="width: 100%;" [(ngModel)]='data[f.field]' *ngSwitchCase="'select'">
+            <nz-option *ngFor='let o of f.options' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+          </nz-select>
+          
+          <label (ngModelChange)='onChange(f, $event)' nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="data[f.field]"></label>
+          
+          <app-reference-type-input *ngSwitchCase="'ref_type'" (ngModelChange)='onChange(f, $event)' [(ngModel)]='data[f.field]'></app-reference-type-input>
+          
+          <input *ngSwitchDefault [(ngModel)]='data[f.field]' nz-input />
+          
+        </ng-container>
+        
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+
+</div>
+
+
+<div *ngIf='index == 1'>
+  <nz-divider nzText="Checks"></nz-divider>
+  <app-default-checks [model]='data.rules' [type]='data.type'></app-default-checks>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="link" [disabled]="!canClose()" (click)="close()">Cancel</button>
+  <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Save</button>
+</div>

@@ -1,0 +1,25 @@
+<div class="h-100 w-100 flex column stretch">
+
+  <nz-card nzSize='small' [nzTitle]='headerText' class="paddless">
+
+    <div class="flex start p-1">
+      <!-- ADITIONAL TOOLBAR BUTTONS -->
+      <ng-content></ng-content>
+
+      <app-pipeline-editor-sidebar *ngIf='!readOnly' (addedNode)='addNode($event)'
+        (onViewTemplate)='editor.viewTemplate(diagramNodeData ,diagramLinkData)'>
+      </app-pipeline-editor-sidebar>
+
+    </div>
+  </nz-card>
+
+  <nz-card class="fill flex editor-box paddless">
+    <gojs-diagram #myDiagram [initDiagram]='initDiagram' [nodeDataArray]='diagramNodeData'
+      [linkDataArray]='diagramLinkData' [divClassName]='diagramDivClassName' [modelData]='diagramModelData'
+      [skipsDiagramUpdate]='skipsDiagramUpdate' (modelChange)='diagramModelChange($event)'>
+    </gojs-diagram>
+    <gojs-overview #myOverview [initOverview]='initOverview' [divClassName]='oDivClassName'
+      [observedDiagram]='observedDiagram'></gojs-overview>
+  </nz-card>
+
+</div>

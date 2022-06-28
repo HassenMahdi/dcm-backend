@@ -1,0 +1,25 @@
+<nz-table #basicTable [nzData]="(tasks$ |async)?.tasks ">
+  <thead>
+    <tr>
+      <!-- <th>Id</th> -->
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <!-- <td>{{data.task_id}}</td> -->
+      <td>{{data.start_date | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td>{{data.end_date | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td>
+        <ng-container [ngSwitch]="data.state">
+          <nz-badge nzStatus="success" *ngSwitchCase="'success'"></nz-badge>
+          <nz-badge nzStatus="error" *ngSwitchCase="'failed'"></nz-badge>
+          <nz-badge nzStatus="error" *ngSwitchCase="'upstream_failed'"></nz-badge>
+          <nz-badge nzStatus="processing" *ngSwitchCase="'running'"></nz-badge>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

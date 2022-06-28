@@ -1,0 +1,16 @@
+::ng-deep .sheet-selector [nz-button] {
+    border-top: none;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    margin-right: 2px;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden
+}
+
+:host{
+    flex: 1;
+}

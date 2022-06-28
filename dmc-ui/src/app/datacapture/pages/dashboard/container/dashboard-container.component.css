@@ -1,0 +1,33 @@
+.dashboard-container {
+  background-color: white;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-box {
+  flex: 1 1 auto;
+}
+
+.dashHeader {
+  padding: 18px;
+}
+
+.requiredInput {
+  border: 1px solid tomato;
+  display: block;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-top-width: 1.02px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.req-input {
+  border: 1px solid tomato;
+}
+
+:host nz-divider.horiz {
+  /* margin: 0 !important; */
+  margin: 0 !important;
+}

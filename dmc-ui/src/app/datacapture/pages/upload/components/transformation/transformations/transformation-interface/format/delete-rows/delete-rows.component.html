@@ -1,0 +1,19 @@
+<form nz-form [nzLayout]="form_orientation">
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">From</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <nz-input-number [nzSize]='size' [nzMin]="1" [(ngModel)]='data.from' (ngModelChange)='onDataChanged()'
+        name='from'></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">To</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <nz-input-number [nzSize]='size' [nzMin]="data.from" [(ngModel)]='data.to' (ngModelChange)='onDataChanged()'
+        name='to'></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

@@ -1,0 +1,37 @@
+<nz-collapse nzAccordion>
+  <nz-collapse-panel *ngFor="let pipeline of pipelines" [nzHeader]="name" (nzActiveChange)="getMonitors(pipeline)">
+    <app-monitor-item [monitors]="monitors$ | async" [pipeline]="pipeline" [getTasks]="getTasks" (openRun)="openRun.emit($event)">
+    </app-monitor-item>
+    <ng-template #name>
+      <div>
+
+        <h6>{{pipeline.name}}</h6>
+        <p class="text-muted">{{pipeline.description}}</p>
+        <!-- <span>
+          <i nz-icon nzType="deployment-unit" nzTheme="outline" class="text-primary"></i>
+          <i class="text-primary pl-2">Name:</i>
+          {{pipeline.name}}
+        </span>
+        <nz-divider nzType="vertical"></nz-divider>
+        <span>
+          <i nz-icon nzType="file-text" nzTheme="outline" class="text-primary"></i>
+          <i class="text-primary pl-2">Description:</i>
+          {{pipeline.description}}
+        </span>
+        <nz-divider nzType="vertical"></nz-divider>
+        <span>
+          <i nz-icon nzType="clock-circle" nzTheme="outline" class="text-primary"></i>
+          <i class="text-primary pl-2"> Created On:</i>
+          {{pipeline?.created_on | date: 'dd/MM/yyyy HH:mm'}}
+        </span>
+        <nz-divider nzType="vertical"></nz-divider>
+        <span>
+          <i nz-icon nzType="edit" nzTheme="outline" class="text-primary"></i>
+          <i class="text-primary pl-2"> Modified On:</i>
+          {{pipeline?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
+        </span> -->
+
+      </div>
+    </ng-template>
+  </nz-collapse-panel>
+</nz-collapse>

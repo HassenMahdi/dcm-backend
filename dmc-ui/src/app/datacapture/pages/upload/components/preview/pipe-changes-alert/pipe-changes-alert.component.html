@@ -1,0 +1,22 @@
+
+<div class="flex start top">
+    <h4 class='mr-2'>
+        <i nz-icon [nzType]='currentSequence.icon' nzTheme='twotone'></i>
+    </h4>
+    <div>
+        <h4 nz-typography [innerHTML]='currentSequence.title'></h4>
+        <p nz-typography [innerHTML]='currentSequence.content'></p>
+    </div>
+
+</div>
+
+<div *nzModalFooter>
+    <div class="button-spacing flex end">
+        <button 
+            nz-button 
+            *ngFor='let b of currentSequence.buttons'
+            (click)='onButtonClick(b.action)'
+            [nzType]='b.style'
+        >{{b.label}}</button>
+    </div>
+</div>

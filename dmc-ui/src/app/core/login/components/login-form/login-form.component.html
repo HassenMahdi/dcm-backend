@@ -1,0 +1,47 @@
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your email!">
+      <nz-input-group nzPrefixIcon="user">
+        <input type="text" nz-input formControlName="email" placeholder="Email" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="password" placeholder="Password" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="remember">
+        <span>Remember me</span>
+      </label>
+      <button nz-button class="login-form-forgot ghost" nz-popover nzPopoverTrigger="click"
+        [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="contentTemplate" [(nzVisible)]="visible">
+        Forgot password
+      </button>
+      <button nz-button class="login-form-button" [nzLoading]='loading' [nzType]="'primary'">Log In <i nz-icon nzType="login" nzTheme="outline"></i></button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #titleTemplate>Please enter your email</ng-template>
+<ng-template #contentTemplate>
+  <form nz-form [formGroup]="resetPwForm" class="reset-form" (ngSubmit)="forgotPassword()">
+    <nz-form-item style="margin-bottom: 6px;">
+      <nz-form-control nzErrorTip="The input is not valid E-mail!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="margin-bottom: 6px;">
+      <div class="flex between">
+        <button nz-button nzSize="small" nzType="default" (click)="visible = false">Cancel</button>
+        <button nz-button nzSize="small" nzType="primary" (ngSubmit)="forgotPassword()">Ok</button>
+      </div>
+    </nz-form-item>
+  </form>
+</ng-template>

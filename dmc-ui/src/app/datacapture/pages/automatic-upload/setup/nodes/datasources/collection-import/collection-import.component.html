@@ -1,0 +1,46 @@
+<div class="node-box">
+  <div>
+    <p nz-typography [(nzContent)]="data.label"></p>
+
+    <form nz-form [nzLayout]="'horizontal'">
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24" nzRequired>Domain</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <div>
+            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(domain?.name)"></i>
+            <button [class.req-input]="!(domain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu"
+              class="wd-80" [nzPlacement]="'bottomRight'">
+              <div style="min-width:200px" class="flex between">
+                <div class="flex-1 text-left">{{ (domain?.name) || 'None' }}</div>
+                <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
+                  [class.text-danger]="!(domain?.name)"></i>
+              </div>
+            </button>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+  </div>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="domainTemplate">
+      <ng-template #domainTemplate>
+        <i nz-icon nzType="folder" nzTheme="outline"></i>
+        {{item}}
+      </ng-template>
+      <ul>
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain)">
+          <i nz-icon nzType="block" nzTheme="outline"></i>
+          {{domain.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

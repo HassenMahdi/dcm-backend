@@ -1,0 +1,9 @@
+<div class="custom-tooltip" *ngIf="errors.length > 0">
+  <div nz-typography class="m-0"><i nz-icon nzType='warning'></i> Errors</div>
+  <nz-list nzSize="small">
+    <nz-list-item *ngFor="let error of errors">
+      <div class="text-muted">{{error.error_message || error.check_type}}</div>
+    </nz-list-item>
+  </nz-list>
+</div>
+<div nz-typography class="m-0" *ngIf="errors.length == 0"><i nz-icon nzType='check-circle'></i> Valid</div>

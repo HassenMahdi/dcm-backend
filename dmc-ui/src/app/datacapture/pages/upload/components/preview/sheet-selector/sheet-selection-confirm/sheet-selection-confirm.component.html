@@ -1,0 +1,24 @@
+<div class="flex start top wrap">
+    <h3 class="mr-3"><i nz-icon nzType='info-circle' nzTheme='twotone'></i></h3>
+    <div class="flex-1">
+        <h4 nz-typograpghy>
+            Changing Worksheet
+        </h4>
+        
+        <p nz-typograpghy>
+            Your active pipe may not be comapitble with the new sheet.
+            <br>
+            It will be de-selected.
+        </p>
+        
+    </div>
+            
+</div>
+
+<div *nzModalFooter>
+    <div>
+        <button nz-button nzType="default" (click)="close(null)">Cancel</button>
+        <button nz-button nzType="default" (click)="close({keepPipe: true })">Change Sheet and keep Pipe</button>
+        <button nz-button nzType="primary" (click)="close({keepPipe: false})">Ok</button>
+    </div>
+</div>

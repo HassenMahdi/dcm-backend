@@ -1,0 +1,28 @@
+<h6><i nz-icon nzType="code" class="mr-2" nzTheme="outline"></i> Templates</h6>
+<p class="text-muted">View Pipline Flowchart generated json</p>
+
+<div class="button-spacing">
+  <button nz-button><i nz-icon nzType='copy'></i>Copy</button>
+  <button nz-button><i nz-icon nzType='export'></i>Export</button>
+  <button nz-button><i nz-icon nzType='import'></i>Import</button>
+</div>
+
+<nz-tabset>
+  <nz-tab [nzTitle]="titleTemplateNodes">
+    <ng-template #titleTemplateNodes>
+      <i nz-icon nzType="appstore" nzTheme="outline"></i>Nodes
+    </ng-template>
+    <div class="p-2">
+      <ngx-json-viewer style="display: block;" [json]="nodes" nzSize='small'></ngx-json-viewer>
+    </div>
+  </nz-tab>
+
+  <nz-tab [nzTitle]="titleTemplateLinks">
+    <ng-template #titleTemplateLinks>
+      <i nz-icon nzType="node-index" nzTheme="outline"></i>Links
+    </ng-template>
+    <div class="p-2">
+      <ngx-json-viewer style="display: block;" [json]="links" nzSize='small'></ngx-json-viewer>
+    </div>
+  </nz-tab>
+</nz-tabset>

@@ -1,0 +1,22 @@
+
+  <!-- PIPE NODES LIST -->
+  <!-- <div class="trans-container">
+    <i nz-icon nzType="api" nzTheme="outline" class="trans-arrow trans-start-arrow trans-arrow-circle"></i>
+    <ng-container *ngFor='let node of pipe$ | async; let i = index'>
+      <i class="trans-arrow"> </i>
+      <div class="trans-block w-100" >
+        <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+      </div>
+    </ng-container>
+  </div> -->
+
+
+  <div class="trans-container">
+    <!-- <i nz-icon nzType="api" nzTheme="outline" class="trans-arrow trans-start-arrow trans-arrow-circle"></i> -->
+    <ng-container *ngFor='let node of pipe$ | async; let i = index'>
+      <i *ngIf='i!=0' class="trans-arrow alt"> </i>
+      <div class="trans-block w-100" >
+        <app-transformation-node [index]=i [params]='node'></app-transformation-node>
+      </div>
+    </ng-container>
+  </div>

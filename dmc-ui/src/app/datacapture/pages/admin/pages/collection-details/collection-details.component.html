@@ -1,0 +1,35 @@
+
+<div class="flex-1 flex stretch column h-100">
+
+  <!-- <div class="flex mb-2"><app-display-changer></app-display-changer></div> -->
+
+  <app-collection-card 
+  [loading]='laoding$ | async' 
+  [data]='collection$ | async'
+  (edited)='loadData()'
+  (deleted)='exit()'
+  >
+</app-collection-card>
+
+<div class="flex-1"  style="overflow-y: hidden; overflow-x: hidden;">
+
+  <nz-card class="collection-details-card h-100">
+  <nz-tabset nzLinkRouter [nzTabPosition]="'top'">
+    <nz-tab>
+      <a nz-tab-link [routerLink]="['fields']">Target Fields</a>
+      <!-- <a nz-tab-link [routerLink]="['fields']"><i nz-icon nzType="unordered-list"></i> Target Fields</a> -->
+    </nz-tab>
+    <nz-tab>
+      <a nz-tab-link [routerLink]="['references']">References</a>
+      <!-- <a nz-tab-link [routerLink]="['references']"><i nz-icon nzType="font-size"></i> References</a> -->
+    </nz-tab>
+  </nz-tabset>
+  
+  <div class="flex-1 flex-scroll p-3" style="height:0;">
+    <router-outlet></router-outlet>
+  </div>
+  
+  </nz-card>
+</div>
+  
+</div>

@@ -1,0 +1,80 @@
+.node
+{
+    /* padding: 0.5rem 2rem;
+    padding-right: 0; */
+     padding: 1rem 2rem;
+    padding-right: 0;
+    border: 1px;
+    margin: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+.node .ant-btn 
+{
+    margin-bottom: 0;
+}
+
+.node.highlight
+{
+    border-color: grey !important;
+    background-color: #fafafa !important;
+    border-style: dotted !important;
+}
+
+.mapping-tree>.node
+{
+    border-bottom-color: #dee2e6;
+    padding: 1rem 2rem;
+    /* padding-right: 0; */
+}
+
+.node .node-label
+{
+    margin-right: 7px;
+}
+
+.node .node-arrow
+{
+    min-width: 20px;
+    display: inline-block;
+}
+
+.node .node-icon
+{
+    margin-right: 1em;
+}
+.node .node-type
+{
+    margin-right: 1em;
+}
+
+/* .node
+{
+    padding: 7px 0px;
+}
+
+.node:first-child
+{
+    padding-top: 0px;
+}
+
+.node .node-label
+{
+    margin-right: 7px;
+}
+
+.node .node-arrow
+{
+    min-width: 20px;
+    display: inline-block;
+}
+
+.node .node-icon
+{
+    margin-right: 1em;
+}
+.node .node-type
+{
+    margin-right: 1em;
+} */

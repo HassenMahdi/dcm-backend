@@ -1,0 +1,25 @@
+
+<div class="button-spacing">
+  <button class='ghost' nz-button nz-dropdown [nzDropdownMenu]="menu"><i nz-icon nzType='subnode'></i> Add Node<i nz-icon nzType="down"></i></button>
+  <nz-divider nzType='vertical'></nz-divider>
+  <button (click)='onViewTemplate.emit()'  class='ghost' nz-button><i nz-icon nzType="snippets" nzTheme="outline"></i>View Template</button>
+</div>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-submenu *ngFor="let cat of nodesMap | keyvalue" [nzTitle]="cat.key">
+      <ul>
+        <li *ngFor='let n of cat.value' (click)='addNode(n)' nz-menu-item>
+          <span [style.background-color]="n.color" class="p-1 border-rounded">
+            <i nz-icon [nzType]="n.nzicon" class="m-1" [style.color]="'white'"></i>
+          </span>
+          {{n.label}} <small class="text-muted">({{n.package}})</small>
+        </li>
+      </ul>
+    </li>  
+  </ul>
+</nz-dropdown-menu>
+
+
+ 

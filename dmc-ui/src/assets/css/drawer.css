@@ -1,0 +1,13 @@
+.drawer-wrapper-full-height{
+    height: fit-content !important;
+}
+
+
+app-transformation-node nz-form-item.ant-form-item.ant-row{
+    margin: 0;
+}
+
+.ant-descriptions-item-label{
+    /* text-transform: uppercase; */
+    /* font-weight: 500; */
+}

@@ -1,0 +1,82 @@
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+      <!-- <nz-select [class.requiredInput]="!selectedDomain" [(ngModel)]="selectedDomain" class="selectStyleSheet" (ngModelChange)="selectDomain($event)">
+        <nz-option *ngFor="let domain of domains; let i = index" [nzValue]="domain.id" [nzLabel]="domain.name"></nz-option>
+      </nz-select> -->
+      <div>
+        <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(selectedDomain?.name)"></i>
+        <button [class.req-input]="!(selectedDomain?.name)" nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+          <div style="min-width:200px" class="flex between">
+            <div class="flex-1 text-left">{{ (selectedDomain?.name) || 'None' }}</div>
+            <i style="opacity: 0.5;" nz-icon nzType="down" nzTheme="outline"
+              [class.text-danger]="!(selectedDomain?.name)"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div nz-col nzSpan="6" class="text-right button-spacing">
+      <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+        nzTooltipPlacement="left" (click)="goToPreview()">Next<i nz-icon nzType="caret-right"></i></button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+        (click)="cancelUpload()">
+        <i nz-icon nzType="close"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- <nz-divider class="horiz" [nzText]="(importState$ | async)?.selectedFile?.token" nzOrientation="left"></nz-divider> -->
+
+  <!-- If The file isn't uploaded -->
+  <div class="flex-child" *ngIf="!(importState$ | async)?.error && !(importState$ | async)?.imported">
+    <nz-spin class="flex-box" [nzSpinning]="(importState$ | async)?.importing">
+      <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false" [nzDisabled]="!(selectedDomain?.id)"
+        [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .mdb'"
+        (nzChange)="handleChange($event)">
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">Click or drag file to this area to import</p>
+        <p class="ant-upload-hint">
+          Once selected the file will be automatically uploaded into our server.
+        </p>
+      </nz-upload>
+    </nz-spin>
+  </div>
+
+  <!-- If the file was uploaded successfully -->
+  <!-- <div class="flex-child" > -->
+    <app-imported-file-info *ngIf="(importState$ | async)?.imported"></app-imported-file-info>
+  <!-- </div> -->
+
+  <!-- If the file was not uploaded -->
+  <div class="flex-child centerBox" *ngIf="(importState$ | async)?.error">
+    <div class="flex-child" *ngIf="(importState$ | async)?.error">
+      <nz-result nzStatus="error" nzTitle="An error occured when attempting to upload the file."
+        nzSubTitle="Please try again or contact us.">
+        <div nz-result-extra>
+          <button nz-button nzType="danger" (click)="cancelUpload()">Cancel</button>
+        </div>
+      </nz-result>
+    </div>
+  </div>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let item of keys(domains)" nz-submenu [nzTitle]="domainTemplate">
+      <ng-template #domainTemplate>
+        <i nz-icon nzType="folder" nzTheme="outline"></i>
+        {{item}}
+      </ng-template>
+      <ul>
+        <li *ngFor="let domain of domains[item]" nz-menu-item (click)="selectDomain(domain.identifier, domain.name, domain.super_domain_id)">
+          <i nz-icon nzType="block" nzTheme="outline"></i>
+          {{domain.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -1,0 +1,6 @@
+version: "2.1"
+services:
+  dcm-frontend:
+      build: . 
+      ports:
+        - "80:80"

@@ -1,0 +1,71 @@
+<div class="flex column h-100 w-100 stretch">
+    <p class="mb-2" nz-typography [(nzContent)]="data.label" nzEditable></p>
+
+    <div class="fill mb-2">
+         <form nz-form [nzLayout]="'vertical'">
+  
+            <nz-form-item>
+                <nz-form-label [nzSm]="8">Level</nz-form-label>
+                <nz-form-control [nzSm]="16">
+                    <nz-radio-group  [ngModelOptions]="{standalone: true}" [(ngModel)]="data.level">
+                        <label nz-radio-button nzValue="ERROR">Error</label>
+                        <label nz-radio-button nzValue="WARNING">Warning</label>
+                      </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            
+        <!-- <nz-form-item>
+          <nz-form-label [nzSm]="8">Column Name</nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <input nz-input [ngModelOptions]="{standalone: true}" [(ngModel)]="data.column"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="8">Format <app-regex-helper-trigger></app-regex-helper-trigger> </nz-form-label>
+            <nz-form-control [nzSm]="16">
+              <input nz-input [ngModelOptions]="{standalone: true}" [(ngModel)]="data.format"/>
+            </nz-form-control>
+          </nz-form-item> -->
+  
+      </form>
+
+      <div class="mb-4">
+
+        <div nz-row class="w-100 mb-2">
+          <div nz-col nzSpan='12'>Column</div>
+          <div nz-col nzSpan='10'>Format <app-regex-helper-trigger></app-regex-helper-trigger></div>
+          <div nz-col nzSpan='2'></div>
+        </div>
+        
+        <div nz-row [nzGutter]="7" *ngFor="let sub of data.formats; let i=index" class="w-100 mt-2">
+          <div nz-col nzSpan='12'>
+            <input  nz-input placeholder="Column" [(ngModel)]="sub.column"/>
+          </div>
+          <div nz-col nzSpan='10'>
+            <input  nz-input placeholder="Format" [(ngModel)]="sub.format"/>
+            <!-- <nz-input-number class="w-100" nzPlaceHolder="regex" [(ngModel)]="sub.format"[nzStep]="1"></nz-input-number> -->
+          </div>
+         
+          <div nz-col nzSpan='2'>
+            <button *ngIf='i>0' nz-button class="ghost" (click)="RemoveFormat(i)"><i nz-icon nzType="delete"></i></button>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+    <div class="flex between">
+      <button nz-button nzType="dashed" (click)="AddFormat()"><i nz-icon nzType="plus"></i> Add Format Check</button>
+      <div class="button-spacing text-right w-100">  
+        <button nz-button (click)='cancel()'>Cancel</button>
+        <button nz-button nzType='primary' (click)='save()'>Save</button>
+      </div>
+    </div>
+</div>
+

@@ -1,0 +1,28 @@
+<div class="node-box">
+  <div>
+    <p nz-typography [(nzContent)]="data.label"></p>
+    <form nz-form [nzLayout]="'horizontal'">
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24">Join On</nz-form-label>
+        <nz-form-control [nzSm]="24">
+            <i nz-icon nzType="api" nzTheme="twotone" class="mr-2"></i>
+            <nz-select [(ngModel)]='data.pipeline' style="width: 250px;"
+              [nzDropdownMatchSelectWidth]='false' name="pipeline" nzPlaceHolder='Select Transformation Pipe'>
+              <nz-option nzCustomContent *ngFor='let o of pipes' [nzValue]='o.id' [nzLabel]='o.name'>
+                <div>{{o.name}}</div>
+                <div class="ellipsis"><small>{{o.description}}</small></div>
+            
+              </nz-option>
+            
+            </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </div>
+
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+  </div>
+</div>

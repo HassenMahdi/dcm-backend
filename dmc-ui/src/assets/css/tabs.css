@@ -1,0 +1,21 @@
+nz-tabset.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+nz-tabset .ant-tabs-content.ant-tabs-top-content{
+  flex: 1 1 auto;
+  /* overflow-y: auto; */
+  /* overflow-x: auto; */
+}
+
+nz-tabset.topless .ant-tabs-bar.ant-tabs-top-bar {
+  /* margin-bottom: 0; */
+}
+
+a, a:hover {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}

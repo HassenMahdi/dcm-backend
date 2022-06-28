@@ -54,6 +54,8 @@ class SuperDomainDto:
         'created_on': fields.DateTime(description='user Identifier'),
         'modified_on': fields.DateTime(description='user Identifier'),
         'domains': fields.List(fields.Nested(DomainDto.domain)),
+        # 'super_domains': fields.List(fields.Nested(fields.Raw)),
+        'parent_super_domain_id': NullableString(description='Super Domain id'),
     })
 
 

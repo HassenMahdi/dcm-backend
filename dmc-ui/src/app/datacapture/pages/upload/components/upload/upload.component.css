@@ -1,0 +1,14 @@
+.main-container {
+  padding: 18px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-child {
+  flex: 1 1 auto;
+}

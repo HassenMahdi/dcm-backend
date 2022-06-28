@@ -1,0 +1,37 @@
+<div class="main-container">
+
+  <div class="h-100 flex stretch column">
+
+    <div class="toolbar mb-3 flex between">
+      <app-active-transformation-input></app-active-transformation-input>
+      <div class="button-spacing">
+        <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
+          nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToImport()"><i nz-icon
+            nzType="caret-left"></i> Previous</button>
+        <button nz-button nzType="primary" nzSize="middle" nzShape="round" nz-tooltip nzTooltipTitle="Next Step"
+          nzTooltipPlacement="left" (click)="onNext()">Next<i nz-icon nzType="caret-right"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset"
+        nzTooltipPlacement="left" (click)="cancelUpload()">
+        <i nz-icon nzType="close"></i>
+      </button>
+      </div>
+
+    </div>
+
+    <div class="preview-content flex stretch flex-1 h-100">
+      <div *ngIf='expanded$ | async' class="sidebar-pipe mr-3">
+        <app-transformation-side-bar [profile]="profile$ | async" [superDomain]="superDomain$ |async"></app-transformation-side-bar>
+      </div>
+
+      <div class="preview-grid flex column stretch flex-1 h-100">
+        <ng-container [ngSwitch]='previewMode$ | async'>
+          <app-source-preview *ngSwitchCase='"SOURCE"'></app-source-preview>
+          <app-target-preview *ngSwitchCase='"TARGET"'></app-target-preview>
+        </ng-container>
+      </div>
+
+    </div>
+
+  </div>
+</div>

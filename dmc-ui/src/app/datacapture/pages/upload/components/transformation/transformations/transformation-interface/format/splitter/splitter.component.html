@@ -1,0 +1,19 @@
+<form nz-form [nzLayout]="'horizontal'">
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Column</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.column' (change)='onDataChanged()'
+        name='column'></app-columns-input>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Sep <app-regex-helper-trigger></app-regex-helper-trigger>
+    </nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.separator' (change)='onDataChanged()' name='separator' />
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

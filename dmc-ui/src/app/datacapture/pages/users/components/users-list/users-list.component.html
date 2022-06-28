@@ -1,0 +1,37 @@
+<nz-list [nzDataSource]="users$ | async | userFilter : 'first_name': searchTerm" [nzRenderItem]="item" [nzItemLayout]="'vertical'" [nzLoading]="loading">
+  <ng-template #item let-item>
+    <nz-list-item [nzActions]="item.loading ? [] : [editAction, moreAction]" class="user-item">
+      <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="nzAvatar" [nzDescription]="nzDescription">
+        <ng-template #nzTitle>
+          <div nz-typography class="font-weight-light">{{item.first_name }} {{item.last_name | uppercase }}</div>
+        </ng-template>
+        <ng-template #nzAvatar>
+          <nz-avatar [nzText]="item?.last_name.charAt(0) + item?.first_name.charAt(0)"
+          style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+        </ng-template>
+        <ng-template #nzDescription>
+          <div *ngIf='item.admin'><nz-tag [nzColor]="'#108ee9'">Administrator</nz-tag></div>
+          <div><i nz-icon nzType="mail" nzTheme="twotone"></i> <span nz-typography class="pl-2">{{item.email }}</span></div>
+          <div>
+            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+            <span class="pl-2" nz-typography>Created On</span>: {{item.created_on | date: 'medium'}}
+            <nz-divider nzType="vertical"></nz-divider>
+            <i nz-icon nzType="clock-circle" nzTheme="twotone"></i>
+            <span class="pl-2" nz-typography>Modified On</span>: {{item.modified_on | date: 'medium'}}
+          </div>
+        </ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+    <ng-template #editAction>
+      <button nz-button class="ghost" (click)="updateUser.emit(item)">
+        <i nz-icon nzType="edit" class="btns"></i>
+      </button>
+    </ng-template>
+    <ng-template #moreAction>
+      <button nz-button class="ghost" nz-popconfirm nzPopconfirmTitle="Are you sure delete this user?" nzPopconfirmPlacement="left"
+        (nzOnConfirm)="deleteUser(item.id)">
+        <i nz-icon nzType="delete" class="btns"></i>
+    </button>
+    </ng-template>
+  </ng-template>
+</nz-list>

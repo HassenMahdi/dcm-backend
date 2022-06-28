@@ -1,0 +1,48 @@
+<div *nzModalTitle>Reference Type</div>
+
+<h6 nz-typography>General</h6>
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Label</nz-form-label>
+  <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.label' nz-input /></nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Description</nz-form-label>
+  <nz-form-control [nzSpan]="14"><textarea [(ngModel)]='data.description' nz-input rows="2"></textarea>
+  </nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSm]="7">Shared Reference</nz-form-label>
+  <nz-form-control [nzSm]="14">
+    <nz-switch [(ngModel)]='data.shared'></nz-switch>
+  </nz-form-control>
+</nz-form-item>
+
+<h6 nz-typography>Properties</h6>
+<div *ngFor="let p of data.properties ; let i=index">
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Property {{i+1}}</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <nz-input-group nzCompact>
+        <input style="width: 50%;" nzPlaceholder='Label' [(ngModel)]='p.label' nz-input (change)='onLabelChange(p)' />
+        <!-- <input disabled [(ngModel)]='p.code' nz-input /> -->
+        <nz-select nzPlaceholder='Type' style="width: 50%;" [(ngModel)]='p.type'>
+          <nz-option *ngFor='let o of types' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+
+<button nz-button nzType='dashed' nzBlock (click)='data.properties.push({})'><i nz-icon nzType='plus'></i>Add
+  Property</button>
+
+
+<div *nzModalFooter>
+  <div class="button-spacing flex end">
+    <button nz-button (click)='close()'>Cancel</button>
+    <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>Save</button>
+  </div>
+</div>

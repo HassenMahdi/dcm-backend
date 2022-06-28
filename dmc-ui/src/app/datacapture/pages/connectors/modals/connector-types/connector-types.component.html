@@ -1,0 +1,32 @@
+<!-- <h6 nz-typography class="mb-2">Add a Connector</h6> -->
+
+<!-- | keyFilter :'name': searchTerm -->
+<!-- <nz-input-group class="m-1" [nzSuffix]="suffixIconSearch">
+  <input type="text" [(ngModel)]="searchTerm" nz-input placeholder="Search" />
+</nz-input-group>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template> -->
+<div nz-row nzType='flex' nzAlign='stretch'>
+  <div nz-col class="gutter-row" [nzSpan]="24" *ngFor="let t of types | keyFilter :'label': searchTerm">
+    <div class="m-1">
+        <button class="p-0" (click)='onSelectType(t.type)' nz-button nzBlock  style="height: fit-content;">
+            <div class="flex column" nz-tooltip [nzTooltipTitle]='t.label'>
+
+                <div class="p-3">
+                  <app-connector-icon [type]='t.type'></app-connector-icon>
+                </div>
+
+                <div class="pb-2">
+                  {{t.label}}
+                </div>
+
+                <!-- <button nz-button nzBlock nzType='primary'>{{t.label}}</button> -->
+            </div>
+        </button>
+    </div>
+  </div>
+</div>
+
+
+<div *nzModalFooter></div>

@@ -1,0 +1,23 @@
+.author-container {
+  /* background-color: white; */
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-box {
+  flex: 1 1 auto;
+}
+
+::ng-deep .fields-card .ant-card-body{
+  padding: 0;
+  /* margin-top: 10px; */
+}
+
+::ng-deep .fields-card .ant-table-small{
+border: 0;
+}
+
+:host ::ng-deep .ant-page-header {
+  padding-left: 16px !important;
+}

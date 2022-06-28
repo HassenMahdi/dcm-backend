@@ -1,0 +1,31 @@
+
+<ng-container *ngIf='(navType$ | async)=="compact"; else default'>
+
+  <nz-steps class="p-2 pl-4 pr-4" nzSize="small" [nzCurrent]="getStepIndex()">
+    <nz-step nzTitle="Import" nzSubtitle="" [nzStatus]="onStepChangeStatus('import')"
+    [routerLink]="['/datacapture/upload/import']"> </nz-step>
+    <nz-step nzTitle="Transform" nzSubtitle="" [nzStatus]="onStepChangeStatus('transform')"
+    [routerLink]="['/datacapture/upload/transform']"> </nz-step>
+    <nz-step nzTitle="Mapping" nzSubtitle="" [nzStatus]="onStepChangeStatus('mapping')"
+    [routerLink]="['/datacapture/upload/mapping']"> </nz-step>
+    <nz-step nzTitle="Cleansing" nzSubtitle="" [nzStatus]="onStepChangeStatus('cleansing')"
+    [routerLink]="['/datacapture/upload/cleansing']"> </nz-step>
+    <nz-step nzTitle="Upload" nzSubtitle="" [nzStatus]="onStepChangeStatus('uploading')"
+    [routerLink]="['/datacapture/upload/uploading']"> </nz-step>
+  </nz-steps>
+</ng-container>
+
+<ng-template #default>
+  <nz-steps nzType="navigation"  nzSize="small" [nzCurrent]="getStepIndex()">
+    <nz-step nzTitle="Import" nzSubtitle="" [nzStatus]="onStepChangeStatus('import')"
+    [routerLink]="['/datacapture/upload/import']"> </nz-step>
+    <nz-step nzTitle="Transform" nzSubtitle="" [nzStatus]="onStepChangeStatus('transform')"
+    [routerLink]="['/datacapture/upload/transform']"> </nz-step>
+  <nz-step nzTitle="Mapping" nzSubtitle="" [nzStatus]="onStepChangeStatus('mapping')"
+  [routerLink]="['/datacapture/upload/mapping']"> </nz-step>
+  <nz-step nzTitle="Cleansing" nzSubtitle="" [nzStatus]="onStepChangeStatus('cleansing')"
+    [routerLink]="['/datacapture/upload/cleansing']"> </nz-step>
+    <nz-step nzTitle="Upload" nzSubtitle="" [nzStatus]="onStepChangeStatus('uploading')"
+    [routerLink]="['/datacapture/upload/uploading']"> </nz-step>
+  </nz-steps>
+</ng-template>

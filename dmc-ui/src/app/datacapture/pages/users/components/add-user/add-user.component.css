@@ -1,0 +1,13 @@
+[nz-form] {
+  width: 500px;
+  max-width: 600px;
+}
+
+.roles-input {
+  width: 45%;
+  margin-right: 8px;
+}
+
+.add-button {
+  width: 60%;
+}

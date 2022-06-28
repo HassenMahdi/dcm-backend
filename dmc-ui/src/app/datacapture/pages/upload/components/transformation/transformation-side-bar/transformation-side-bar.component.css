@@ -1,0 +1,11 @@
+:host{
+    display: contents;
+}
+
+.pipe-bg{
+    padding: 5px;
+    background-color: #f0f2f5;
+    /* border-radius: 10px; */
+    margin-top: 10px;
+    /* border: 1px solid grey; */
+}

@@ -1,0 +1,10 @@
+<div class="flex start wrap">
+    <div *ngFor='let s of shortcuts; let i=index'>
+        <div class="flex between" nz-tooltip [nzTooltipTitle]='s.name'>
+            <div class="mr-2">
+                <i nz-icon class="mr-1" [nzType]='s.icon'></i>
+                <span nz-typography><kbd>{{s.shortcut}}</kbd></span>
+            </div>
+        </div>
+    </div>
+</div>

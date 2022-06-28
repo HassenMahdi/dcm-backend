@@ -1,0 +1,9 @@
+<div class="button-spacing">
+    <button nzShape='circle' (click)='s.changeDisplayList(false)' [ngClass]="{'ghost':(s.displayList$ | async)}"  nz-button ><i nz-icon nzType="appstore"></i></button>
+    <button nzShape='circle' (click)='s.changeDisplayList(true)'  [ngClass]="{'ghost':!(s.displayList$ | async)}" nz-button ><i nz-icon nzType="bars"></i></button>
+    
+    <nz-divider nzType='vertical'></nz-divider>
+    
+    <button nzShape='circle' (click)='s.changeDisplaySize("default")' [ngClass]="{'ghost':(s.displaySize$ | async) != 'default'}" class="ghost" nz-button ><i nz-icon nzType="plus"></i></button>
+    <button nzShape='circle' (click)='s.changeDisplaySize("small")'   [ngClass]="{'ghost':(s.displaySize$ | async) != 'small'}" class="ghost" nz-button ><i nz-icon nzType="minus"></i></button>
+  </div>

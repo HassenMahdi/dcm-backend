@@ -1,0 +1,82 @@
+<!-- <nz-collapse [nzBordered]="false">
+  <nz-collapse-panel *ngFor="let panel of mappings" [nzHeader]="title" [nzActive]="true">
+    <ng-template #title>
+      <div class="flex between">
+        <div>
+          <div><h6>{{panel.name}}</h6></div>
+          <div class=""><i nz-icon nzType='copy'></i> {{panel.versions.length}} Total Versions</div>
+        </div>
+        <button nz-button  (click)='applyLatest(panel)'>Apply Latest</button>
+      </div>
+    </ng-template>
+    <nz-list nzBordered>
+      <nz-list-item *ngFor='let v of panel.versions; let i = index' nzSize='small'>
+        <div class="flex between w-100">
+          <div>
+            <h6>Version <i>{{i+1}}</i></h6>
+            <div *ngIf='v.description' class="text-muted"><p>{{v.description}}</p></div>
+            <button nz-button (click)='applyVersion(v)'>Apply Version</button>
+          </div>
+          <div class="button-spacing">
+          <button nz-button class="ghost" (click)='applyVersion(v)'><i nz-icon nzType='delete'></i></button>
+        </div>
+      </div>
+    </nz-list-item>
+  </nz-list>
+  </nz-collapse-panel>
+</nz-collapse> -->
+
+<nz-collapse nzAccordion [nzBordered]="false">
+  <nz-collapse-panel *ngFor="let mapping of mappings" [nzHeader]="nzTitle" [nzActive]="mappingId === mapping.id">
+    <ng-template #nzTitle>
+      <div class="flex between">
+        <div>
+          <div>
+            <h6> 
+              <i *ngIf="mapping.id == mappingId" class="text-success mr-2" nz-icon nzType="check" nzTheme="outline"></i>
+              {{mapping.name}}
+            </h6>
+          </div>
+          <div class="">
+            <i nz-icon nzType='copy'></i> {{mapping.versions.length}} Total Versions
+            <!-- <nz-tag *ngIf="mapping.id == mappingId" nzColor='green'>Appllied</nz-tag> -->
+          </div>
+        </div>
+        <button nz-button  (click)='applyLatest(mapping)'>Apply Latest</button>
+      </div>
+    </ng-template>
+
+    <!-- Versions -->
+    <nz-list [nzDataSource]="mapping.versions" nzBordered [nzRenderItem]="defaultItem">
+      <ng-template #defaultItem let-item let-index>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="nzVersion">
+          </nz-list-item-meta>
+        </nz-list-item>
+        <ng-template #nzVersion>
+          <div class="flex between">
+            <div nz-typography>
+              <div>
+                <i *ngIf="selectedVersion == item.id" class="text-success mr-2" nz-icon nzType="check-circle"></i> 
+                Version {{item.version}}
+              </div>
+              <div><p class="text-muted" nz-typography>{{item.description}}</p></div>
+              <button nz-tooltip nzTooltipTitle='Apply' nz-button (click)='selectedVersion = item.id;apply(mapping)'>Apply Version</button>
+            </div>
+            <div class="button-spacing">
+              <button nz-tooltip nzTooltipTitle='Rename' nzShape='circle' class="ghost" nz-button  disabled>
+                <i nz-icon nzType="edit"></i>
+              </button>
+              <button nzShape='circle' class="ghost" nz-button [disabled]="item.id == selectedVersion"
+                nz-popconfirm
+                nzPopconfirmTitle="If you delete the first version, the original mapping will be deleted and hence, the rest of its versions."
+                nzPopconfirmPlacement="left" (nzOnConfirm)="deleteMapping(item.id)">
+                <i nz-icon nzType="delete"></i>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </nz-list>
+  </nz-collapse-panel>
+</nz-collapse>

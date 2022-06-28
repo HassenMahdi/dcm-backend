@@ -1,0 +1,40 @@
+<nz-page-header>
+  <nz-page-header-title>
+    {{title}}
+  </nz-page-header-title>
+  <nz-page-header-subtitle *ngIf="!hideIcons">
+    <div class="wrap">
+      <div class="content">
+        <div class="content">
+          <p class="content-link">
+            <a nzTooltipTitle="Quick Start Guide" nzTooltipPlacement="bottom"  nz-tooltip>
+                <i class="primary" nz-icon nzType="file-unknown" nzTheme="outline"></i>
+            </a>
+            <a nzTooltipTitle="Documentation" nzTooltipPlacement="bottom"  nz-tooltip>
+                <i class="primary" nz-icon nzType="question-circle" nzTheme="outline"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </nz-page-header-subtitle>
+
+  <nz-page-header-extra class="padding-fix" *ngIf="!hideFilter || !hideAddbtn">
+    <div nz-row nzType="flex" nzJustify="space-between" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }">
+      <div nz-col [nzSpan]="hideAddbtn ? 24 : 12" *ngIf="!hideFilter">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Filter" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="filter"></i>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="hideFilter ? 24 : 12" *ngIf="!hideAddbtn">
+        <button nz-button nzType="primary" class="full-width" (click)="Click.emit(true)">
+          <i nz-icon nzType="plus"></i>
+          <span>{{addBtn}}</span>
+        </button>
+      </div>
+    </div>
+  </nz-page-header-extra>
+</nz-page-header>

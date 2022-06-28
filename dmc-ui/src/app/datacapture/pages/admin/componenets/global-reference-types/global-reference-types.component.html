@@ -1,0 +1,66 @@
+<div class="flex fill stretch column">
+
+    <div class="flex between">
+        <div class="button-spacing mb-2">
+            <button nz-button class="ghost" (click)='addRefrenceType()'><i nz-icon nzType='plus'></i>Add Reference Type</button>
+            <button nz-button class="ghost" (click)='laodData()'><i nz-icon nzType='reload'></i></button>      
+        </div>
+        <div></div>
+    </div>
+
+
+<div class="flex-scroll  bg-grey">
+        <nz-card *ngFor="let item of list$ | async">
+            <div class="flex between top">
+
+                <div>
+                    <h6 class="font-weight-light mb-2">{{ item.label }}</h6>
+                    
+                    <div *ngIf='item.shared'>
+                        <nz-tag [nzColor]="'#108ee9'">Shared Reference</nz-tag>
+                    </div>
+                    <p nz-paragraph class="dom-description mb-1">{{item?.description}}</p>
+
+                    <div nz-paragraph class="mb-1">
+                        <i nz-icon nzType="clock-circle" nzTheme="outline"></i> <i> Created On</i>
+                        {{item?.created_on | date: 'dd/MM/yyyy HH:mm'}}
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <i nz-icon nzType="edit" nzTheme="outline"></i> <i> Modified On</i>
+                        {{item?.modified_on | date: 'dd/MM/yyyy HH:mm'}}
+
+                        <span *ngIf='!item.shared'>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <i nz-icon nzType="block" nzTheme="outline" class="mr-2"></i>
+                            <i>Used in </i>
+                            {{item.domain_ids.length}}
+                            <i>Collection(s)</i>
+                        </span >
+                    </div>
+
+
+                    <div class="mt-2">
+                            <nz-button-group class="mr-2" *ngFor="let version of item.versions">
+                                <button nz-button (click)='openReferenceData(version)'>{{version.version_label}}</button>
+                                <button nz-button nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight"><i nz-icon nzType="ellipsis"></i></button>
+                                <nz-dropdown-menu #menu1="nzDropdownMenu">
+                                    <ul nz-menu>
+                                      <li (click)='OnEditVersion(item, version)' nz-menu-item>Edit</li>
+                                      <li (click)='deleteRefrenceType(version)' nz-menu-item>Delete</li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                        </nz-button-group>
+                    </div>
+                    
+                </div>
+                
+                <div class="button-spacing">
+                    <button class="ghost" nz-button (click)='OnCreateVersion(item)'><i nz-icon nzType='plus'> </i>Create Version</button>
+                    <button class="ghost" *ngIf='!item.shared' nz-button (click)='shareRefrenceType(item)'><i nz-icon nzType='share-alt'></i>Share</button>
+                    <button nz-button class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='edit'></i></button>
+                    <button nz-button class="ghost" (click)='deleteRefrenceType(item)'><i nz-icon nzType='delete'></i></button>
+                </div>
+                    
+            </div>
+        </nz-card>
+</div>
+</div>

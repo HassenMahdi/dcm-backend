@@ -1,0 +1,37 @@
+<div class="flex column stretch w-100 h-100">
+  
+  <div class="mb-2">
+    <div class="button-spacing">
+      <button nz-button (click)="Reload()"><i nz-icon nzType="reload"></i></button>
+
+      <nz-divider nzType="vertical"></nz-divider>
+
+      <button *ngFor="let b of toolbarButtons$ | async" [nzShape]="b.shape" (click)="b.onClicked()" nz-button>
+        <i  *ngIf="b.icon" nz-icon [nzType]="b.icon"></i> 
+        <span *ngIf="b.text">{{b.text}}</span>
+      </button>
+    </div>
+
+  </div>
+
+  <app-data-grid  class="flex-1" [paginationPageSize]='size$ | async' [columnDefs]="headers$ | async" [rowSelection]="selectionMode"
+    (gridReady)="gridReady$.next($event)" ></app-data-grid>
+
+    <app-grid-footer [t]='total$ | async'>
+      
+      <div class="flex between w-100">
+
+      <div class="grid-toolbar">{{footerText$ | async}}</div>
+
+      <div *ngIf="resultMetadata$|async; let r">
+        <nz-tag *ngIf="r.totals.ERROR" nzColor="error" class="mr-1" ><b>{{r.totals.ERROR}}</b> Errors</nz-tag>
+        <nz-tag *ngIf="r.totals.WARNING" nzColor="warning" nzType="warning"class="mr-1" ><b>{{r.totals.WARNING}}</b> Warnings</nz-tag>
+      </div>
+
+
+    </div>
+
+    </app-grid-footer>
+
+   
+</div>

@@ -1,0 +1,17 @@
+.pipe-icon {
+  border-radius: 20px 0 0 20px !important;
+}
+
+.pipe-icon-last {
+  border-radius: 0 20px 20px 0 !important;
+}
+
+.ellipsis {
+  white-space: normal;
+  overflow: auto;
+  /* text-overflow: ellipsis; */
+}
+
+[nz-button] {
+  margin: 0 5px;
+}

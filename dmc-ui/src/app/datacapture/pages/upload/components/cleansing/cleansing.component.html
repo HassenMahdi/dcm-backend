@@ -1,0 +1,99 @@
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+      <div class="flex start">
+        <button *ngIf='!(expanded$ | async)' (click)='expanded$.next(true)' nz-tooltip nzTooltipTitle='Error Details'
+          nzShape='round' nz-button class="ghost">
+          <i nz-icon nzType="menu-unfold"></i>
+        </button>
+        <button *ngIf='(expanded$ | async)' (click)='expanded$.next(false)' nz-tooltip nzTooltipTitle='Error Details'
+          nzShape='round' nz-button class="ghost">
+          <i nz-icon nzType="menu-fold"></i>
+        </button>
+        <nz-divider class="fold" nzType="vertical"></nz-divider>
+        <nz-badge class="mr-3" nz-tooltip nzTooltipTitle="Total errors" [nzOverflowCount]="99999999"
+          [nzCount]="(metaData$ | async)?.totalErrors || 0" [nzShowZero]="true"></nz-badge>
+        <nz-badge nz-tooltip nzTooltipTitle="Total Rows in Error" [nzOverflowCount]="99999999"
+          [nzCount]="(metaData$ | async)?.totalRowsInError || 0" [nzShowZero]="true"></nz-badge>
+        <nz-divider class="error" nzType="vertical"></nz-divider>
+        <button nz-tooltip nzTooltipTitle='Save modifications' nzShape='round' class="ghost" nz-button
+          (click)="syncWithServer()">
+          <i nz-icon nzType="save"></i>
+        </button>
+
+        <button *ngIf='autosave' nz-tooltip nzTooltipTitle='Auto-Sync On' nzShape='circle' nzType='primary' nz-button
+          (click)="autosave=false"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
+        <button *ngIf='!autosave' nz-tooltip nzTooltipTitle='Auto-Sync Off' nzShape='circle' class='ghost' nz-button
+          (click)="autosave=true"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
+
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='round' class="ghost" nz-button (click)="auditTrial()">
+          <i nz-icon nzType="audit"></i>
+        </button>
+
+        <nz-divider nzType="vertical"></nz-divider>
+        <div class="button-spacing">
+          <button *ngFor='let b of errorLevels' nz-button
+            [ngClass]='{"ghost": (b.level!=(selectedErrorLevel$ | async))}'
+            [nzType]='(b.level==(selectedErrorLevel$ | async))?b.type:"default"' (click)='changeErrorLevel(b.level)'
+            nzShape='round'>{{b.label}}</button>
+        </div>
+
+        <nz-divider nzType="vertical"></nz-divider>
+        <app-clear-grid-filter [gridApi]="grid" [filters]="filters$ | async"></app-clear-grid-filter>
+      </div>
+    </div>
+    <div nz-col nzSpan="6" class="text-right button-spacing">
+      <div class="flex end">
+        <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
+          nzTooltipTitle="Previous Step" nzTooltipPlacement="left" (click)="goToMapping()"><i nz-icon
+            nzType="caret-left"></i> Previous</button>
+        <button nz-button nzType="primary" nzSize="middle" [disabled]="(metaData$ | async)?.totalErrors != 0" nzShape="round"
+          nz-tooltip nzTooltipTitle="Next Step" nzTooltipPlacement="left" (click)="goToUpload()">Next
+          <i nz-icon nzType="caret-right"></i></button>
+        <nz-divider nzType='vertical'></nz-divider>
+        <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+          (click)="cancelUpload()">
+          <i nz-icon nzType="close"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- jobResult -->
+
+  <div class="preview-content flex stretch flex-1 h-100">
+    <div *ngIf='expanded$ | async' class="sidebar-pipe mr-3">
+      <div class="flex flex-1 column start h-100">
+        <div class="mt-4" style="overflow-y: auto;">
+          <div *ngFor="let item of (metaData$ | async)?.jobResult">
+            <!-- <div class="w-100"> -->
+              <nz-tag class="w-100 mb-1 mr-0" nzColor='red'>
+                <div class="flex between">
+                  <span class="mr-2">{{ item?.label}}</span>
+                  <b>{{item?.errors}}</b>
+                </div>
+              </nz-tag>
+              <!-- <span class="pr-2"><small>{{ item?.label}}:</small></span> -->
+              <!-- <nz-badge [nzOverflowCount]="99999999" [nzCount]="item?.errors"></nz-badge> -->
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-grid flex column stretch flex-1 h-100">
+      <!-- Grid -->
+      <div class="flex flex-1 column start mt-4">
+        <app-data-grid class="flex-1" [columnDefs]="headers$ | async" [paginationPageSize]="numberOfRows"
+          (cellValueChanged)="onCellEdit($event)" (gridReady)="fetchData($event)">
+        </app-data-grid>
+        <app-grid-footer [t]='total$ | async'></app-grid-footer>
+        <div class="w-100 flex end mt-1">
+          <app-shortcuts-list [shortcuts]='(hotkeys.registeredHostkeys$ | async)'></app-shortcuts-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

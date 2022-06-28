@@ -1,0 +1,26 @@
+<form nz-form [nzLayout]="'horizontal'">
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Column</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.column' (change)='onDataChanged()'
+        name='column'></app-columns-input>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf='showFrom'>
+    <nz-form-label [nzSm]="8">From <app-regex-helper-trigger></app-regex-helper-trigger>
+    </nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.from' (change)='onDataChanged()' name='from' />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">To</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.to' (change)='onDataChanged()' name='to' />
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

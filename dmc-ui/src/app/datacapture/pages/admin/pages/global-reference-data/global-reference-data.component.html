@@ -1,0 +1,93 @@
+<div class="ref-data-container">
+  <div class="flex column fill stretch">
+
+    <div class="site-page-header-ghost-wrapper">
+      <nz-page-header nzBordered nzBackIcon (nzBack)="onBack()" [nzGhost]="false">
+        <nz-page-header-title>{{(activeRefType$ | async)?.label}}</nz-page-header-title>
+        <nz-page-header-subtitle>
+          <nz-tag>{{(activeRefType$ | async)?.version_label}}</nz-tag>
+          <nz-tag *ngIf='(activeRefType$ | async)?.shared' [nzColor]="'#108ee9'">Shared Reference</nz-tag>
+        </nz-page-header-subtitle>
+        <nz-page-header-extra>
+          <div class="flex between">
+            <div class="pr-2">
+              <nz-upload *ngIf="(referenceData$ | async)?.length == 0" [nzAction]="uploadURI" [nzHeaders]="{ authorization: 'authorization-text' }"
+                (nzChange)="handleChange($event)">
+                <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+              </nz-upload>
+            </div>
+            <div class="pr-2">
+              <nz-upload *ngIf="(referenceData$ | async)?.length != 0"[nzAction]="updateURI" [nzHeaders]="{ authorization: 'authorization-text' }"
+                (nzChange)="handleChange($event)" [nzShowUploadList]="false">
+                <button nz-button nzType='info'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Update</button>
+              </nz-upload>
+            </div>
+            <div>
+              <button nz-button (click)="download()"><i nz-icon nzType="download" nzTheme="outline"></i> Download</button>
+            </div>
+          </div>
+          <!-- <button nzShape='circle' nz-button>A</button>
+              <button nzShape='circle' nz-button>B</button>
+              <button nzShape='circle' nz-button nzType="primary">C</button> -->
+        </nz-page-header-extra>
+        <nz-page-header-content>
+          <nz-descriptions nzSize="small" [nzColumn]="3">
+            <nz-descriptions-item nzTitle="Created On" [nzSpan]="1">
+              {{(activeRefType$ | async)?.created_on | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Modified On" [nzSpan]="1">
+              {{(activeRefType$ | async)?.modified_on | date: 'dd/MM/yyyy HH:mm'}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Collections" [nzSpan]="1">{{(activeRefType$ | async)?.domain_ids.length}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Description" [nzSpan]="2">
+              {{(activeRefType$ | async)?.description}}
+            </nz-descriptions-item>
+          </nz-descriptions>
+
+          <div class="button-spacing mt-1">
+            <button nz-button (click)='addRefrenceType()'><i nz-icon nzType='plus'></i> Add Reference Data</button>
+            <button nz-button (click)='laodData()'><i nz-icon nzType='reload'></i></button>
+          </div>
+        </nz-page-header-content>
+      </nz-page-header>
+    </div>
+
+    <nz-card class="flex fill" nzSize='small' nzTitle='Reference Data'>
+
+    <div class="h-100" style="position: relative;">
+      <nz-table nzBordered #basicTable nzShowSizeChanger nsAutoHeightTable='20' [nzData]='(referenceData$ | async)' nzSize='small'
+        [nzLoading]='loading'>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Aliases</th>
+            <th *ngFor='let p of (activeRefType$ | async)?.properties'>{{p.label}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <!-- <td>{{data.label}}</td> -->
+            <td>{{data.code}}</td>
+            <td>
+              <nz-tag *ngFor='let a of data.alias'>{{a}}</nz-tag>
+            </td>
+            <td *ngFor='let p of (activeRefType$ | async)?.properties'>{{(data.properties || {})[p.code]}}</td>
+            <td nzRight class="text-right">
+              <button nzShape='circle' class="ghost" nz-button (click)="editRefrenceType(data)"><i nz-icon
+                  nzType='edit'></i></button>
+              <nz-divider nzType="vertical"></nz-divider>
+              <button nzShape='circle' class="ghost" nz-button (click)="deleteRefrenceType(data)"><i nz-icon
+                  nzType='delete'></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+
+  </nz-card>
+
+
+  </div>
+
+
+</div>

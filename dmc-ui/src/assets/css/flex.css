@@ -1,0 +1,111 @@
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex.between{
+    justify-content: space-between;
+}
+
+.flex.around{
+    justify-content: space-around;
+}
+
+.flex.wrap{
+    flex-wrap: wrap;
+}
+
+.flex.end{
+    justify-content: flex-end;
+}
+
+.flex.start{
+    justify-content: flex-start;
+}
+
+.flex.stretch{
+    align-items: stretch;
+}
+
+
+.flex.top{
+    align-items: flex-start;
+}
+
+.flex.column.start{
+    align-items: flex-start;
+}
+
+.flex.column{
+    flex-direction: column;
+}
+
+.flex.row{
+    flex-direction: row;
+}
+
+.flex-1{
+    flex: 1 1 0%;
+}
+
+.height-1{
+    max-height: 100%;
+    min-height: 100%;
+}
+
+.flex-scroll{
+    flex: 1 1 0%;
+    height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.fill{
+    flex: 1 1 0%;
+    /* height: 0; */
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.flex.column > .fill{
+    height: 0;
+}
+
+
+.flex-hidden{
+    flex: 1 1 0%;
+    height: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
+/* TODO MEDIA QURIES FOR FLEX */
+/* @media(max-width: 1333px) {
+    .grid-item {
+      flex-basis: 33.33%;
+    }
+  } */
+  /* @media(max-width: 1073px) {
+     .grid-item {
+      flex-basis: 33.33%;
+    }
+  } */
+  @media(max-width: 815px) {
+    .admin-hierarchy-flex{
+        flex-basis: 100%;
+    }
+    .admin-content-flex{
+        flex-basis: 100%;
+    }
+    .admin-flex {
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+  /* }
+  @media(max-width: 555px) {
+    .grid-item {
+      flex-basis: 100%;
+    } */
+  }

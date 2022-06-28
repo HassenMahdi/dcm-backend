@@ -1,0 +1,65 @@
+nz-page-header {
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 3px;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.wrap {
+  display: flex;
+}
+
+:host ::ng-deep .ant-page-header-heading-sub-title {
+  margin: 8px 0 !important;
+}
+
+:host ::ng-deep .ant-page-header {
+  padding: 8px 16px 6px 16px !important;
+}
+
+:host ::ng-deep .ant-page-header-heading-title {
+  line-height: 48px !important;
+  padding-right: 6px !important;
+}
+
+.content {
+  flex: 1;
+}
+
+.content p {
+  margin-bottom: 6px;
+}
+
+
+.content-link a {
+  display: inline-block;
+  vertical-align: sub;
+  margin-right: 6px;
+  opacity: 0.8;
+}
+
+.content-link a:hover {
+  opacity: 1;
+}
+
+.content-link a img {
+  margin-right: 8px;
+}
+
+.primary {
+  font-size: 18px;
+  padding-top: 4px;
+  line-height: 24px;
+}
+.padding-fix {
+  padding: 9px 0;
+}
+
+
+.icon{
+  position: relative;
+  top: 4px;
+}

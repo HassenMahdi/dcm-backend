@@ -1,0 +1,24 @@
+<form nz-form [nzLayout]="'horizontal'">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Destination</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.destination' (change)='onDataChanged()' name='destination' />
+      <!-- <app-columns-input [nzSize]='size' [nodeIndex]='index' [(ngModel)]='data.destination' name='destination' (change)='onDataChanged()'></app-columns-input> -->
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Columns</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <app-columns-input [nzSize]='size' [nodeIndex]='index' mode='multiple' [(ngModel)]='data.columns' name='columns'
+        (change)='onDataChanged()'></app-columns-input>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Seperator</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.separator' (change)='onDataChanged()' name='separator' />
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

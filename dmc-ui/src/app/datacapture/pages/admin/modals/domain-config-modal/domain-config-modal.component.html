@@ -1,0 +1,34 @@
+<nz-form-item>
+  <nz-form-label [nzSpan]="7" nzRequired>Collection Name</nz-form-label>
+  <nz-form-control [nzSpan]="12">
+    <input nz-input [(ngModel)]='data.name' placeholder="Name Here" />
+  </nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Description</nz-form-label>
+  <nz-form-control [nzSpan]="12">
+    <textarea [(ngModel)]='data.description' nz-input rows="2" placeholder="Write your description here"></textarea>
+  </nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7" nzRequired>Classification</nz-form-label>
+  <nz-form-control [nzSpan]="12">
+    <nz-select nzPlaceholder="Choose the collection's classification" class="w-100" [(ngModel)]='data.classification'>
+      <nz-option *ngFor='let o of classifications' [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+    </nz-select>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item>
+  <nz-form-label [nzSpan]="7" nzRequired>Transfer to database</nz-form-label>
+  <nz-form-control [nzSpan]="12" class="pl-2">
+    <nz-switch [(ngModel)]='data.enableDF' placeholder="Enable/Disable Database transfer."></nz-switch>
+  </nz-form-control>
+</nz-form-item>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" [disabled]="!canClose()" (click)="close()">Cancel</button>
+  <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()"
+    [nzLoading]="loading">{{edit? "Save": "Create"}}</button>
+</div>

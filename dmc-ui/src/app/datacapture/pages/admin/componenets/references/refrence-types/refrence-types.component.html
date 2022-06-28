@@ -1,0 +1,30 @@
+<button nz-button nzType='dashed' nzBlock (click)='addRefrenceType()'><i nz-icon nzType='plus'></i>Add Reference Type</button>
+<nz-list style="min-width: 300px;">
+    <nz-list-item class="flex between" *ngFor="let item of list$ | async">
+      
+            <div class="flex column start">
+                <div class="font-weight-bold">{{ item.label }}</div>
+                <div class="text-muted">{{ item.description }}</div>
+            </div>
+
+            <div>
+                <button nz-button nzShape='circle' class="ghost" (click)='openReferenceData(item)'><i nz-icon nzType='edit'></i></button>
+                <button nz-button nz-dropdown [nzDropdownMenu]="collapsedTrans" class="ghost" nzShape='circle'><i nz-icon
+                    nzType="ellipsis" [nzRotate]='90'></i></button>
+                    <nz-dropdown-menu #collapsedTrans="nzDropdownMenu">
+                        <ul nz-menu>
+                            <div class="button-spacing">
+                                <button nz-button nzShape='circle' class="ghost" (click)='editRefrenceType(item)'><i nz-icon nzType='setting'></i></button>
+                                <button nz-button nzShape='circle' class="ghost" (click)='deleteRefrenceType(item)'><i nz-icon nzType='delete'></i></button>
+                                <button nz-button nzShape='circle' nz-tooltip nzTooltipTitle='Share with other collections' class="ghost" (click)='shareRefrenceType(item)'><i nz-icon nzType='share-alt'></i></button>
+                            </div>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
+
+    </nz-list-item>
+</nz-list>
+
+
+<ng-template #header>
+</ng-template>

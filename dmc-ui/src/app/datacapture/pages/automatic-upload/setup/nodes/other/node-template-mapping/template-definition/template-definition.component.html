@@ -1,0 +1,193 @@
+
+<!-- {{array_elements | json}} -->
+<ng-container *ngIf="template$ | async; let t">
+
+    <div class="mapping-tree">
+        <ng-container *ngTemplateOutlet="refDefinition; context: {ref: t.$ref, path:null};"></ng-container>
+    </div>
+    
+</ng-container>
+
+<ng-template #schemaDefinition let-defs="defs" let-path="path">
+    <ng-container *ngFor="let def of defs">
+
+        <ng-container *ngIf="def.$ref">
+            <ng-container *ngTemplateOutlet="refDefinition; context: {ref: def.$ref, path:path};"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="def.properties">
+            <ng-container *ngTemplateOutlet="propertyDefinition; context: {def: def, path:path};"></ng-container>
+        </ng-container>
+
+    </ng-container>
+</ng-template>
+
+<!-- Simple Definition -->
+
+<ng-template #propertyDefinition let-def="def" let-path="path">
+
+    <ng-container *ngFor="let p of def.properties | keyvalue | enbaleExtention : enableExtentions">
+        <ng-container [ngSwitch]="p.value.type">
+            <!-- Does not have type -->
+            <ng-container *ngSwitchCase="null">
+                <ng-container *ngTemplateOutlet="reference; context: {property:p.key, def:p.value, path:(path)? ( path + '.' + p.key ): p.key};"></ng-container>
+            </ng-container>
+
+            <!-- Array Type -->
+            <ng-container *ngSwitchCase="'array'">
+                <ng-container *ngTemplateOutlet="Array; context: {property:p.key, def:p.value, path: (path)? ( path + '.' + p.key ): p.key};"></ng-container>
+            </ng-container>
+
+            <!-- Refernce Type -->
+            <ng-container *ngSwitchDefault>
+                <ng-container *ngTemplateOutlet="primitive; context: {property:p.key, def:p.value, path: (path)? ( path + '.' + p.key ): p.key};"></ng-container>
+            </ng-container>
+        </ng-container>  
+    </ng-container>
+
+</ng-template>
+
+
+<ng-template #refDefinition let-ref="ref" let-path="path">
+
+    <!-- GET THE REF DEFINITION -->
+    <ng-container *ngIf="findDefinition(ref); let definitions">
+        <ng-container *ngTemplateOutlet="schemaDefinition; context: {defs: definitions, path:path};"></ng-container>
+    </ng-container>
+
+</ng-template>
+
+
+<!-- PROPERTIES -->
+<ng-template #Array let-property="property" let-def="def" let-path="path">
+
+    <div class="node">
+
+        <div class="flex between">
+
+            <ng-container *ngTemplateOutlet="nodeArrow; context: {path:path};"></ng-container>
+            
+            <i class="node-icon" nz-icon nzType="appstore" nzTheme="twotone"></i>
+            <span class="node-label" nz-popover [nzPopoverContent]="def.description">{{property}}</span> 
+            
+            <ng-container *ngTemplateOutlet="nodeStatus; context: {path:path};"></ng-container>
+
+            <span class="fill"></span>
+
+            <span class="button-spacing">
+                <button (click)="AddArrayElement(path, item)" 
+                *ngFor="let item of def.items | keyvalue"
+                nz-button nzSize="small" nzType="dashed" 
+                class="mb-1" >
+                    <i nz-icon nzType="plus-circle"></i>
+                    <span style="min-width: 100px;">{{item.value.split("/").pop()}}</span>
+                </button>
+            </span>
+
+
+        </div>
+    
+    
+    <ng-container *ngIf="expandedProps[path]">
+        <div class="ml-4 mt-2">
+            <!-- Array Elemenyts here -->
+            <ng-container *ngFor="let element of array_elements[path] | keyvalue; let i=index">
+                <ng-container *ngFor="let item of def.items | keyvalue">
+
+                    <div [ngSwitch]="item.key">
+                        <ng-container *ngSwitchCase="'$ref'">
+                            <ng-container *ngTemplateOutlet="reference; context: {property:'[' + i + ']', def: {'$ref':item.value}, path: path + '.' + '[' + i + ']'};"></ng-container>
+                        </ng-container>
+                        <div *ngSwitchDefault>
+                            <ng-container *ngTemplateOutlet="primitive; context: {property:'[' + i + ']', def: {'type':item.value}, path: path + '.' + '[' + i + ']'};"></ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <!-- <ng-container *ngFor="let item of def.items | keyvalue">
+                <div *ngFor="let i of [0]">
+
+                    <div [ngSwitch]="item.key">
+                        <ng-container *ngSwitchCase="'$ref'">
+                            <ng-container *ngTemplateOutlet="reference; context: {property:'[' + i + ']', def: {'$ref':item.value}, path: path + '.' + '[' + i + ']'};"></ng-container>
+                        </ng-container>
+                        <div *ngSwitchDefault>
+                                <ng-container *ngTemplateOutlet="primitive; context: {property:'[' + i + ']', def: item.value, path: path + '.' + '[' + i + ']'};"></ng-container>
+                        </div>
+                    </div>
+                        
+                </div>
+                    
+            </ng-container> -->
+                
+            </div>
+        </ng-container>
+        
+    </div>
+</ng-template>
+
+
+<ng-template #reference let-property="property" let-def="def" let-path="path">
+    
+    <div class="node">
+
+        <ng-container *ngTemplateOutlet="nodeArrow; context: {path:path};"></ng-container>
+        
+        <i class="node-icon" nz-icon nzType="folder" nzTheme="twotone"></i>
+        <span class="node-label" nz-popover [nzPopoverContent]="def.description">{{property}}</span> 
+        <span class="node-type text-muted">({{def.$ref.split("/").pop()}})</span> 
+        
+        <ng-container *ngTemplateOutlet="nodeStatus; context: {path:path};"></ng-container>
+        
+        <ng-container *ngIf="expandedProps[path]">
+            <div class="ml-4 mt-2" *ngIf="findDefinition(def.$ref); let refAllOf">
+                <ng-container *ngTemplateOutlet="schemaDefinition; context: {defs: refAllOf, path:path};"></ng-container>
+            </div>
+        </ng-container>
+        
+    </div>
+</ng-template>
+
+<ng-template #primitive let-property="property" let-def="def" let-path="path">
+    
+    <div class="node" [class.highlight]="highlight" dndDropzone (dndDrop)="onDrop($event, path)">
+
+        <ng-container *ngTemplateOutlet="nodeArrow; context: {path:path};"></ng-container>
+        
+            <i class="node-icon" *ngIf='doesPathHaveMapping(path)' nz-icon nzType="check-square"></i>
+            <i class="node-icon" *ngIf='!doesPathHaveMapping(path)' nz-icon nzType="border"></i>
+
+            <span  class="node-label" nz-popover [nzPopoverContent]="def.description">
+                {{property}}
+            </span>
+            <span class="node-type text-muted">({{def.type}})</span>
+
+            <span *ngIf='doesPathHaveMapping(path)'> 
+                <nz-tag><i nz-icon nzType="caret-left"></i>{{model[path]}}</nz-tag>
+            </span>
+            
+                        
+            <ng-container *ngIf="expandedProps[path]">
+
+            <div class="ml-4 mt-2">
+                <input type="text" nz-input style="width: 200px;" [attr.placeholder]="path" (change)="onMappingChanged($event, path)" [ngModel]="model[path]">
+            </div>
+
+        </ng-container>
+    </div>
+</ng-template>
+
+
+<!-- UTILITIES -->
+<ng-template #nodeArrow let-path="path">
+    <span class="node-arrow">
+        <i nz-icon *ngIf="!expandedProps[path]"  nzType="right" (click)="expandedProps[path] = !expandedProps[path]"></i>
+        <i nz-icon *ngIf="expandedProps[path]" nzType="down" (click)="expandedProps[path] = !expandedProps[path]"></i>
+    </span>
+</ng-template>
+
+<ng-template #nodeStatus let-path="path">
+    <span class="ml-2" *ngIf="doesPathHaveMapping(path); let mapcount">
+        <nz-tag><b>{{mapcount}}</b> field(s) mapped</nz-tag>
+    </span>
+</ng-template>

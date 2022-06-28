@@ -1,0 +1,20 @@
+code.docutils.literal.notranslate {
+    padding: 5px;
+    margin-right: 5px;
+    background: #efefef;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+dl {
+    display: inline-flex;
+}
+
+.doctest.highlight-default.notranslate,
+.highlight-python3.notranslate
+{
+    background: #dfffe4;
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: 0 0rem 0.5rem rgba(0,0,0,.15)!important;
+}

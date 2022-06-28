@@ -1,0 +1,41 @@
+<div class="flex start column h-100" style="max-width: 350px;">
+
+
+  <div class="flex between w-100">
+    <app-transformation-toolbar class="w-100" [showTransformation]='true'></app-transformation-toolbar>
+
+  </div>
+  <div class="flex-scroll w-100 pipe-bg">
+    <app-transformation-pipe></app-transformation-pipe>
+  </div>
+
+  <div class="w-100 flex between mt-1">
+    <button *ngIf="enableAddbtn(profile)" class='ghost' nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Edit" nz-dropdown
+      [nzDropdownMenu]="editMenu">
+      <nz-badge [nzDot]='!pipeInfo.name'><i nz-icon nzType="edit"></i></nz-badge>
+    </button>
+    <button *ngIf="!enableAddbtn(profile)" class='ghost' nzShape='circle' nz-button disabled>
+      <nz-badge [nzDot]='!pipeInfo.name'><i nz-icon nzType="edit"></i></nz-badge>
+    </button>
+    <app-transformation-toolbar [showActions]='true' [profile]="profile" [superDomain]="superDomain"></app-transformation-toolbar>
+  </div>
+
+</div>
+
+<nz-dropdown-menu #editMenu="nzDropdownMenu">
+  <ul nz-menu class='p-3 border' style="width: 300px;">
+    <nz-form-item>
+      <nz-form-label>Pipe Name</nz-form-label>
+      <nz-form-control>
+        <input nz-input (change)='onChanged()' placeholder='Name' [(ngModel)]="pipeInfo.name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Pipe Description</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input rows="4" (change)='onChanged()' placeholder='Description'
+          [(ngModel)]="pipeInfo.description"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </ul>
+</nz-dropdown-menu>

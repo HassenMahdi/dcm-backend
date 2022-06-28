@@ -1,0 +1,6 @@
+    
+    <div class="h-100 flex column stretch">
+        <app-data-grid class="flex-1" [paginationPageSize]='size$ | async' [columnDefs]="headers$ | async"
+        (gridReady)="gridReady$.next($event)"></app-data-grid>
+    </div>
+  

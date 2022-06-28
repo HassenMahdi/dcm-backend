@@ -1,0 +1,54 @@
+<div class="flex-1 flex stretch column h-100">
+  <nz-page-header class="site-page-header" (nzBack)="navigate(['datacapture/admin/domains/'])" nzBackIcon
+    nzTitle="Collections" nzSubtitle="Manage Domain collections">
+  </nz-page-header>
+
+  <div class="flex wrap between mb-2">
+    <div class="button-spacing">
+      <button nz-button class="ghost" [disabled]="!enableAddbtn((profile$ | async))" (click)='openConfig(null)'><i nz-icon nzType="plus"></i>Add Collection</button>
+      <button class="ghost" nz-button nzType="default" (click)="load_data()"><i nz-icon nzType="reload"></i></button>
+    </div>
+
+    <app-display-changer></app-display-changer>
+
+    <div>
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" [(ngModel)]='searchTerm' nz-input placeholder="Filter Collections" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+  </div>
+
+
+  <div class="flex-1 flex-scroll bg-grey">
+    <div nz-row nzType='flex' nzAlign='stretch'>
+
+      <div nz-col class="gutter-row" [nzSpan]="(s.displayList$ | async)?24:8"
+        *ngFor="let d of domains$ | async | filter :'name': searchTerm">
+
+        <!-- <nz-card class="inner-box super-domain-card"> -->
+
+        <app-collection-card [class]='(s.displayList$ | async)?"":"h-100"' [data]='d' [loading]='loading'
+          (edited)='load_data()' (deleted)='load_data()' (copied)='load_data()'>
+          <div class="button-spacing">
+            <button (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'fields'])"
+              nz-button nzType="default"><i nz-icon nzType="unordered-list"></i>Target Fields</button>
+            <button nz-button nzType="default"
+              (click)="navigate(['/datacapture/admin/domains', super_domain_id, 'collection', d.id, 'references'])"><i
+                nz-icon nzType="font-size" nzTheme="outline"></i>Refrence Data</button>
+          </div>
+        </app-collection-card>
+
+      </div>
+      <!-- </nz-card> -->
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!-- TEMPLATES -->

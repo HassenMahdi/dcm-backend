@@ -1,0 +1,26 @@
+<div class="node-box">
+  <div>
+    <form nz-form [nzLayout]="'horizontal'">
+
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24">Source Column</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <input nz-input [nzSize]='size' [(ngModel)]='data.url' name="url" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24">Destination</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <input nz-input [nzSize]='size' [(ngModel)]='data.destination' name="destination" />
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </div>
+
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+  </div>
+</div>

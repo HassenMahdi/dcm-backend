@@ -1,0 +1,49 @@
+<form nz-form [nzLayout]="'horizontal'">
+  <div *ngFor='let c of data.conditions; let i = index'>
+
+    <div class="flex between">
+      <div nz-typography class="text-muted p-0" [attr.size]='size'>Condition {{i+1}}</div>
+      <button class="ghost p-0" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Remove Predicate"
+        (click)='onRemoveCondition(i)'><i nz-icon nzType="minus"></i></button>
+    </div>
+
+    <!-- </ng-template> -->
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Column</nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <app-columns-input [nzSize]='size' [nodeIndex]='index' [ngModelOptions]=" {standalone: true}"
+          [(ngModel)]='c.column' (change)='onDataChanged()'></app-columns-input>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Operation</nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <nz-select [nzSize]='size' [(ngModel)]='c.op' [ngModelOptions]=" {standalone: true}"
+          (ngModelChange)='onDataChanged()' nzPlaceHolder='None'>
+          <nz-option-group *ngFor='let og of operations' [nzLabel]='og.label'>
+            <nz-option *ngFor='let o of og.operations' [nzValue]='o.value' [nzLabel]='o.label'></nz-option>
+          </nz-option-group>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="8">Value <app-regex-helper-trigger *ngIf='isUsingRegex(c.op)'></app-regex-helper-trigger>
+      </nz-form-label>
+      <nz-form-control [nzSm]="16">
+        <input nz-input [nzSize]='size' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.condition'
+          (change)='onDataChanged()' />
+      </nz-form-control>
+    </nz-form-item>
+
+  </div>
+
+  <div class="flex"><button class="ghost" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Add Predicate"
+      (click)='onAddCondition()'><i nz-icon nzType="plus"></i></button></div>
+
+  <label *ngIf='showReverse' nz-checkbox [ngModelOptions]=" {standalone: true}" [(ngModel)]='data.reverse'
+    (ngModelChange)='onDataChanged()'>Reverse Filter</label>
+
+</form>

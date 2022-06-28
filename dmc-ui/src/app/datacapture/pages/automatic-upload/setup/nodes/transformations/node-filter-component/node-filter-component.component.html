@@ -1,0 +1,54 @@
+<div class="node-box">
+  <div>
+    <p nz-typography [(nzContent)]="data.label"></p>
+    <form nz-form [nzLayout]="'horizontal'">
+      <div *ngFor='let c of data.conditions; let i = index'>
+
+        <div class="flex between">
+          <div nz-typography class="text-muted p-0">Condition {{i+1}}</div>
+          <button class="ghost p-0" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Remove Predicate"
+            (click)='onRemoveCondition(i)'><i nz-icon nzType="minus"></i></button>
+        </div>
+
+        <!-- </ng-template> -->
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">Column</nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <input nz-input [nzSize]='size' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.column' />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">Operation</nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <nz-select [nzSize]='size' [(ngModel)]='c.op' [ngModelOptions]=" {standalone: true}" nzPlaceHolder='None'>
+              <nz-option-group *ngFor='let og of operations' [nzLabel]='og.label'>
+                <nz-option *ngFor='let o of og.operations' [nzValue]='o.value' [nzLabel]='o.label'></nz-option>
+              </nz-option-group>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="8">Value <app-regex-helper-trigger *ngIf='isUsingRegex(c.op)'>
+            </app-regex-helper-trigger>
+          </nz-form-label>
+          <nz-form-control [nzSm]="16">
+            <input nz-input [nzSize]='size' [ngModelOptions]=" {standalone: true}" [(ngModel)]='c.condition' />
+          </nz-form-control>
+        </nz-form-item>
+
+      </div>
+
+      <div class="flex"><button class="ghost" nzShape='circle' nz-button nz-tooltip nzTooltipTitle="Add Predicate"
+          (click)='onAddCondition()'><i nz-icon nzType="plus"></i></button></div>
+
+      <label nz-checkbox [ngModelOptions]=" {standalone: true}" [(ngModel)]='data.reverse' >Reverse Filter</label>
+    </form>
+  </div>
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+  </div>
+</div>

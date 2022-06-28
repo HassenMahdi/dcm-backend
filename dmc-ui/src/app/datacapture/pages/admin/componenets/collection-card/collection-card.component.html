@@ -1,0 +1,28 @@
+<ng-template #extraTemplate>
+  <div class="button-spacing ghost">
+    <button nzShape='circle' nz-button (click)='onEdit()'><i nz-icon nzType="edit"></i></button>
+    <nz-divider nzType='vertical'></nz-divider>
+    <button nzShape='circle' nz-button (click)='onCopy()'><i nz-icon nzType="copy"></i></button>
+    <nz-divider nzType='vertical'></nz-divider>
+    <button nzShape='circle' nz-button (click)='onDelete()'><i nz-icon nzType="delete"></i></button>
+  </div>
+</ng-template>
+<ng-template #titleTemplate>
+  <div class="flex start wrap">
+
+    <h4>
+      <nz-avatar *ngIf='!small' [nzSize]="42" nzIcon="block" style="background-color:#87d068;"></nz-avatar>
+      <i nz-icon *ngIf='small' style="color: #87d068;" nzType='block'></i>
+      {{data?.name}}
+    </h4>
+  </div>
+</ng-template>
+
+<ng-template #clockTemplate><i nz-icon nzType="clock-circle"></i></ng-template>
+<ng-template #editedTemplate><i nz-icon nzType="edit"></i></ng-template>
+
+<nz-card class="collection-card" [ngClass]='class' [nzExtra]="extraTemplate" [nzTitle]='titleTemplate'
+  [nzLoading]='loading' [nzSize]='s.displaySize$ | async'>
+  <app-meta *ngIf='!small' [data]='data'></app-meta>
+  <ng-content></ng-content>
+</nz-card>

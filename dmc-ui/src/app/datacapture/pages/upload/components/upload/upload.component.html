@@ -1,0 +1,29 @@
+<div class="main-container flex-box">
+  <!-- Header -->
+  <div class="importHeader" nz-row>
+    <div nz-col nzSpan="18">
+    </div>
+    <div nz-col nzSpan="6" class="text-right button-spacing">
+      <button nz-button nzType="primary" nzGhost nzSize="middle" nzShape="round" nz-tooltip
+        [disabled]="!['READY'].includes(uploadStatus$ | async)" nzTooltipTitle="Previous Step" nzTooltipPlacement="left"
+        (click)="goToCleansing()"><i nz-icon nzType="caret-left"></i> Previous</button>
+      <nz-divider nzType='vertical'></nz-divider>
+      <button nz-button nzSize="middle" nzShape="circle" nz-tooltip nzTooltipTitle="Reset" nzTooltipPlacement="left"
+        (click)="cancelUpload()">
+        <i nz-icon nzType="close"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="flex-box">
+    <app-overview [metaData]="metaData$ | async" class="mt-4"></app-overview>
+    <app-upload-tags [metaData]="metaData$ | async" (tagsChanged)="selectedTags = $event" class="mt-2">
+    </app-upload-tags>
+    <div class="flex-child mt-2">
+      <app-upload-data [selectedTags]="selectedTags" [metaData]="metaData$ | async" (cancel)="cancelUpload()">
+      </app-upload-data>
+    </div>
+
+  </div>
+</div>

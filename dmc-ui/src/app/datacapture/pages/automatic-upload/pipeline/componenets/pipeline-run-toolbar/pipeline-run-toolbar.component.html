@@ -1,0 +1,64 @@
+
+
+<nz-card class="paddless" *ngIf='showProgress'>
+
+    <!-- SWITCH STATUS -->
+    <div class="m-2">
+
+      <div class="flex between font-weight-light ">
+        <div>
+          <button class="ghost" nz-button nzShape='circle' (click)='showDetails=!showDetails'>
+            <i *ngIf='showDetails' nz-icon nzType="up" nzTheme="outline"></i>
+            <i *ngIf='!showDetails' nz-icon nzType="down" nzTheme="outline"></i>
+          </button>
+          <i nz-icon nzType="fund-projection-screen" nzTheme="outline"></i> Run Information
+        </div>
+        <div>
+          <span class="mr-2" *ngFor='let l of legend | keyvalue'><span class="mr-1" style="display: inline-block; width: 10px; height: 10px;" [style.background-color]='l.value.color'></span>{{l.value.label}}</span>
+        </div>
+      </div>
+
+    <div class="mt-2" *ngIf='showDetails'>
+
+      <!-- DESCRIPTIONS -->
+        
+      <nz-descriptions class="mb-2" *ngIf='showProgress' [nzColon]='false' nzSize="small">
+        <nz-descriptions-item nzTitle="Tasks">{{doneSteps}} (Done) / {{progressSteps}} (Total)</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Status"><nz-badge [nzStatus]="badgeType" [nzText]='run.state'></nz-badge></nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Run Files"><button nz-button (click)="openLogs(run)"><i nz-icon nzType="file" nzTheme="outline"></i>Logs</button></nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Excecution Date">{{run.execution_date | date}}</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="Tasks"><nz-progress [nzStatus]="progressStatus" [nzPercent]="progress" [nzSteps]="progressSteps" nzStrokeColor="#1890ff"></nz-progress></nz-descriptions-item> -->
+        <nz-descriptions-item nzTitle="Start Date">{{run.start_date | date}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="End Date">{{run.end_date | date}}</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="Run ID">{{run.run_id}}</nz-descriptions-item> -->
+      </nz-descriptions>
+
+        <!-- BUTTONS -->
+        <!-- <ng-container [ngSwitch]="runStatus" >
+
+          <div *ngSwitchCase="'not_running'" class="button-spacing">
+              <button nz-button (click)='trigger.emit()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
+              <button  nz-button><i nz-icon nzType='bug'></i> Debug</button>
+            </div>
+            <div *ngSwitchCase="'running'">
+              <button nz-button nzDanger><i nz-icon nzType='stop'></i> Stop</button>
+              
+            </div>
+            <div *ngSwitchDefault>
+              <div class="button-spacing">
+              <button nz-button (click)='trigger.emit()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger Again</button>
+              <button nz-button><i nz-icon nzType='file'></i> View Logs</button>
+            </div>
+          </div>
+        </ng-container> -->
+    </div>
+
+    <!-- <nz-progress [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress> -->
+
+  </div>
+
+  <nz-progress class="raw" [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress>
+
+  <!-- <nz-progress class="raw"  *ngIf='showProgress' [nzPercent]="progress" nzSize="small" [nzStatus]="progressStatus"></nz-progress> -->
+
+  </nz-card>

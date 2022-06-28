@@ -1,0 +1,28 @@
+<div class="grid-container">
+
+    <div *ngFor='let e of stats' class="grid-item grid-stats bg-{{e.theme}}">
+        <p nz-typography class="stat-text">{{e.title}}</p>
+        <div class="flex start">
+            <h3 nz-typography style="font-size: 32px;" class="text-white">{{e.value}}</h3>
+        </div>
+    </div>
+
+    <nz-card nzSize='small' class="grid-item" style="grid-column: span 3;" nzTitle='Recent Uploads'>
+        <nz-empty></nz-empty>
+    </nz-card>
+    <nz-card nzSize='small' class="grid-item"  style="grid-row: span 2;" nzTitle='Saved Progress'>
+        <nz-empty></nz-empty>
+    </nz-card>
+
+    <nz-card nzSize='small' class="grid-item" style="grid-column: span 2;" nzTitle='Misc'>
+        <div class="flex between">
+            <nz-statistic [nzValue]="(1949101 | number)!" [nzTitle]="'Active Users'"></nz-statistic>
+            <nz-statistic [nzValue]="(1949101 | number)!" [nzTitle]="'Active Users'"></nz-statistic>
+            <nz-statistic [nzValue]="(1949101 | number)!" [nzTitle]="'Active Users'"></nz-statistic>
+            <nz-statistic [nzValue]="(1949101 | number)!" [nzTitle]="'Active Users'"></nz-statistic>
+        </div>
+    </nz-card>
+    <nz-card nzSize='small' class="grid-item" nzTitle='Collaborators'>
+        <nz-avatar class="mr-2" *ngFor='let e of [0,0,0,0,0,0]' nzText="JD"></nz-avatar>
+    </nz-card>
+</div>

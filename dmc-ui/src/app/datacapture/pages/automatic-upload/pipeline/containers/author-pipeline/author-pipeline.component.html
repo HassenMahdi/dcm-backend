@@ -1,0 +1,44 @@
+<div class="flex column stretch h-100">
+  <app-pipeline-editor [headerText]='(metadata$ | async)?.name || "UNAMED"' [readOnly]="context.monitor_as_run && !context.failed" [run]='run$|async' class="fill" [diagramNodeData]='nodes$ | async' 
+  [diagramLinkData]='links$ | async' 
+  (diagramNodeDataChange)='onDiagramNodeDataChange($event)'
+  (diagramLinkDataChange)='onDiagramLinkDataChange($event)'
+  (taskDatasetChanged)="onTaskDatasetChange($event)"
+  >
+
+  <div class="button-spacing ghost flex start">
+    <ng-container *ngIf='context.monitor'>
+      <span class="ml-2">
+        <nz-tag [nzColor]="'#108ee9'" *ngIf='context.monitor_as_run'>Monitor</nz-tag>
+        <nz-tag [nzColor]="'#87d068'" *ngIf='context.monitor_as_preview'>Preview <span *ngIf='context.paused'>(Paused)</span> </nz-tag>
+      </span>
+      <nz-divider nzType='vertical'></nz-divider>
+    </ng-container>
+    <ng-container *ngIf='context.idle'>
+      <button [disabled]='loadingTrigger$ | async' nz-button (click)="onEdit()"><i nz-icon nzType='edit'></i>Edit</button>
+      <button [disabled]='loadingTrigger$ | async' nz-button (click)="onSave()"><i nz-icon nzType='save'></i>Save</button>
+      <nz-divider nzType='vertical'></nz-divider>
+    </ng-container>
+    <ng-container *ngIf='context.idle'>
+      <button [disabled]='loadingTrigger$ | async' (click)='onPublish()' nz-button><i nz-icon nzType='upload'></i>Publish</button>
+      <nz-divider nzType='vertical'></nz-divider>
+    </ng-container>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.idle' (click)='onTrigger()'><i nz-icon nzType="caret-right" nzTheme="outline"></i> Trigger</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.idle' (click)='onTriggerPreview()'><i nz-icon nzType='bug'></i> Debug</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.running' (click)='onCancel()'><i nz-icon nzType="close" nzTheme="outline"></i> Cancel</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.success || context.failed' (click)='onCancel()'><i nz-icon nzType="arrow-left" nzTheme="outline"></i> Exit Preview</button>
+
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.running && !context.paused' (click)='onPause()'><i nz-icon nzType="pause-circle" nzTheme="outline"></i> Pause</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.paused' (click)='onContinue()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Unpause</button>
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_preview && context.paused' (click)='onJumpNext()'><i nz-icon nzType="play-circle" nzTheme="outline"></i> Continue</button>
+
+    <button  [disabled]='loadingTrigger$ | async' nz-button *ngIf='context.monitor_as_run && context.failed' (click)='onRetryFailed()'><i nz-icon nzType="reload" nzTheme="outline"></i> Retry</button>
+    <nz-divider nzType='vertical'></nz-divider>
+
+   
+  </div>
+
+  </app-pipeline-editor>
+
+  <app-pipeline-run-toolbar [run]='run$|async' (trigger)='onTrigger()'></app-pipeline-run-toolbar>
+</div>

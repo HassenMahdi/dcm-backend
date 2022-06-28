@@ -1,0 +1,4 @@
+<nz-descriptions>
+  <nz-descriptions-item nzTitle="Header Name">{{name}}</nz-descriptions-item>
+  <nz-descriptions-item *ngFor='let d of keys(description)' [nzTitle]="d">{{description[d]}}</nz-descriptions-item>
+</nz-descriptions>

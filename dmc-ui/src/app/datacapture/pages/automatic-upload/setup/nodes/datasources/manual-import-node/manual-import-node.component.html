@@ -1,0 +1,56 @@
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+
+<nz-spin *ngIf='!imported' class="flex-box" [nzSpinning]="importing">
+    <nz-upload nzType="drag" [nzAction]="url" [nzShowUploadList]="false"
+      [nzAccept]="'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .mdb'"
+      (nzChange)="handleChange($event)">
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="inbox"></i>
+      </p>
+      <p class="ant-upload-text">Click or drag file to this area to import</p>
+      <p class="ant-upload-hint">
+        Once selected the file will be automatically uploaded into our server.
+      </p>
+    </nz-upload>
+  </nz-spin>
+
+  <ng-container *ngIf='imported'>
+    <h4>{{data.filename}}</h4>
+    <p>Select a sheet</p>
+    <nz-spin [nzSpinning]="importing">
+        <div class="flex stretch wrap button-spacing">
+            <button nz-button (click)='onSheetSelected(e)' *ngFor="let e of data.sheets"
+          [ngClass]='{"active": data.sheetId == e.sheetId}' class="flex-1" style="min-height: 100px;">
+          <div class="flex column">
+              <i style="font-size: 34px;" nz-icon nzType='copy' nzTheme='twotone'></i>
+              <i>{{e.sheetName}}</i>
+            </div>
+        </button>
+        </div>      
+    </nz-spin>
+
+       
+   
+
+</ng-container>
+
+
+<div class="button-spacing mt-2">
+  <button nz-button (click)="openConfig()"><i nz-icon nzType="setting"></i>Select Range</button>
+  <!-- <button nz-button (click)="resetRange()"><i nz-icon nzType="redo"></i>Reset Range</button> -->
+  </div>
+
+<nz-alert class="mt-2" nzShowIcon *ngIf='data.sheet_id' nzMessage="Dataset is ready"></nz-alert>
+
+
+<div *ngIf='imported' class="flex column stretch mt-2" style="height: 300px;">
+  <app-data-grid [floatingFilter]='false' class="flex-1" [paginationPageSize]='size$ | async' [columnDefs]="headers$ | async"
+  (gridReady)="gridReady$.next($event)"></app-data-grid>
+</div>
+
+
+<div class="button-spacing mt-2" >
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button (click)='removeData()'>Remove</button>
+</div>

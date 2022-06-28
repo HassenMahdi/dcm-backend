@@ -1,0 +1,37 @@
+::ng-deep .error-cell {
+  border-color: #c04e4e !important;
+  /* border-color: #ffbfbf !important; */
+}
+
+::ng-deep .edited-cell {
+  border-style: dashed;
+  /* border-color: #ffbfbf !important; */
+}
+
+::ng-deep .warning-cell {
+  border-color: #e48d53 !important;
+}
+
+::ng-deep .error-cell,
+::ng-deep .warning-cell
+{
+  border-style: dashed !important;
+  border-width: 1px !important;
+
+  text-decoration: underline !important;
+}
+
+::ng-deep .error-cell.ag-cell-focus,
+::ng-deep .warning-cell.ag-cell-focus
+{
+  border-style: solid !important;
+}
+
+
+::ng-deep .index-cell {
+  background-color: #f0f0f0 !important;
+}
+
+:host{
+  display: contents;
+}

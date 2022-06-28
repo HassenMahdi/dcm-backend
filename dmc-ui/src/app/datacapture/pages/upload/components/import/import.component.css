@@ -1,0 +1,74 @@
+.main-container {
+  padding: 18px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-child {
+  flex: 1 1 auto;
+}
+
+.importHeader {
+  padding-bottom: 18px;
+}
+
+.selectStyleSheet {
+  width: 40%;
+}
+
+.loader {
+  text-align: center;
+  padding: 12%
+}
+
+:host ::ng-deep .ant-spin-container {
+  flex: 1 1 auto;
+}
+
+:host ::ng-deep .ant-divider-inner-text {
+  /* color: #28a745 !important; */
+}
+
+.centerBox {
+  height: 100%;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  border: 1px dashed #d9d9d9;
+  margin-top: 24px;
+}
+
+.centerBox:hover {
+  border: 1px dashed #40a9ff;
+  box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.1) !important;
+}
+
+:host nz-divider.horiz {
+  /* margin: 0 !important; */
+  /* margin: 0 0 24px 0 !important; */
+}
+
+:host ::ng-deep .ant-divider-inner-text {
+  /* color: #28a745!important; */
+}
+
+.requiredInput {
+  border: 1px solid tomato;
+  display: block;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-top-width: 1.02px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.req-input {
+  border: 1px solid tomato;
+}

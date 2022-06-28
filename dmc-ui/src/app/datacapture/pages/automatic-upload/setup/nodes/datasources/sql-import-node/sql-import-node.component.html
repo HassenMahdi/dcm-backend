@@ -1,0 +1,73 @@
+<div class="flex column stretch h-100">
+    <div>
+        <h6 nz-typography>Edit {{data.label}} ({{nodeClass.connectorDef.label}})</h6>
+    </div>
+    <div class="fill flex-scroll">
+        <form nz-form nzLayout='vertical'>
+    
+            <nz-form-item>
+                <nz-form-label  nzRequired nzFor="container">Name</nz-form-label>
+                <nz-form-control  >
+                    <input nz-input  [(ngModel)]='data.label' [ngModelOptions]="{standalone: true}"/>
+                </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                    <nz-form-label  nzRequired nzFor="connector_id">Connector</nz-form-label>
+                    <nz-form-control  >
+                        <nz-select [(ngModel)]="data.connector_id" [ngModelOptions]="{standalone: true}">
+                            <nz-option *ngFor='let o of connectors$ | async' [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzRequired>Get With</nz-form-label>
+                    <nz-form-control >
+                      <nz-select [(ngModel)]="data.get_with" [ngModelOptions]="{standalone: true}">
+                        <nz-option nzValue="schema_and_table" nzLabel="Schema and Table"></nz-option>
+                        <nz-option nzValue="query" nzLabel="Query"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>              
+                
+                <nz-form-item *ngIf='getWith("schema_and_table")'>
+                    <nz-form-label  nzRequired nzFor="container">Schema</nz-form-label>
+                    <nz-form-control  >
+                        <input nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item *ngIf='getWith("schema_and_table")'>
+                    <nz-form-label  nzRequired nzFor="container">Table Name</nz-form-label>
+                    <nz-form-control  >
+                        <input nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                
+                <nz-form-item *ngIf='getWith("query")'>
+                    <nz-form-label  nzRequired nzFor="container">From Query</nz-form-label>
+                    <nz-form-control  >
+                        <div style="height: 150px" class="border rounded pt-4 pb-4">
+                            <ngx-monaco-editor style="height: 100%"  [ngModelOptions]="{standalone: true}" [options]="editorOptions" [(ngModel)]="data.query"></ngx-monaco-editor>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+
+
+                        
+                <div class="mt-2 mb-2">
+                    <app-connector-preview [data]="data"></app-connector-preview>
+                </div>
+              
+            
+            </form>
+
+            <div class="button-spacing">
+                <button nz-button nzType='primary' (click)='save()'>Save</button>
+                <button nz-button (click)='cancel()'>Cancel</button>
+            </div>
+    </div>
+   
+</div>

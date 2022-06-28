@@ -1,0 +1,51 @@
+<div class="flex flex-1 column start h-100 w-100">
+
+  <div class="flex-1 flex w-100" *ngIf='(error$ | async)'>
+    <div class="flex column">
+      <span nz-text nzType='danger' nz-tooltip [nzTooltipTitle]='error$ | async | json'>
+        <i nz-icon nzType="block" style="font-size: 64px"></i>
+      </span>
+      <div class="mt-3">
+        <span nz-text>{{error$ | async}}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf='!(error$ | async)'>
+    <div class="flex between mb-2 w-100">
+      <div class="button-spacing">
+        <button nz-button nz-dropdown nzTrigger='click' [nzDropdownMenu]="expAll"><i nz-icon nzType="export"></i> Export <i nz-icon nzType='down'></i></button>
+        <nz-dropdown-menu #expAll="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-submenu nzTitle="All">
+              <ul>
+                <li nz-menu-item (click)="download('csv')">CSV File</li>
+                <li nz-menu-item (click)="download('xlsx')">Excel File</li>
+              </ul>
+            </li>
+            <li nz-submenu nzTitle="With Filters">
+              <ul>
+                <li nz-menu-item (click)="download('csv', true)">CSV File</li>
+                <li nz-menu-item (click)="download('xlsx', true)">Excel File</li>
+              </ul>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+
+      <div>
+        <app-clear-grid-filter [filters]="filters$ | async" [gridApi]="gridApi"  (reinit)='clearFilter()'></app-clear-grid-filter>
+        <!-- <button [disabled]='!(filters$ | async).length' class="ghost" (click)='clearFilter()' nz-button><i nz-icon nzType="filter"></i>
+          Clear Filters ({{(filters$ | async).length}})
+        </button> -->
+      </div>
+    </div>
+
+
+    <app-data-grid class="flex-1" [paginationPageSize]='size$ | async' [rangeSelection]='false'
+      [columnDefs]="headers$ | async" (gridReady)="this.gridReady$.next($event)"></app-data-grid>
+      <app-grid-footer [t]='total$|async'></app-grid-footer>
+  </ng-container>
+
+
+</div>

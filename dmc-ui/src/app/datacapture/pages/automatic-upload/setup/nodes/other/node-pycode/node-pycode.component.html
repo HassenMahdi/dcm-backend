@@ -1,0 +1,11 @@
+<p nz-typography nzEditable [(nzContent)]="data.label"></p>
+<p nz-typography class="text-muted">Takes df:pd.Dataframe as input and return df</p>
+
+<div style="height: 700px" class="border rounded pt-3 pb-3">
+    <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="data.code"></ngx-monaco-editor>
+</div>
+
+<div class="button-spacing mt-2">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+</div>

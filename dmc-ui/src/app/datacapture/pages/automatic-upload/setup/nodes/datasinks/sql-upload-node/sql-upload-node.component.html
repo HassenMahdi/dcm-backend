@@ -1,0 +1,60 @@
+<div class="flex column stretch h-100">
+    <div>
+        <h6 nz-typography>Edit {{data.label}} ({{nodeClass.connectorDef.label}})</h6>
+    </div>
+    <div class="fill flex-scroll">
+        <form nz-form nzLayout='vertical'>
+    
+            <nz-form-item>
+                <nz-form-label  nzRequired nzFor="container">Name</nz-form-label>
+                <nz-form-control  >
+                    <input nz-input  [(ngModel)]='data.label' [ngModelOptions]="{standalone: true}"/>
+                </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                    <nz-form-label  nzRequired nzFor="connector_id">Connector</nz-form-label>
+                    <nz-form-control  >
+                        <nz-select [(ngModel)]="data.connector_id" [ngModelOptions]="{standalone: true}">
+                            <nz-option *ngFor='let o of connectors$ | async' [nzValue]="o.id" [nzLabel]="o.name"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label nzRequired>If Exists</nz-form-label>
+                    <nz-form-control >
+                        <nz-radio-group [(ngModel)]="data.if_exists" [ngModelOptions]="{standalone: true}" nzButtonStyle="solid">
+                            <label nz-radio-button nzValue="fail">Fail</label>
+                            <label nz-radio-button nzValue="replace">Replace</label>
+                            <label nz-radio-button nzValue="append">Append</label>
+                          </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>              
+                
+                <nz-form-item>
+                    <nz-form-label  nzRequired nzFor="container">Schema</nz-form-label>
+                    <nz-form-control  >
+                        <input nz-input  [(ngModel)]='data.schema' [ngModelOptions]="{standalone: true}"/>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                    <nz-form-label  nzRequired nzFor="container">Table Name</nz-form-label>
+                    <nz-form-control  >
+                        <input nz-input  [(ngModel)]='data.table' [ngModelOptions]="{standalone: true}"/>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                
+              
+            
+            </form>
+
+            <div class="button-spacing">
+                <button nz-button nzType='primary' (click)='save()'>Save</button>
+                <button nz-button (click)='cancel()'>Cancel</button>
+            </div>
+    </div>
+   
+</div>

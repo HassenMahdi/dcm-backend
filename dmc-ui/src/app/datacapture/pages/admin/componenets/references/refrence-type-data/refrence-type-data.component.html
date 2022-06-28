@@ -1,0 +1,45 @@
+<ng-container *ngIf='utils.activeRefType$ | async; let ref'>
+
+    <div class="flex between">
+        <h4 nz-typography>{{ref.label}}</h4>
+        <h6 nz-typography>{{ref.version_label}}</h6>
+
+        <div class="button-spacing">
+            <button nz-button class="ghost" (click)='addRefrenceType()'><i nz-icon nzType='plus'></i>Add Reference</button>
+
+            <nz-upload [nzAction]="uploadURI" [nzHeaders]="{ authorization: 'authorization-text' }"
+                (nzChange)="handleChange($event)">
+                <button nz-button class='ghost'><i nz-icon nzType="file-excel" nzTheme="outline"></i>Import</button>
+            </nz-upload>
+          
+        </div>
+    </div>
+    
+    
+    <nz-table  [nzData]='referenceData$ | async' nzSize='small' [nzShowPagination]="false" [nzLoading]='loading'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Alias</th>
+                    <th *ngFor='let p of ref.properties' >{{p.label}}</th>
+                    <!-- ADD DYNAMIC FIELDS -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of referenceData$ | async">
+                    <td >
+                        <button nz-button class="ghost" nzShape='circle' (click)='editRefrenceType(data)'><i nz-icon nzType='edit'></i></button>
+                        <button nz-button class="ghost" nzShape='circle' (click)='deleteRefrenceType(data)'><i nz-icon nzType='delete'></i></button>
+                    </td>
+                    <td>{{data.code}}</td>
+                    <td>{{data.alias}}</td>
+                    <td *ngFor='let p of ref.properties' >{{(data.properties || {})[p.code]}}</td>
+                    <!-- ADD DYNAMIC FIELDS -->
+                 
+                </tr>
+            </tbody>
+
+    </nz-table>
+        
+</ng-container>

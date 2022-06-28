@@ -1,0 +1,28 @@
+<nz-input-group [nzSuffix]="suffixIcon" class="mb-2">
+  <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+</nz-input-group>
+<ng-template #suffixIcon>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<nz-tree
+      [nzData]="nodes"
+      [nzSearchValue]="searchValue"
+      nzCheckable
+      nzMultiple
+      nzShowIcon
+      [(nzCheckedKeys)]="defaultCheckedKeys"
+      (nzCheckBoxChange)="nzEvent($event)"
+    ></nz-tree>
+
+    <ng-template #modalTitle>
+      Share <i class="font-weight-light">{{data.label}}</i> with
+    </ng-template>
+
+    <div *nzModalFooter>
+      <button nz-button nzType="default" [disabled]="!canClose()" (click)="close()">Cancel</button>
+      <button nz-button nzType="primary" [disabled]="!canSave()" (click)="save()" [nzLoading]="loading">Share</button>
+    </div>
+
+    <!-- <p nz-typography>{{defaultCheckedKeys.length}} Selected</p> -->
+  

@@ -1,0 +1,146 @@
+<nz-layout class="full-h" [ngClass]='settings.appSize$ | async'>
+  <!-- Header -->
+  <nz-header>
+    <div class="flex between top">
+      <div class="flex start">
+        <div [class]="isCollapsed ? 'collapsed-logo' : 'logo'">
+          <a [routerLink]="['/datacapture/projects']">
+            <img class="header-icon" [class.header-icon-collapsed]="isCollapsed"
+            src="../../../../assets/images/logo.png" alt="logo">
+            <h1 nz-typography *ngIf="!isCollapsed" class="text-white font-weight-light">Deepkube<span
+              style="opacity: 0.6;">Data</span></h1>
+            </a>
+          </div>
+          <div class="ml-2"><app-env-tag></app-env-tag></div>
+      </div>
+      <div class="flex">
+        <button nz-dropdown [nzDropdownMenu]="zoom" class='ghost' nzShape='circle' nz-button nzType='primary'><i nz-icon
+            nzType="layout"></i></button>
+        <nz-dropdown-menu #zoom="nzDropdownMenu">
+          <ul nz-menu nzSelectable style="min-width: 200px;">
+            <li (click)='settings.setDefaultSize()' nz-menu-item>Default Layout</li>
+            <li (click)='settings.setCompactSize()' nz-menu-item>Compact Layout</li>
+          </ul>
+        </nz-dropdown-menu>
+      
+
+        <app-user-bar class="ml-2"></app-user-bar>
+
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-layout>
+    <!-- Sidebar -->
+    <ng-container *ngIf="true">
+      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200px" nzTheme="light">
+        <ul nz-menu nzMode="inline" class="sider-menu" [nzInlineCollapsed]="isCollapsed">
+          <!-- <li nz-menu-item nzMarchRouter [routerLink]="['/datacapture/dashboard']">
+            <i nz-icon nzType="dashboard"></i>
+            <span *ngIf='(settings.appSize$ | async)!="compact"'>Dashboard</span>
+          </li> -->
+          <li nz-submenu nzIcon="tool" nzTitle="Admin" >
+            <ul>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/users']">
+                <i nz-icon nzType="user"></i>
+                <span>Users</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/domains']">
+                <i nz-icon nzType="folder"></i>
+                <span>Domains</span>
+              </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/references']">
+                <i nz-icon nzType="font-size"></i>
+                <span>References</span>
+              </li>
+              <li *ngIf="(profile$ | async)?.admin" nz-menu-item nzMatchRouter [routerLink]="['/datacapture/admin/connectors']">
+                <i nz-icon nzType="api"></i>
+                <span>Connectors</span>
+              </li>
+            </ul>
+          </li>
+
+          <li nz-submenu nzIcon="database" nzTitle="Data Explorer" >
+            <ul>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/uploads']">
+                <i nz-icon nzType="upload"></i>
+                <span>Uploads</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/data']">
+                <i nz-icon nzType="table"></i>
+                <span>Collection Data</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/explorer/tags']">
+                <i nz-icon nzType="tags"></i>
+                <span>Tags</span>
+              </li>
+              <!-- <li nz-menu-item [nzSelected]="isPrimaryPage('references')" [routerLink]="['/datacapture/explorer/tags']">
+                <span>References</span>
+              </li> -->
+            </ul>
+          </li>
+
+          <li nz-submenu nzIcon="upload" nzTitle="Manual Upload" >
+            <ul>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/import']">
+                <i nz-icon nzType="import"></i>
+                <span>Import</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/transform']">
+                <i nz-icon nzType="sliders"></i>
+                <span>Transform</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/upload/mapping']">
+                <i nz-icon nzType="arrows-alt"></i>
+                <span>Mapping</span>
+              </li>
+              <li nz-menu-item nzMatchRouter
+                [routerLink]="['/datacapture/upload/cleansing']">
+                <i nz-icon nzType="monitor"></i>
+                <span>Cleansing</span>
+              </li>
+              <li nz-menu-item nzMatchRouter
+                [routerLink]="['/datacapture/upload/uploading']">
+                <i nz-icon nzType="upload"></i>
+                <span>Upload</span>
+              </li>
+            </ul>
+          </li>
+
+          <li nz-submenu nzIcon="deployment-unit" nzTitle="Automatic Upload" >
+            <ul>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/pipeline']">
+                <i nz-icon nzType="edit" nzRotate='-90'></i>
+                <span>Editor</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/author']">
+                <i nz-icon nzType="apartment"></i>
+                <span>Piplines</span>
+              </li>
+              <li nz-menu-item nzMatchRouter [routerLink]="['/datacapture/automatic/monitor']">
+                <i nz-icon nzType="monitor"></i>
+                <span>Runs</span>
+              </li>
+              
+            </ul>
+          </li>
+        </ul>
+      </nz-sider>
+    </ng-container>
+
+    <!-- Content -->
+    <nz-layout class="inner-layout">
+      <nz-breadcrumb class="compatable">
+        <nz-breadcrumb-item *ngFor="let item of pageList; let i = index">
+          <a [routerLink]="[getLinkByIndex(i)]">
+            <i nz-icon [nzType]="matchNameWithIcons(item)"></i>
+            <span *ngIf="item != 'home'">{{item | titlecase}}</span>
+          </a>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

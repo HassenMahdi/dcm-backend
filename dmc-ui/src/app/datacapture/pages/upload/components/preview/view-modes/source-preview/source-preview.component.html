@@ -1,0 +1,7 @@
+<div class="flex flex-1 column start">
+  <app-data-grid class="flex-1" [paginationPageSize]='size$ | async' [contextMenu]="getContextMenuItems"
+    [mainContextMenu]="getMainContextMenuItems" [rangeSelection]='true' [columnDefs]="headers$ | async"
+    (gridReady)="gridReady$.next($event)"></app-data-grid>
+  <app-grid-footer [t]='total$ | async'></app-grid-footer>
+  <app-grid-bottom-toolbar></app-grid-bottom-toolbar>
+</div>

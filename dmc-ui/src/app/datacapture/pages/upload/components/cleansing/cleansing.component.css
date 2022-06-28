@@ -1,0 +1,36 @@
+.main-container {
+  padding: 18px;
+  height: 100%;
+}
+
+.flex-box {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.flex-child {
+  flex: 1;
+}
+
+.total {
+  border: 1px solid #bdc3c7;
+  padding: 0 16px;
+  border-top: none;
+}
+
+:host ::ng-deep .ant-divider-inner-text {
+  color: #28a745 !important;
+}
+
+:host ::ng-deep nz-divider.error {
+  margin-left: 24px !important;
+}
+
+:host ::ng-deep nz-divider.fold {
+  margin-right: 24px !important;
+}
+
+:host ::ng-deep .ag-theme-balham .ag-header {
+  background-color: #f0f0f0 !important;
+}

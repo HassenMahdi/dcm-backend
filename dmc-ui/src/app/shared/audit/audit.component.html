@@ -1,0 +1,27 @@
+<nz-table #audit [nzData]="data$ | async" [nzBordered]="true" [nzLoading]="loading$ | async"
+  [nzTotal]="(data$ | async).length" [nzPageIndex]="(page$ | async)" [nzPageSize]="(size$|async)">
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Row Number</th>
+      <th>Previous Value</th>
+      <th>Current Value</th>
+      <th>Upload Date</th>
+      <th>User</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let e of audit.data">
+      <td> <span nz-typography>{{e?.column}}</span></td>
+      <td>{{e?.row}}</td>
+      <td class="text-danger">{{e?.oldValue}}</td>
+      <td class="text-success">{{e?.newValue}}</td>
+      <td>{{e?.uploadDate | date : 'short'}}</td>
+      <td>
+        <nz-avatar [nzText]="e.avatar" [style.background]="e.color"></nz-avatar>
+        <span class="pl-2">{{e?.user || 'Null'}}</span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

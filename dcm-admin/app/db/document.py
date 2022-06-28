@@ -47,7 +47,7 @@ class Document:
         return self
 
     def to_dict(self):
-        return self.__dict__
+        return {**self.__dict__, "id": self.id}
 
     def from_dict(self, d):
         if d:

@@ -1,0 +1,17 @@
+:host ::ng-deep .ant-list-item-meta-avatar {
+  margin-left: 16px;
+}
+
+:host ::ng-deep .ant-list-vertical .ant-list-item-meta-title {
+  margin-bottom: 0;
+}
+
+:host ::ng-deep div.ant-typography {
+  margin-bottom: 6px !important;
+}
+
+.user-item {
+  background: white;
+  margin: 1px;
+  /* border-radius: 10px; */
+}

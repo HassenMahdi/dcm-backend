@@ -1,0 +1,34 @@
+<div class="bg-primary flex column between" style="height: 100vh;">
+  <i nz-icon nzType="experiment" class="cube-icon"></i>
+
+  <div></div>
+  <div>
+    <div class='flex column mb-4' >
+      <img class="m-2" src="../../../../assets/images/logo.png" alt="logo">
+      <div class="flex">
+        <h2 nz-typography class="text-white font-weight-light m-0 mr-1" >C&C</h2>
+        <h2 nz-typography class="text-white font-weight-light m-0" style="opacity: 0.6;">Datafactory</h2>
+      </div>
+      <app-env-tag></app-env-tag>
+    </div>
+
+    <nz-card class="p-4 shadow mb-2 rounded">
+      <h3 nz-typography class="mb-0">Log In</h3>
+      <p nz-typography class="pb-2">to continue to the platform</p>
+      <app-login-form [loading]='loading$ | async' (resetPw)="resetPw($event)" (login)="login($event)"></app-login-form>
+    </nz-card>
+
+  </div>
+  <!-- <button nz-button nzType='link'>Learn More</button> -->
+
+  <div class="flex column end w-1" class="login-footer">
+    <!-- <p nz-typography class="m-0">Powered By</p> -->
+
+    <div class="flex">
+      <div class="login-footer-icon" nz-tooltip nzTooltipTitle='Microsoft Azure'><i nz-icon nzType="windows"></i></div>
+      <div class="login-footer-icon" nz-tooltip nzTooltipTitle='Ant Design'><i nz-icon nzType="ant-design"></i></div>
+      <div class="login-footer-icon" nz-tooltip nzTooltipTitle='Chrome'><i nz-icon nzType="chrome"></i></div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div *nzModalTitle>Reference Data</div>
+
+<nz-form-item>
+    <nz-form-label [nzSpan]="7" >Code</nz-form-label>
+    <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.code' nz-input /></nz-form-control>
+</nz-form-item>
+
+<nz-form-item>
+    <nz-form-label [nzSpan]="7" >Alias</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+        <nz-select nzMode="tags" [(ngModel)]="data.alias" style="width: 100%;">
+            <!-- <nz-option *ngFor="let tag of tags" [nzLabel]="tag" [nzValue]="tag"></nz-option> -->
+        </nz-select>
+    </nz-form-control>
+</nz-form-item>
+
+<ng-container *ngIf='refType'>
+    <nz-form-item *ngFor='let p of refType.properties'>
+        <nz-form-label [nzSpan]="7" >{{p.label}}</nz-form-label>
+        <nz-form-control [nzSpan]="14"><input [(ngModel)]='data.properties[p.code]' nz-input /></nz-form-control>
+    </nz-form-item>
+</ng-container>
+
+
+<div *nzModalFooter>
+    <div class="button-spacing flex end">
+        <button nz-button (click)='close()'>Cancel</button>
+        <button nz-button nzType='primary' [nzLoading]='loading' (click)='onSave()'>Save</button>
+    </div>
+</div>

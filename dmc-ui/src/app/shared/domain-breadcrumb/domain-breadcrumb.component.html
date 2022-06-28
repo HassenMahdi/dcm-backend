@@ -1,0 +1,16 @@
+<div>
+    <ng-container>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item><i nz-icon nzType="database"></i> Data Explorer</nz-breadcrumb-item>
+            <ng-container *ngIf=' (loading$ | async)'><nz-breadcrumb-item><i nz-icon [nzType]="'loading'"></i></nz-breadcrumb-item></ng-container>
+            <ng-container *ngIf=' (collection$ | async) ; let info'>
+                <nz-breadcrumb-item>
+                  <a><i nz-icon nzType="folder"></i><span>{{info.domain.name}}</span></a>
+                </nz-breadcrumb-item>
+                <nz-breadcrumb-item>
+                    <a><i nz-icon nzType="block"></i><span>{{info.collection.name}}</span></a>
+                </nz-breadcrumb-item>
+            </ng-container>
+              </nz-breadcrumb>
+    </ng-container>  
+</div>

@@ -1,0 +1,8 @@
+<nz-badge [nzCount]="filters.length">
+  <button 
+  nz-tooltip nzTooltipTitle='Clear Filter(s)'
+  [disabled]='!filters.length' nzShape='circle' (click)='clearFilter()' nz-button>
+    <i nz-icon nzType="clear" nzTheme="outline"></i>  
+    <!-- Clear Filters ({{filters.length}}) -->
+  </button>
+</nz-badge>

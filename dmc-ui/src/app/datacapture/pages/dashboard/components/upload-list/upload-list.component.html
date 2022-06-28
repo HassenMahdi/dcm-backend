@@ -1,0 +1,54 @@
+<div class="flex column start h-100">
+  <!-- <div class="flex-scroll"> -->
+    <div class="fill w-100" style="position: relative;">
+      <nz-table [nsAutoHeightTable]='20' #basicTable [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="true"
+        [nzShowSizeChanger]="true" [nzTotal]="pagesSize" [nzPageIndex]="(page$ | async)"
+        [nzPageSize]="(size$|async)" (nzPageIndexChange)="onPageChange($event)" [nzLoading]="loading$ | async"
+        (nzPageSizeChange)="onSizeChange($event)" nzSize='small' nzBordered>
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+          <tr>
+            <!-- <th>Collection</th> -->
+            <!-- <th nzShowSort nzSortKey="inserted_records">Inserted Records</th> -->
+            <th nzShowSort nzSortKey="total_records">Total Records</th>
+            <th nzShowSort nzSortKey="upload_start_time">Upload Start Date</th>
+            <!-- <th nzShowSort nzSortKey="upload_end_time">Upload End Date</th> -->
+            <th>Tags</th>
+            <th>User</th>
+            <th nzShowSort nzSortKey="upload_status">Status</th>
+            <th>Audit Trail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of basicTable.data">
+            <!-- <td>{{ _selectedDomain.name }}</td> -->
+            <!-- <td>{{ e.inserted_records }}</td> -->
+            <td>{{ e.total_records }}</td>
+            <td>{{ e.upload_start_time | date:'medium' }}</td>
+            <!-- <td>{{ e.upload_end_time | date:'medium' }}</td> -->
+            <td>
+              <nz-tag *ngFor='let tag of e.upload_tags'>{{tag}}</nz-tag>
+            </td>
+            <td> {{e.user?.last_name + ' ' + e.user?.first_name}} </td>
+            <td>
+              <ng-container [ngSwitch]='e.upload_status'>
+                <span *ngSwitchCase="'DONE'"><nz-badge nz-tooltip nzTooltipTitle="Done" nzStatus="success"> 
+                </nz-badge> Done </span>
+                <span *ngSwitchCase="'ERROR'"><nz-badge nz-tooltip nzTooltipTitle="Error" nzStatus="error"> 
+                </nz-badge> Error </span>
+                <span *ngSwitchDefault><nz-badge nz-tooltip nzTooltipTitle="Running" nzStatus="processing"> 
+                </nz-badge> In Progress </span>
+              </ng-container>
+            </td>
+            <td class="center">
+              <button nz-tooltip nzTooltipTitle='Audit Trail' nzShape='circle' class="ghost" nz-button
+                (click)="auditTrial(e)">
+                <i nz-icon nzType="audit" ></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  <!-- </div> -->
+
+</div>

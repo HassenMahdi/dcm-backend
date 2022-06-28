@@ -1,0 +1,28 @@
+::ng-deep .transformation-card.ant-card{
+    border-radius: 0px !important;
+    min-width: 250px;
+    width: 100%;
+}
+
+::ng-deep .transformation-card{
+    font-size: 14px;
+}
+::ng-deep .transformation-card .ant-form-item-control,
+::ng-deep .transformation-card .ant-form-item-label
+{
+    line-height: 25px;
+}
+
+::ng-deep .transformation-card .ant-form-item-label label
+{
+    font-size: 12px;
+}
+
+::ng-deep .transformation-card .ant-form-item-label label::after
+{
+    content:''
+}
+
+:host{
+    display: contents;
+}

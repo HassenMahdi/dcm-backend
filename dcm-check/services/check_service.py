@@ -7,25 +7,23 @@ from database.data_handler_document import DataHandlerDocument
 from database.job_result_document import JobResultDocument
 
 
-def start_simple_datacheck(file_id, sheet_id, checks, modifications):
+def start_simple_datacheck(file_id, sheet_id, checks, modifications, result_id=None):
 
     df = get_imported_data_df(file_id, sheet_id)
     modified_df = apply_modifcations(df, modifications)
     result_set = apply_checks(modified_df, checks)
-    result_id = None
 
-    if len(result_set.columns):
-        result_id = generate_id()
-        create_result_metadata(result_set)
-        result_meta = create_result_metadata(result_set)
-        save_check_results_df(result_set, file_id, result_id)
-        JobResultDocument.save_result_metadata(
-            file_id, sheet_id, result_id, checks, result_meta[0], result_meta[1])
+    # ++++ SAVE RESULTSET
+    result_id = result_id or generate_id()
+    result_meta = create_result_metadata(result_set)
+    save_check_results_df(result_set, file_id, result_id)
+    JobResultDocument.save_result_metadata(
+        file_id, sheet_id, result_id, checks, result_meta[0], result_meta[1])
 
-    if len(df.index) != len(modified_df.index):
-        # update worksheet_meta_data
-        save_import_df(modified_df, file_id, sheet_id)
-        DataHandlerDocument.WorksheetDocument.update_worksheet_metadata(sheet_id, len(modified_df.index))
+    # if len(df.index) != len(modified_df.index):
+    # update worksheet_meta_data
+    save_import_df(modified_df, file_id, sheet_id)
+    DataHandlerDocument.update_worksheet_metadata(sheet_id, len(modified_df.index))
 
     return {
         "file_id": file_id,
@@ -106,6 +104,10 @@ def apply_checks(df, checks_list):
             check_result = pycode_check(df, check)
         elif check_type == "type_check":
             check_result = type_check(df, check)
+        elif check_type == "format_check":
+            check_result = format_check(df, check)
+        elif check_type == "empty_check":
+            check_result = empty_check(df, check)
         else:
             raise Exception("INVALID_CHECK_TYPE")
 
@@ -162,3 +164,14 @@ def type_check(df, params):
     match = c1.astype(str).str.match("^" + rgx + "$", case=False)
 
     return match.astype(int)
+
+
+def format_check(df, params):
+    s = df[params["column"]]
+    regex_format = params["format"]
+    return ~(s.astype(str).str.match(regex_format))
+
+
+def empty_check(df, params):
+    s = df[params["column"]]
+    return s.fillna("") == ""

@@ -1,0 +1,17 @@
+<div 
+              *ngFor="let item of items" 
+              [dndDraggable]="item"
+              (dndStart)="dragStart.emit()"
+              (dndEnd)="dragEnd.emit()"
+              >
+              <ng-container *ngTemplateOutlet="draggableItem; context: {item: item};"></ng-container>               
+</div>
+
+
+<ng-template #draggableItem let-item="item">
+    <div class="draggable-item border">
+        <span class="draggable-label">{{item}}</span>
+        <i class="draggable-icon" nz-icon nzType="drag" nzTheme="outline"></i>
+    </div>
+
+</ng-template>

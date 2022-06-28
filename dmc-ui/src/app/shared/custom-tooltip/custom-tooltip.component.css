@@ -1,0 +1,35 @@
+:host {
+  padding: 10px;
+  position: absolute;
+  width: auto;
+  white-space: nowrap;
+  word-wrap: no-wrap;
+  border-radius: 5px;
+  background-color: #fff;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%);
+  transform-style: preserve-3d;
+  z-index: 200;
+  display: block;
+  box-shadow: 1px 1px 20px rgba(211, 4, 35, 0.3);
+  /* font-size: 0.9em; */
+  /* color: #D30423; */
+  /* font-family: 'Ubuntu', sans-serif; */
+}
+
+:host.ag-tooltip-hiding {
+  opacity: 1;
+}
+
+.custom-tooltip {
+  background-color: white !important;
+}
+
+/* .custom-tooltip p:first-of-type {
+  font-weight: bold;
+} */
+
+/* p {
+  margin: 0;
+} */

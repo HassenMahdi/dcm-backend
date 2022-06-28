@@ -1,0 +1,30 @@
+:host nz-result {
+  height: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+}
+
+.upload {
+  background: #68c755;
+  border-color: white;
+  color: white;
+  -webkit-transition: background-color 1s ease-out;
+  -moz-transition: background-color 1s ease-out;
+  -o-transition: background-color 1s ease-out;
+  transition: background-color 1s ease-out;
+}
+
+.upload:hover {
+  color: #68c755;
+  border-color: #68c755;
+  background: white;
+}
+
+.upload:focus {
+  color: #68c755;
+  border-color: #68c755;
+  background: white;
+}

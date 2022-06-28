@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from flask_restplus import Resource
 
 from ..service.auth_helper import Auth
@@ -49,8 +49,8 @@ class DomainsHierarchy(Resource):
     """
     @token_required
     @api.doc('Get Domains Hierarchy')
-    @api.marshal_list_with(dto)
+    # @api.marshal_list_with(dto)
     def get(self):
         user_rights, status = Auth.get_logged_in_user_rights(request)
-        return get_domains_hierarchy(user_rights)
+        return jsonify(get_domains_hierarchy(user_rights))
 

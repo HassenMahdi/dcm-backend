@@ -21,7 +21,7 @@ def execute_node(df, node):
     elif node["type"] == "delete-column":
         return delete_columns(df, node["columns"])
     elif node["type"] == "merge":
-        return concatenate_columns_string(df, node["destination"], node.get("columns", []), node.get("separator", " "))
+        return concatenate_columns_string(df, node["destination"], node.get("columns", []), node.get("separator", ""))
     elif node["type"] == "replace":
         return replace(df, node["column"], node.get("from", None), node.get("to", None))
     elif node["type"] == "calculator":
@@ -34,6 +34,8 @@ def execute_node(df, node):
         return default_value(df, node)
     elif node["type"] == "split":
         return split_column(df, node)
+    elif node["type"] == "substring":
+        return substring(df, node)
     elif node["type"] == "format-date":
         return reformat_date(df, node)
     elif node["type"] == "groupby":
@@ -162,7 +164,7 @@ def delete_columns(df, columns):
         return df
 
 
-def concatenate_columns_string(df, target, columns, sep=" "):
+def concatenate_columns_string(df, target, columns, sep):
     try:
         if len(columns):
             df[target] = df[columns].agg(sep.join, axis=1)
@@ -405,31 +407,21 @@ def request_api(df, node):
     key_url = node['url']
     result = []
 
+    def construct_results(row, key_url, method, datapath):
+        url = row[key_url]
+        response = requests.request(url=url, method=method)
+        json = response.json()
+        df_chunk = pd.json_normalize(json)
+        return df_chunk
+
     # WORK IN PARALLEL - SEND ALL REQUEST IN PARALLEL
     with ThreadPoolExecutor() as executor:
         args = ((row, key_url, node['method'], node['datapath']) for index, row in df.iterrows())
-        executor.map(lambda p: result.extend(construct_results(*p)), args)
+        executor.map(
+          lambda p: result.append(construct_results(*p)), args)
 
-    new_df = pd.json_normalize(result)
+    new_df = pd.concat(result, axis=0, ignore_index=True).fillna("")
     return new_df
-
-
-def construct_results(row, key_url, method, datapath):
-    data = make_http_call(method, row[key_url], datapath)
-    [d.update(row) for d in data]
-
-    return data
-
-
-def make_http_call(method, url, datapath):
-    if method == 'GET':
-        response = requests.get(url=url)
-        json = response.json()
-        if type(json[datapath]) == list:
-            return json[datapath]
-        else:
-            var = [json[datapath]]
-            return var
 
 
 def matching_score(df, node):
@@ -443,3 +435,19 @@ def is_match(word, match_with):
     seq = difflib.SequenceMatcher(None, word.upper(), match_with.upper())
     score = seq.ratio()
     return score
+
+
+def substring(df, options):
+    substrings = options["substrings"]
+    original_column = options["original_column"]
+    for sub in substrings:
+        column = sub["column"]
+        start = sub.get("start", 0) - 1
+        end = sub.get("end", 0)
+        df[column] = df[original_column].str[start:end]
+
+    # df.drop(columns=[original_column], inplace=True)
+    return df
+
+
+

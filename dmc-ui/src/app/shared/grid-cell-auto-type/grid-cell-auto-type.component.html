@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]='type'>
+
+    <ng-container *ngSwitchCase='"date"'>
+            <i nz-icon nzType='calendar' class="mr-1" style="opacity: 0.5;"></i> <span>{{value}}</span>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <div [innerHTML]="value"></div>
+    </ng-container>
+</ng-container>

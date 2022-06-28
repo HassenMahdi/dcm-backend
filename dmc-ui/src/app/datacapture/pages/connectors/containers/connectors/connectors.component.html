@@ -1,0 +1,62 @@
+<div class="page-container">
+  <div class="flex column stretch">
+    <div>
+      <nz-page-header class="site-page-header" [nzTitle]="pageTitle" nzSubtitle="Manage Application Connectors">
+      </nz-page-header>
+      <ng-template #pageTitle><i class="mr-2" nz-icon nzType="api" nzTheme="outline"></i>Connectors</ng-template>
+    </div>
+  </div>
+
+  <div class="fill flex column stretch p-1">
+
+    <div class="flex between mb-2">
+      <div class="button-spacing">
+        <button nz-button class="ghost" (click)='addConnector()'><i nz-icon nzType='plus'></i>Add Connector</button>
+        <button nz-button class="ghost" (click)='loadData()'><i nz-icon nzType='reload'></i></button>
+      </div>
+
+      <div style="width: 250px;">
+        <nz-input-group class="m-1" [nzSuffix]="suffixIconSearch">
+          <input type="text" [(ngModel)]="searchTerm" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="fill flex-scroll  bg-grey">
+
+      <div nz-row nzType='flex' nzAlign='stretch'>
+
+        <div nz-col class="gutter-row" [nzSpan]="8" *ngFor="let c of list$ | async | keyFilter :'name': searchTerm">
+          <!-- <nz-card class="inner-box super-domain-card"> -->
+          <nz-card class="h-100" [nzTitle]='cnTitle' [nzExtra]='cnActions' nzSize='small'>
+            <!-- <h6 nz-typography class="text-muted">{{types[c.type].label}}</h6> -->
+            <app-meta [data]="c"></app-meta>
+          </nz-card>
+          <ng-template #cnTitle>
+            <div class="flex start">
+              <app-connector-icon class="m-2" [type]='c.type'></app-connector-icon>
+              <div class="flex column start ml-2">
+                <h5 class="p-0 m-0">{{c.name}}</h5>
+                <h6 class="text-muted p-0 m-0 font-weight-light">{{types[c.type].label}}</h6>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #cnActions>
+            <div class="button-spacing ghost">
+              <button nzShape='circle' nz-button (click)='editConnector(c)'><i nz-icon nzType="edit"></i></button>
+              <nz-divider nzType='vertical'></nz-divider>
+              <button nzShape='circle' nz-button (click)='deleteConnector(c)'><i nz-icon nzType="delete"></i></button>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

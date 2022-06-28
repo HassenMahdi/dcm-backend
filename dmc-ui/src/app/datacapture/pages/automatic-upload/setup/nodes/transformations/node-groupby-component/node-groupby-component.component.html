@@ -1,0 +1,38 @@
+<div class="node-box">
+  <div>
+    <p nz-typography [(nzContent)]="data.label"></p>
+    <form nz-form [nzLayout]="'horizontal'">
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8">Group Keys</nz-form-label>
+        <nz-form-control [nzSm]="16">
+          <nz-select nzMode="tags" nzPlaceHolder="Group Keys" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.groupKeys">
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8">Columns</nz-form-label>
+        <nz-form-control [nzSm]="16">
+          <nz-select nzMode="tags" nzPlaceHolder="Columns" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.columns">
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="8"><i nz-icon nzType='function'></i></nz-form-label>
+        <nz-form-control [nzSm]="16">
+          <nz-select *ngIf='!data.custom' [nzSize]='size' name='agg' [(ngModel)]='data.agg'>
+            <nz-option *ngFor='let f of aggFunctions' [nzLabel]='f.label' [nzValue]='f.value'></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()'>Save</button>
+  </div>
+</div>

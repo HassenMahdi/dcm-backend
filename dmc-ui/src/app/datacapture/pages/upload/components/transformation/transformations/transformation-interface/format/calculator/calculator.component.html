@@ -1,0 +1,20 @@
+<form nz-form [nzLayout]="'horizontal'">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Destination</nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input nz-input [nzSize]='size' [(ngModel)]='data.destination' (change)='onDataChanged()' name='destination' />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8">Formula
+
+    </nz-form-label>
+    <nz-form-control [nzSm]="16">
+      <input type="text" disabled [nzSize]='size' nz-input placeholder="=" [value]="getFormulaText()" />
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+<button nz-button nzBlock (click)='openFormula()' nz-tooltip nzTooltipTitle='Open Editor'><i nz-icon
+    nzType='calculator'></i></button>
