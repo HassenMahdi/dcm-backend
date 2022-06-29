@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '@app/core/notifications/notification.service';
 import { PipelineNodeComponent } from '@app/datacapture/pages/automatic-upload/pipeline/componenets/pipeline-editor/pipeline-node/pipeline-node.component';
 import { PiplineUtilityService } from '@app/datacapture/pages/automatic-upload/pipeline/services/pipline-utility.service';
-import { BehaviorSubject } from 'rxjs';
-import { HAYSTACK_TAGS } from './haystack.const';
+import { HAYSTACK_DEFS } from './haystack.const';
 
 @Component({
   selector: 'app-haystack-mapping',
@@ -12,7 +11,7 @@ import { HAYSTACK_TAGS } from './haystack.const';
 })
 export class HaystackMappingComponent  extends PipelineNodeComponent {
   
-  TAGS = HAYSTACK_TAGS
+  TAGS = []
   static width = "70vw" 
   
   highlightDropZone = false
@@ -33,10 +32,13 @@ export class HaystackMappingComponent  extends PipelineNodeComponent {
   {
     this.sourceHeaders = this.data.headers || []
     this.targetTags = this.data.mapping || []
+
+    this.filterTags()
   }
 
   AddTag(t)
   {
+    console.log({tagDef: t})
     const bTagExist = !!this.targetTags.find(tt=>tt.target == t.name)
     if (bTagExist)
     {
@@ -44,7 +46,7 @@ export class HaystackMappingComponent  extends PipelineNodeComponent {
       return 
     }
 
-    this.targetTags.push({target:t.name, source: null})
+    // this.targetTags.push({target:t.name, source: null})
   }
 
   AddHeader()
@@ -75,5 +77,11 @@ export class HaystackMappingComponent  extends PipelineNodeComponent {
     target.source = null
   }
 
-
+  filterTags()
+  {
+    if (!!this.tagSearch)
+      this.TAGS = HAYSTACK_DEFS.rows.filter(t=>{return this.tagSearch.match(t.def.val.toLowerCase())})
+    else
+      this.TAGS = HAYSTACK_DEFS.rows
+  }
 }

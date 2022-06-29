@@ -54,10 +54,14 @@
         <div class="m-2">
             <nz-input-group [nzSuffix]="suffixIconSearch"><input type="text" nz-input placeholder="Tag Search" [(ngModel)]='tagSearch'/></nz-input-group>
         </div>
-        <ng-template #suffixIconSearch><i nz-icon nzType="search"></i></ng-template>
+        <ng-template #suffixIconSearch><i nz-icon nzType="search" [(ngModel)]="tagSearch" (change)="filterTags()"></i></ng-template>
         <!-- List -->
         <ul>
-            <li (click)="AddTag(t)" *ngFor="let t of TAGS" nz-menu-item><b>{{t.name}}</b><p>{{t.desc}}</p></li>
+            <li (click)="AddTag(t)" *ngFor="let t of TAGS" nz-menu-item>
+                <span nzTooltipTitle="{{t.doc}}" nz-tooltip>
+                    <span>{{t.def.val}}</span> <nz-tag class="ml-2" *ngFor="let is of t.is">{{is.val}}</nz-tag>
+                </span>
+            </li>
         </ul>
     </div>
   </nz-dropdown-menu>
