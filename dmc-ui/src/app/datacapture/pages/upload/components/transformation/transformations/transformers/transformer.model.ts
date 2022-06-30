@@ -218,7 +218,7 @@ export class Filter extends Transformer {
 export class FilterAndReplace extends Transformer {
   shortcut = 'control.alt.r';
   type = 'find-replace';
-  label = 'Find & Replace';
+  label = 'Find and Replace with Filter';
   icon = 'search';
 
   getErrors = (params, previousNodes, headers) => {

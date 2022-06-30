@@ -370,10 +370,15 @@ def map_columns(df, node):
     mappings = node.get("mapping", [])
     mapped_df = pd.DataFrame(index=df.index, columns=[])
     for mapping in mappings:
-        source = mapping["source"]
+        source = mapping.get("source", None)
+        value = mapping.get("value", None)
         target = mapping["target"]
-        if source in df.columns:
+
+        if value is not None:
+            mapped_df[target] = value
+        elif source in df.columns:
             mapped_df[target] = df[source]
+
     df = mapped_df
 
     return df

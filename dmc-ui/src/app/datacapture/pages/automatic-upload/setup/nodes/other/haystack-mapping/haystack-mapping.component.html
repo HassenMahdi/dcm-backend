@@ -7,7 +7,7 @@
         <button nz-button nz-dropdown [nzDropdownMenu]="headerMenu">
             <i nz-icon nzType="plus-square" nzTheme="twotone"></i>Add Header<i nz-icon nzType="down"></i>
         </button>
-        <button nz-button nz-dropdown [nzDropdownMenu]="tagMenu">
+        <button nz-button nz-dropdown [nzDropdownMenu]="tagMenu" (nzVisibleChange)="onTagMenuVisibleChange($event)">
             <i nz-icon nzType="tags" nzTheme="twotone"></i>Add Tag<i nz-icon nzType="down"></i>
         </button>
     </div>
@@ -25,10 +25,10 @@
             <div class="flex column h-100 w-75">
                 <h5>Tags</h5>
                 <div class="flex-scroll w-100 h-100 border p-1">
-                    <div *ngFor="let t of targetTags" class="p-2 border-bottom" dndDropzone (dndDrop)="Map($event.data, t)">
+                    <div *ngFor="let t of targetTags; let i = index" class="p-2 border-bottom" dndDropzone (dndDrop)="Map($event.data, t)">
                         <div class="flex">
                             <div class="flex-1">{{t|json}}</div>
-                            <button nz-button (click)="Unmap(t)">Remove Mapping</button>
+                            <button class="ghost" nz-button (click)="Untag(i)"><i nz-icon nzType="delete"></i></button>
                         </div>
                     </div>
                 </div>
@@ -52,14 +52,14 @@
     <div nz-menu style="max-height: 70vh;overflow: auto;">
         <!-- Search -->
         <div class="m-2">
-            <nz-input-group [nzSuffix]="suffixIconSearch"><input type="text" nz-input placeholder="Tag Search" [(ngModel)]='tagSearch'/></nz-input-group>
+            <nz-input-group [nzSuffix]="suffixIconSearch"><input [(ngModel)]="tagSearch" (ngModelChange)="filterTags()" type="text" nz-input placeholder="Tag Search"/></nz-input-group>
+            <ng-template #suffixIconSearch><i nz-icon nzType="search"></i></ng-template>
         </div>
-        <ng-template #suffixIconSearch><i nz-icon nzType="search" [(ngModel)]="tagSearch" (change)="filterTags()"></i></ng-template>
         <!-- List -->
         <ul>
-            <li (click)="AddTag(t)" *ngFor="let t of TAGS" nz-menu-item>
+            <li (click)="AddTag(t)" *ngFor="let t of TAGS | async" nz-menu-item>
                 <span nzTooltipTitle="{{t.doc}}" nz-tooltip>
-                    <span>{{t.def.val}}</span> <nz-tag class="ml-2" *ngFor="let is of t.is">{{is.val}}</nz-tag>
+                    <span>{{t.def.val}}</span>
                 </span>
             </li>
         </ul>
@@ -73,8 +73,10 @@
             <input type="text" nz-input placeholder="Header Name" [(ngModel)]='addedHeader'/>
         </div>
         <!-- List -->
-        <ul>
-            <li (click)="AddHeader()" nz-menu-item>Add Header</li>
+        <ul  >
+            <li nz-menu-item (click)="AddHeader()"><i nz-icon nzType="plus"></i>Add Header</li>
+            <li nz-menu-item *ngFor='let h of sourceHeaders; let i= index' (click)="RemoveHeader(i)"><i nz-icon nzType="delete"></i>{{h}}</li>
         </ul>
+
     </div>
   </nz-dropdown-menu>
