@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = "/scor-data"
     MONGO_DBNAME = 'dcm_db'
-    MONGO_URI = "mongodb://localhost:27017/dcm?retryWrites=false"
+    MONGO_URI = "mongodb://host.docker.internal:27017/dcm?retryWrites=false"
     CORS_HEADERS = 'Content-Type'
 
 

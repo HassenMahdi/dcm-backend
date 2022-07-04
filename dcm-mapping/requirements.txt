@@ -117,3 +117,4 @@ urllib3==1.25.9
 Werkzeug==0.15.3
 xlrd==1.2.0
 auto-mapper
+flask_restx
