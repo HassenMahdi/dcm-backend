@@ -2,27 +2,27 @@ version: "2.1"
 services:
 
   dcm-admin:
-    build: ./dcm-admin 
+    build: ./dcm-admin
     ports:
       - "5000:5000"
     env_file:
       - .env-locale
 
-  dcm-auth:
-    build: ./dcm-auth 
-    ports:
-      - "5010:5000"
-    env_file:
-      - .env-locale
+  # dcm-auth:
+  #   build: ./dcm-auth
+  #   ports:
+  #     - "5010:5000"
+  #   env_file:
+  #     - .env-locale
 
-  dcm-transform:
-    build: ./dcm-transform
-    ports:
-      - "5002:5000"
-    volumes:
-      - /home/ubuntu/ghpsj/volumes/data:/data/
-    env_file:
-      - .env-locale
+  # dcm-transform:
+  #   build: ./dcm-transform
+  #   ports:
+  #     - "5002:5000"
+  #   volumes:
+  #     - /home/ubuntu/ghpsj/volumes/data:/data/
+  #   env_file:
+  #     - .env-locale
 
   dcm-import:
     build: ./dcm-import
@@ -42,13 +42,20 @@ services:
     env_file:
       - .env-locale
 
-  dcm-upload:
-    build: ./dcm-upload
+  # dcm-upload:
+  #   build: ./dcm-upload
+  #   ports:
+  #     - "5005:5000"
+  #   volumes:
+  #     - /home/ubuntu/ghpsj/volumes/data:/data/
+  #   env_file:
+  #     - .env-locale
+
+  dcm-check:
+    build: ./dcm-check
     ports:
-      - "5005:5000"
+      - "5004:5000"
     volumes:
       - /home/ubuntu/ghpsj/volumes/data:/data/
     env_file:
       - .env-locale
-
-
