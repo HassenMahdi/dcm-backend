@@ -17,18 +17,6 @@ class Transfos(Resource):
         Transfo Resource
     """
 
-    # @api.doc('Get All Domains')
-    # def get(self):
-    #     df = load_dataframe("C:/Users/Wajdi/Desktop/Projects/imports/cccc.csv")
-    #     options = {
-    #         "column": 'col3',
-    #         "op": '!=',
-    #         "condition": '2'
-    #     }
-    #     df = filtering(df, options)
-    #     print(df)
-    #     return "Transfo works!"
-
     @api.doc('Get All Domains')
     @api.marshal_list_with(pipe)
     def get(self):
@@ -120,3 +108,13 @@ class CheckPipe(Resource):
     @api.doc('Check Pipe')
     def get(self, pipe_id):
         return jsonify(check_pipe_syntax(pipe_id))
+
+
+@api.route('/plugins/<plugin_id>')
+class PluginExecution(Resource):
+    """
+        Pipe Resource
+    """
+    @api.doc('Execute plugin')
+    def get(self, plugin_id):
+        return {"transformed_file_id": execute_plugin(plugin_id)}
