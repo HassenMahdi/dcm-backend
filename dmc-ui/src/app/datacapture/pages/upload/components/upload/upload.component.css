@@ -12,3 +12,17 @@
 .flex-child {
   flex: 1 1 auto;
 }
+
+.plugin {
+  margin-top: 3em;
+  display: flex;
+  align-items: center;
+}
+
+.plugin > * {
+  height: 100%;
+}
+
+.plugin-select {
+  width: 30%;
+}

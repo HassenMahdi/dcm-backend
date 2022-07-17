@@ -1,0 +1,46 @@
+<div class="node-box">
+  <div>
+    <p nz-typography [(nzContent)]="data.label"></p>
+
+    <form nz-form [nzLayout]="'horizontal'">
+
+      <!-- Domain -->
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24" nzRequired>Domain</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <div>
+            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(data.domain_id)"></i>
+            <nz-select [(ngModel)]="data.domain_id" (ngModelChange)="selectDomain($event)" class="wd-80" nzShowSearch
+              [ngModelOptions]="{standalone: true}" nzAllowClear nzPlaceHolder="Select a Domain">
+              <nz-option *ngFor="let domain of domains$ | async" [nzLabel]="domain.name" [nzValue]="domain.id">
+              </nz-option>
+            </nz-select>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Plugins -->
+      <nz-form-item>
+        <nz-form-label class="text-left" [nzSm]="24" nzRequired>Plugin</nz-form-label>
+        <nz-form-control [nzSm]="24">
+          <div>
+            <i nz-icon class="pr-3" nzType="block" nzTheme="outline" [class.text-danger]="!(data.plugin_id)"></i>
+            <nz-select [(ngModel)]="data.plugin_id" nzAllowClear (ngModelChange)="selectPlugin($event)" class="wd-80" nzShowSearch
+              [ngModelOptions]="{standalone: true}" nzPlaceHolder="Select a plugin">
+              <nz-option *ngFor="let plugin of plugins$ | async" [nzLabel]="plugin.name" [nzValue]="plugin.id">
+              </nz-option>
+            </nz-select>
+          </div>
+
+        </nz-form-control>
+      </nz-form-item>
+      <!-- END Plugins -->
+
+    </form>
+  </div>
+
+  <div class="button-spacing text-right w-100">
+    <button nz-button (click)='cancel()'>Cancel</button>
+    <button nz-button nzType='primary' (click)='save()' [disabled]="!(data.plugin_id && data.domain_id)">Save</button>
+  </div>
+</div>

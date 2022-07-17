@@ -16,7 +16,7 @@ import { NodePipelineComponent } from '../../../setup/nodes/other/node-pipeline/
 import { NodePycodeComponent } from '../../../setup/nodes/other/node-pycode/node-pycode.component';
 import { NodeTemplateMappingComponent } from '../../../setup/nodes/other/node-template-mapping/node-template-mapping.component';
 import { BaseNodeTransformationComponent } from '../../../setup/nodes/transformations/base-node-transformation/base-node-transformation.component';
-import { NodeConcat, NodeJoin, NodePycode, NodeMap, NodeSelect, NodeTransformationPipeline, NodeRequest, NodeMapToStandard, NodeMapToHaystack, NodeRequestImport } from '../nodes/other.model';
+import { NodeConcat, NodeJoin, NodePycode, NodeMap, NodeSelect, NodeTransformationPipeline, NodeRequest, NodeMapToStandard, NodeMapToHaystack, NodeRequestImport, NodePlugin } from '../nodes/other.model';
 import { NodeTransformationFilter, NodeTransformationFilterAndReplace, NodeTransformationMerge, NodeTransformationReplace, NodeTransformationDeleteRow, NodeTransformationDefaultValue, NodeTransformationSplitter, NodeTransformationCalculator, NodeTransformationFormatDate, NodeTransformationHash, NodeTransformationKeySelect, NodeSubstring } from '../nodes/transformations.model';
 import { NodeDuplicateCheck, NodeComparionCheck, NodeColumnComparison, NodeCodeCheck, NodeTypeCheck, NodeMatchingScore, NodeFormatCheck, NodeEmptyCheck } from '../nodes/checks.model';
 import { NodeCheckDuplicateComponent } from "../../../setup/nodes/other/node-check-duplicate/node-check-duplicate.component";
@@ -26,6 +26,7 @@ import { NodeSubstringComponent } from "../../../setup/nodes/transformations/nod
 import { NodeFormatCheckComponent } from "../../../setup/nodes/checks/node-format-check/node-format-check.component";
 import { NodeEmptyCheckComponent } from "../../../setup/nodes/checks/node-empty-check/node-empty-check.component";
 import { HaystackMappingComponent } from "../../../setup/nodes/other/haystack-mapping/haystack-mapping.component";
+import { NodePluginComponent } from "../../../setup/nodes/other/node-plugin/node-plugin.component";
 
 export const NODE_OTHERS = [
   NodeConcat.setComponenet(BaseNodeTransformationComponent),
@@ -39,8 +40,9 @@ export const NODE_OTHERS = [
   NodeSubstring.setComponenet(NodeSubstringComponent),
   NodeRequest.setComponenet(NodeRequestComponent),
   NodeRequestImport.setComponenet(NodeRequestComponent),
+  NodePlugin.setComponenet(NodePluginComponent),
 ]
- 
+
 export const DATASOURCE_NODES = [
   NodeCollectionImport.setComponenet(CollectionImportComponent),
   NodeSQLImport.setComponenet(SqlImportNodeComponent),

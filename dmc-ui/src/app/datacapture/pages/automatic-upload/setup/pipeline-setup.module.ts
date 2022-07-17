@@ -44,6 +44,7 @@ import { NodeSubstringComponent } from './nodes/transformations/node-substring/n
 import { NodeEmptyCheckComponent } from './nodes/checks/node-empty-check/node-empty-check.component';
 import { NodeFormatCheckComponent } from './nodes/checks/node-format-check/node-format-check.component';
 import { HaystackMappingComponent } from './nodes/other/haystack-mapping/haystack-mapping.component';
+import { NodePluginComponent } from './nodes/other/node-plugin/node-plugin.component';
 
 
 const setupComponenets = [
@@ -100,6 +101,7 @@ const pipes = [
     ...pipes,
     DraggableShelfComponent,
     HaystackMappingComponent,
+    NodePluginComponent,
   ],
   exports: [
     ...setupComponenets,

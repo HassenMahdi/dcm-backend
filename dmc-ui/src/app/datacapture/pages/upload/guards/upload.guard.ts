@@ -76,6 +76,7 @@ export class UploadGuard implements CanActivate {
         }
       }
       case 'UPLOAD': {
+        return true
         if (this.fileData.metaData && this.selectedDomain && this.mandatories === 0 && this.errors === 0) {
             return true;
         } else {

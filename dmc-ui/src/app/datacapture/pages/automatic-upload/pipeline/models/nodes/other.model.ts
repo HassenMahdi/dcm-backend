@@ -47,7 +47,7 @@ export class NodePycode extends PipelineNode{
     static category = 'SCRIPTS';
 
     // static icon = 'assets/images/svg/pycode.svg';
-    static nzicon = "pycode" 
+    static nzicon = "pycode"
     static color = 'red';
     static label = 'Python Transformation'
     static ports = [
@@ -71,7 +71,7 @@ export class NodeMap extends PipelineNode{
 
 export class NodeMapToStandard extends PipelineNode{
     static type = 'map_standard'
-    static category = 'MAPPING'    
+    static category = 'MAPPING'
     static nzicon = "fire"
     static color = 'darkorange';
     static label = 'HL7-FHIR'
@@ -84,13 +84,25 @@ export class NodeMapToStandard extends PipelineNode{
 
 export class NodeMapToHaystack extends PipelineNode{
     static type = 'map_haystack'
-    static category = 'MAPPING'    
+    static category = 'MAPPING'
     static nzicon = "tag"
     static color = 'darkorange';
     static label = 'Haystack'
     static package = "IOT";
     static ports = [
         {id:"INPUT",spot: go.Spot.Left},
+        {id:"OUTPUT",spot:go.Spot.Right},
+    ]
+}
+
+export class NodePlugin extends PipelineNode{
+    static type = 'Plugin'
+    static category = 'MAPPING'
+    static nzicon = "insert-row-right"
+    static color = 'darkorange';
+    static label = 'Plugin'
+    static package = "IOT";
+    static ports = [
         {id:"OUTPUT",spot:go.Spot.Right},
     ]
 }
@@ -121,7 +133,7 @@ export class NodeRequestImport extends PipelineNode{
 
 export class NodeSelect extends PipelineNode{
     static type = 'select'
-    static category = 'TRANSFORMATION'    
+    static category = 'TRANSFORMATION'
     static nzicon = "select"
     static color = 'darkorange';
     static label = 'Select'

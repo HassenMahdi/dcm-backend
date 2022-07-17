@@ -18,8 +18,10 @@ export const selectUploadOverview = createSelector(
       fileId: object.import.fileData.metaData ? object.import.fileData.metaData.file_id : null,
       transformationId: object.transformation.transformedFilePath,
       cleansingId: object.cleansing.jobId,
+      pipeId: object.transformation.activePipe? object.transformation.activePipe.id : null,
       // tslint:disable-next-line: max-line-length
-      sheetId: object.preview.generatedSheetId
+      sheetId: object.preview.generatedSheetId,
+      superDomain: object.import.superDomain
     };
   }
 );
