@@ -59,6 +59,22 @@ class SuperDomainDto:
     })
 
 
+class PluginDto:
+  api = Namespace('plugin', description='plugin related operations')
+  plugin = api.model('plugin', {
+    'id': NullableString(description='user password'),
+    'name': fields.String(required=True, description='user email address'),
+    'type': NullableString(description='type'),
+    'super_domain_id': NullableString(description='super_domain_id'),
+    'mapping_id': NullableString(description='mapping_id'),
+    'pipe_id': NullableString(description='pipe_id'),
+    'file_id': NullableString(description='file_id'),
+    'sheet_id': NullableString(description='sheet_id'),
+    'created_on': fields.DateTime(description='user Identifier'),
+    'modified_on': fields.DateTime(description='user Identifier'),
+  })
+
+
 class FieldsDto:
     api = Namespace('domain', description='domain specific fields')
     field = api.model('field', {
