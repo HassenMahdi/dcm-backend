@@ -12,6 +12,8 @@ from app.main.service.transformation_pipe_service import get_pipe_by_id
 from app.main.service.plugin_service import get_plugin_by_id
 from app.main.util.strings import generate_id
 from app.main.util.utils import get_upload_file_path, save_transformed_dataframe, getTransformedFilePath
+from app.main.util.mapping_utils import map_source_targets
+
 
 from inforcehub import Anonymize
 
@@ -148,25 +150,28 @@ def main(file_id, sheet_id, pipe_id):
 
     return file_path
 
-def execute_plugin(plugin_id):
+def execute_plugin(file_id, sheet_id, plugin_id):
 
     # Uplpad plugin
     plugin  = get_plugin_by_id(plugin_id)
     print('plugin', plugin)
 
-    path = get_upload_file_path(plugin['sheet_id'], plugin['file_id'])
+    path = get_upload_file_path(sheet_id, file_id)
     df = load_dataframe(path)
-
-    # do the mapping
 
     pipe = get_pipe_by_id(plugin['pipe_id'])
     if pipe is not None:
       for node in pipe[0].nodes:
           df = execute_node(df, node)
+
+    # do the mapping
+    map_source_targets(df, plugin['mapping_id'])
+
+
     output_sheet_id = generate_id()
-    output_path = getTransformedFilePath(plugin['file_id'], output_sheet_id)
+    output_path = getTransformedFilePath(file_id, output_sheet_id)
     file_path = save_transformed_dataframe(df, output_path)
-    WorksheetDocument().create_file_metadata(plugin['file_id'], output_sheet_id, df.columns, len(df))
+    WorksheetDocument().create_file_metadata(file_id, output_sheet_id, df.columns, len(df))
 
     print('file_path', file_path)
 

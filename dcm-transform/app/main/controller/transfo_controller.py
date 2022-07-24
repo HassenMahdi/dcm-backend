@@ -110,11 +110,11 @@ class CheckPipe(Resource):
         return jsonify(check_pipe_syntax(pipe_id))
 
 
-@api.route('/plugins/<plugin_id>')
+@api.route('/<file_id>/<sheet_id>/plugins/<plugin_id>')
 class PluginExecution(Resource):
     """
         Pipe Resource
     """
     @api.doc('Execute plugin')
-    def get(self, plugin_id):
-        return {"transformed_file_id": execute_plugin(plugin_id)}
+    def get(self, file_id, sheet_id, plugin_id):
+        return {"transformed_file_id": execute_plugin(file_id, sheet_id, plugin_id)}
