@@ -154,7 +154,6 @@ def execute_plugin(file_id, sheet_id, plugin_id):
 
     # Uplpad plugin
     plugin  = get_plugin_by_id(plugin_id)
-    print('plugin', plugin)
 
     path = get_upload_file_path(sheet_id, file_id)
     df = load_dataframe(path)
@@ -165,7 +164,7 @@ def execute_plugin(file_id, sheet_id, plugin_id):
           df = execute_node(df, node)
 
     # do the mapping
-    map_source_targets(df, plugin['mapping_id'])
+    df = map_source_targets(df, plugin['mapping_id'])
 
 
     output_sheet_id = generate_id()
