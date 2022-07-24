@@ -71,7 +71,7 @@ export class UploadComponent implements OnInit {
     let plugin: any = {
       name: this.validateForm.value.pluginName,
       type: this.validateForm.value.pluginType,
-      super_domain_id: data.superDomain,
+      domain_id: data.domainId,
       mapping_id: data.mappingId,
       pipe_id: data.pipeId,
       file_id: data.fileId,
