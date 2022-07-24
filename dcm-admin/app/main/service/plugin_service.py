@@ -2,37 +2,37 @@ import uuid
 import datetime
 
 from app.db.Models.plugin import Plugin
-from app.db.Models.super_domain import SuperDomain
+from app.db.Models.domain import Domain
 
 from app.main.util.strings import camelCase
 
 
 def save_plugin(data):
-  super_domain_id = data['super_domain_id']
-  super_dom = SuperDomain(**{'id': super_domain_id}).load()
+  domain_id = data['domain_id']
+  domain = Domain(**{'identifier': domain_id}).load()
 
-  if super_dom.id:
+  if domain.identifier:
     plugin = Plugin(**data).load()
     if not plugin.id:
 
       new_plugin = Plugin(
         **{**data, **{
           'created_on': datetime.datetime.utcnow(),
-          'super_domain_id': super_domain_id
+          'super_domain_id': domain_id
         }})
 
       plugin = new_plugin
 
     plugin.name = data.get('name', None)
     plugin.type = data.get('type', None)
-    plugin.super_domain_id = data.get('super_domain_id', None)
+    plugin.domain_id = data.get('domain_id', None)
     plugin.mapping_id = data.get('mapping_id', False)
     plugin.pipe_id = data.get('pipe_id', False)
     plugin.file_id = data.get('file_id', False)
     plugin.sheet_id = data.get('sheet_id', False)
     plugin.modified_on = datetime.datetime.utcnow()
 
-    if Plugin().db().find_one({'_id': {'$ne': plugin.id}, 'name': plugin.name, 'super_domain_id': super_dom.id}):
+    if Plugin().db().find_one({'_id': {'$ne': plugin.id}, 'name': plugin.name, 'domain_id': domain.id}):
       return {"status": 'fail', "message": 'Plugin name already used in this Domain'}, 409
 
     plugin.save()
