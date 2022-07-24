@@ -15,9 +15,9 @@ class DevelopmentConfig(Config):
     """Dev config settings"""
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = "/scor-data"
-    MONGO_DBNAME = 'dcm_db'
-    MONGO_URI = "mongodb://host.docker.internal:27017/dcm?retryWrites=false"
+    UPLOAD_FOLDER = "/Users/karim/Documents/docker-data/"
+    # MONGO_DBNAME = 'dcm_db'
+    MONGO_URI = "mongodb://localhost:27017/dcm"
     CORS_HEADERS = 'Content-Type'
 
 
@@ -35,6 +35,8 @@ class ProductionConfig(Config):
     """Prod config settings"""
 
     DEBUG = False
+    MONGO_URI = "mongodb://localhost:27017/dcm"
+
 
 
 config_by_name = dict(

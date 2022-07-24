@@ -1,12 +1,11 @@
 version: "2.1"
 services:
-
-  dcm-admin:
-    build: ./dcm-admin
-    ports:
-      - "5000:5000"
-    env_file:
-      - .env-locale
+  # dcm-admin:
+  #   build: ./dcm-admin
+  #   ports:
+  #     - "5009:5000"
+  #   env_file:
+  #     - .env-locale
 
   # dcm-auth:
   #   build: ./dcm-auth
@@ -20,7 +19,7 @@ services:
   #   ports:
   #     - "5002:5000"
   #   volumes:
-  #     - /home/ubuntu/ghpsj/volumes/data:/data/
+  #     - /Users/karim/Documents/docker-data:/data/
   #   env_file:
   #     - .env-locale
 
@@ -29,33 +28,35 @@ services:
     ports:
       - "5001:5000"
     volumes:
-      - /home/ubuntu/ghpsj/volumes/data:/data/
+      - /Users/karim/Documents/docker-data/:/data/
     env_file:
       - .env-locale
+    environment:
+      - PYTHONUNBUFFERED=1
 
-  dcm-mapping:
-    build: ./dcm-mapping
-    ports:
-      - "5003:5000"
-    volumes:
-      - /home/ubuntu/ghpsj/volumes/data:/data/
-    env_file:
-      - .env-locale
-
-  # dcm-upload:
-  #   build: ./dcm-upload
+  # dcm-mapping:
+  #   build: ./dcm-mapping
   #   ports:
-  #     - "5005:5000"
+  #     - "5003:5000"
   #   volumes:
-  #     - /home/ubuntu/ghpsj/volumes/data:/data/
+  #     - /Users/karim/Documents/docker-data:/data/
   #   env_file:
   #     - .env-locale
+
+  dcm-upload:
+    build: ./dcm-upload
+    ports:
+      - "5005:5000"
+    volumes:
+      - /Users/karim/Documents/docker-data:/data/
+    env_file:
+      - .env-locale
 
   dcm-check:
     build: ./dcm-check
     ports:
       - "5004:5000"
     volumes:
-      - /home/ubuntu/ghpsj/volumes/data:/data/
+      - /Users/karim/Documents/docker-data:/data/
     env_file:
       - .env-locale

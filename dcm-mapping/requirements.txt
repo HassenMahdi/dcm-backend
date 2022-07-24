@@ -114,7 +114,7 @@ six==1.11.0
 SQLAlchemy==1.3.18
 thrift==0.13.0
 urllib3==1.25.9
-Werkzeug==0.15.3
+Werkzeug==0.16.1
 xlrd==1.2.0
 auto-mapper
 flask_restx

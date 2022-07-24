@@ -12,7 +12,7 @@ class Config:
     MONGO_DBNAME = 'dcm_db'
     CORS_HEADERS = 'Content-Type'
     PORT = os.getenv("PORT", 5001)
-    UPLOAD_FOLDER = "/scor-data/"
+    UPLOAD_FOLDER = "/Users/karim/Documents/docker-data/"
     # MONGO_URI = "mongodb://root:Bxia2020DaaTa1920CAvlmd@20.74.14.235:27017/dcm?authSource=admin&readPreference=primary&ssl=false"
     MONGO_URI = "mongodb://localhost:27017/dcm"
 

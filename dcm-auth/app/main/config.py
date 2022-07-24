@@ -10,7 +10,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
     DEBUG = False
 
-    MONGO_URI = "mongodb://localhost:27017/dcm"
+    MONGO_URI = "mongodb://localhost:27017/dcm?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 
     MAIL_SERVER = 'smtp.office365.com'
     MAIL_PORT = 587
